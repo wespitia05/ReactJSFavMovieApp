@@ -68,11 +68,37 @@ function App() {
                 {results.map((item) => {
                     const title = item.title || item.name;
                     const year = (item.release_date || item.first_air_date || "").slice(0, 4);
+                    const posterPath = item.poster_path;
+                    const posterUrl = posterPath ? `https://image.tmdb.org/t/p/original${posterPath}`: null;
+
+                    function handleClick() {
+                        console.log("Clicked item:", {
+                            id: item.id,
+                            mediaType: item.media_type,
+                            title,
+                        });
+                    }
 
                     return (
-                        <li key={`${item.media_type}-${item.id}`} className="results-item">
-                            <span className="results-title">{title}</span>
-                            {year && <span className="results-year"> ({year})</span>}
+                        <li
+                            key={`${item.media_type}-${item.id}`}
+                            className="results-item"
+                            onClick={handleClick}
+                        >
+                            {posterUrl ? (
+                                <img
+                                    src={posterUrl}
+                                    alt={`${title} poster`}
+                                    className="results-poster"
+                                />
+                            ) : (
+                                <div className="poster-placeholder">No Image</div>
+                            )}
+
+                            <div className="results-info">
+                                <span className="results-title">{title}</span>
+                                {year && <span className="results-year"> ({year})</span>}
+                            </div>
                         </li>
                     );
                 })}

@@ -26,14 +26,14 @@ body {
 .search-input {
     flex: 1;
     padding: 12px 14px;
-    font-size: 1rem;
+    font-size: 1.25rem;
     border-radius: 6px;
     border: none;
 }
   
 .search-button {
     padding: 10px 14px;
-    font-size: 1rem;
+    font-size: 1.25rem;
     border-radius: 6px;
     border: none;
     cursor: pointer;
@@ -58,15 +58,48 @@ body {
     min-width: 360px;
 }
 
+.results-poster {
+    width: 125px;
+    height: 190px;
+    border-radius: 4px;
+    margin-right: 20px;
+    margin-left: 10px;
+}
+
+.poster-placeholder {
+    width: 125px;
+    height: 190px;
+    background-color: #333;
+    color: #aaa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    border-radius: 4px;
+    margin-right: 20px;
+    margin-left: 10px;
+}
+
+.results-info {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+}
+
 .results-item {
     padding: 10px 0;
     border-bottom: 1px solid #2a2a2a;
+    display: flex;
+    cursor: pointer;
+}
+
+.results-item:hover {
+    background-color: #1c1c1c;
 }
 
 .results-title {
-    font-size: 20px;
+    font-size: 1.5rem;
     font-weight: 600;
-    cursor: pointer;
 }
 
 .results-title:hover {
@@ -74,6 +107,6 @@ body {
 }
 
 .results-year {
-    font-size: 20px;
+    font-size: 1rem;
     opacity: 0.8;
 }  
