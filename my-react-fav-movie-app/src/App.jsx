@@ -50,15 +50,17 @@ function App() {
 
     return (
         <div className="movie-app">
-            <form className="search-form" onSubmit={handleSubmit}>
-                <input
-                className="search-input"
-                value={query}
-                onChange={(event) => setQuery(event.target.value)}
-                placeholder="Search movies or TV..."
-                />
-                <button className="search-button" type="submit">Search</button>
-            </form>
+            <div className="search-bar">
+                <form className="search-form" onSubmit={handleSubmit}>
+                    <input
+                        className="search-input"
+                        value={query}
+                        onChange={(event) => setQuery(event.target.value)}
+                        placeholder="Search movies or TV..."
+                    />
+                    <button className="search-button" type="submit">Search</button>
+                </form>
+            </div>
 
             {error && <p className="error-text">{error}</p>}
 
