@@ -110,3 +110,13 @@ body {
     font-size: 1rem;
     opacity: 0.8;
 }  
+
+/* MOVIE PAGE STYLING */
+.movie-basic {
+    display: flex;
+}
+
+.movie-poster {
+    width: 275px;
+    border-radius: 5px;
+}
