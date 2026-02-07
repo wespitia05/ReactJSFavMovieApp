@@ -51,9 +51,11 @@ function SearchBar() {
         }
     }
 
+    // this function handles when select a movie from the results
     function handleResultClick(item) {
         if (item.media_type === "movie") {
             navigate(`/movie/${item.id}`);
+            setResults([]); // clears results after we click on a movie
             return;
         }
 

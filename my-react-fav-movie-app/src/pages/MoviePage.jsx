@@ -29,7 +29,8 @@ function MoviePage() {
                 const movieData = {
                     title: data.title,
                     year: data.release_date ? data.release_date.slice(0,4) : "Release Data Unavailable",
-                    poster: data.poster_path ? `https://images.tmdb.org/t/p/original${data.poster_path}` : null
+                    poster: data.poster_path ? `https://images.tmdb.org/t/p/original${data.poster_path}` : null,
+                    summary: data.overview
                 };
 
                 // store the object in state
@@ -69,11 +70,14 @@ function MoviePage() {
                     ) : (
                         <p>No Poster Available</p>
                     )}
-                    {/* title + year elements */}
-                    <h1>
-                        {movie.title}
-                        {movie.year && <span>({movie.year})</span>}
-                    </h1>
+                    {/* title + year + summary elements */}
+                    <div className="movie-info">
+                        <h1>
+                            {movie.title}
+                            {movie.year && <span>({movie.year})</span>}
+                        </h1>
+                        <h2>{movie.summary}</h2>
+                    </div>
                 </div>
             )}
         </div>

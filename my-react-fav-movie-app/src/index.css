@@ -9,7 +9,7 @@ body {
 /* layout */
 .movie-app {
     padding: 24px;
-    max-width: 100vw;
+    max-width: 85%;
     margin: 0 auto;
 }
   
@@ -114,9 +114,18 @@ body {
 /* MOVIE PAGE STYLING */
 .movie-basic {
     display: flex;
+    align-items: center;
+    max-width: 85%;
+    margin: 25px;
 }
 
 .movie-poster {
     width: 275px;
     border-radius: 5px;
+}
+
+.movie-info {
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
 }
