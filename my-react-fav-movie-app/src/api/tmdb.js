@@ -35,5 +35,32 @@ async function searchMulti(query) {
     return data;
 }
 
+// async so we can use await and returns an object
+// our parameter is movieId which is what we use to get info on the movie selected
+async function getMovieDetails(movieId) {
+    // build our full request url
+    // ${base_url}/movie/${movieId} is the endpoint that searches across movies, tv and people
+    // ? starts the query parameters
+    // language=en-US returns english text
+    const url = `${base_url}/movie/${movieId}?` +
+    `language=en-US&&append_to_response=credits&api_key=${api}`;
+
+    // res is our response object, sends an http request to the tmdb
+    // await pauses until the response comes back
+    const res = await fetch(url);
+
+    // res.ok is true for status codes 200-299
+    // if res.ok is not true...
+    if (!res.ok) {
+        // if tmdb returns 401, 404, etc, we throw an error
+        throw new Error("TMDb movie details failed")
+    };
+
+    // converts the response body into a json, data becomes the parsed json
+    const data = await res.json();
+    // return the parsed json to whoever calls getMovieDetails
+    return data;
+}
+
 // exports function for other files to import
-export default searchMulti
+export {searchMulti, getMovieDetails}

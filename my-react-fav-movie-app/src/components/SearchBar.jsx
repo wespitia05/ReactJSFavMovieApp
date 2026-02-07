@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import searchMulti from "../api/tmdb";
+import {searchMulti} from "../api/tmdb";
 import {useNavigate} from "react-router-dom";
 
 function SearchBar() {
@@ -53,8 +53,8 @@ function SearchBar() {
 
     function handleResultClick(item) {
         if (item.media_type === "movie") {
-          navigate(`/movie/${item.id}`);
-          return;
+            navigate(`/movie/${item.id}`);
+            return;
         }
 
         console.log("TV clicked (route later):", item.id);
