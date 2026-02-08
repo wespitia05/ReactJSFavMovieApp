@@ -126,11 +126,11 @@ function MoviePage() {
                         <h1>{movie.title}</h1>
                         <h3>
                             {/* only render the year if it exists */}
-                            {movie.year && <span>{movie.year}</span>}
+                            {movie.year && <span><u>{movie.year}</u></span>}
                             {/* only show the bullet if both year and director exist */}
                             {movie.year && movie.director && <span> • </span>}
                             {/* renders the director text */}
-                            {movie.director && <span>Directed By {movie.director}</span>}
+                            {movie.director && <span>Directed By <u>{movie.director}</u></span>}
                         </h3>
                         <p>
                             {/* only render the runtime if it exists */}

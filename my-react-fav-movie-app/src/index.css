@@ -100,6 +100,7 @@ body {
 .results-title {
     font-size: 1.5rem;
     font-weight: 600;
+    transition: .25s ease;
 }
 
 .results-title:hover {
@@ -117,8 +118,6 @@ body {
     max-width: 85%;
     margin: 0 auto;
     display: flex;
-    flex-direction: column;
-    align-items: center;
 }
 
 .movie-poster {
@@ -129,6 +128,16 @@ body {
 .movie-info {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    margin: 10px;
+    align-items: flex-start;
+    justify-content: center;
+    margin: 60px 40px;
+}
+
+.movie-info u {
+    cursor: pointer;
+    transition: .25s ease;
+}
+
+.movie-info u:hover {
+    color: hsl(204, 92%, 55%);
 }
