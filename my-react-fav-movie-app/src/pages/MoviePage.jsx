@@ -25,6 +25,23 @@ function MoviePage() {
 
                 // get full movie data from tmdb
                 const data = await getMovieDetails(id);
+
+                // initialize directorName as an empty string
+                let directorName = "";
+
+                // only try to read crew if credits exists
+                if (data.credits && data.credits.crew) {
+                    // crew is an array of people, find returns first match where condition is true
+                    const director = data.credits.crew.find(
+                        (person) => person.job === "Director"
+                    );
+
+                    // if we found the director, set the name
+                    if (director) {
+                        directorName = director.name;
+                    }
+                }
+
                 // create object of movie data we want to display
                 const movieData = {
                     // pull movie title directly from tmbd
@@ -34,14 +51,16 @@ function MoviePage() {
                     // prepend image base url to tmdb path given, if poster doesn't exist return null
                     poster: data.poster_path ? `https://images.tmdb.org/t/p/original${data.poster_path}` : null,
                     // pull movie overview from tmdb
-                    summary: data.overview,
+                    summary: data.overview || "No Summary Available",
                     // pass the runtime through our helper function to format
                     runtime: formatRuntime(data.runtime),
                     // tmdb returns genres like this:
                     //      {id: 12, name: "Adventure"},
                     //      {id: 18, name: "Drama"}
                     // we just return the genre name only
-                    genre: data.genres ? data.genres.map((genre) => genre.name) : []
+                    genre: data.genres ? data.genres.map((genre) => genre.name) : [],
+                    // pass the directors name from tmdb
+                    director: directorName
                 };
 
                 // store the object in state
@@ -105,10 +124,20 @@ function MoviePage() {
                     {/* title + year + summary + runtime/genre elements */}
                     <div className="movie-info">
                         <h1>{movie.title}</h1>
-                        <h3>{movie.year && <span>{movie.year}</span>}</h3>
+                        <h3>
+                            {/* only render the year if it exists */}
+                            {movie.year && <span>{movie.year}</span>}
+                            {/* only show the bullet if both year and director exist */}
+                            {movie.year && movie.director && <span> • </span>}
+                            {/* renders the director text */}
+                            {movie.director && <span>Directed By {movie.director}</span>}
+                        </h3>
                         <p>
+                            {/* only render the runtime if it exists */}
                             {movie.runtime && <span>{movie.runtime}</span>}
+                            {/* only show bullet if noth runtime and genre exists */}
                             {movie.runtime && movie.genre.length > 0 && <span> • </span>}
+                            {/* if there is more than one genre, separate with a comma */}
                             {movie.genre.length > 0 && <span>{movie.genre.join(", ")}</span>}
                         </p>
                         <h3>{movie.summary}</h3>
