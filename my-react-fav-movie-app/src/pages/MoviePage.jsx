@@ -60,7 +60,8 @@ function MoviePage() {
                     // we just return the genre name only
                     genre: data.genres ? data.genres.map((genre) => genre.name) : [],
                     // pass the directors name from tmdb
-                    director: directorName
+                    director: directorName,
+                    tagline: data.tagline
                 };
 
                 // store the object in state
@@ -140,6 +141,7 @@ function MoviePage() {
                             {/* if there is more than one genre, separate with a comma */}
                             {movie.genre.length > 0 && <span>{movie.genre.join(", ")}</span>}
                         </p>
+                        <h3><i>{movie.tagline}</i></h3>
                         <h3>{movie.summary}</h3>
                     </div>
                 </div>
