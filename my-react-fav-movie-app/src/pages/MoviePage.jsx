@@ -27,10 +27,21 @@ function MoviePage() {
                 const data = await getMovieDetails(id);
                 // create object of movie data we want to display
                 const movieData = {
+                    // pull movie title directly from tmbd
                     title: data.title,
+                    // release_date looks like "2014-11-05", .slice(0,4) returns only first 4 indexes (2014). if not date, return msg
                     year: data.release_date ? data.release_date.slice(0,4) : "Release Data Unavailable",
+                    // prepend image base url to tmdb path given, if poster doesn't exist return null
                     poster: data.poster_path ? `https://images.tmdb.org/t/p/original${data.poster_path}` : null,
-                    summary: data.overview
+                    // pull movie overview from tmdb
+                    summary: data.overview,
+                    // pass the runtime through our helper function to format
+                    runtime: formatRuntime(data.runtime),
+                    // tmdb returns genres like this:
+                    //      {id: 12, name: "Adventure"},
+                    //      {id: 18, name: "Drama"}
+                    // we just return the genre name only
+                    genre: data.genres ? data.genres.map((genre) => genre.name) : []
                 };
 
                 // store the object in state
@@ -48,6 +59,27 @@ function MoviePage() {
                 setLoading(false); // stop loading
             }
         }
+
+        // this function will format the runtime
+        // our parameter will be minutes (ex. 90m -> 1h 30m)
+        function formatRuntime(minutes) {
+            // if min is null, undefined or missing, return msg
+            // prevents errors like "cannot read property of undefined"
+            if (!minutes && minutes !== 0) {
+                return "Runtime Not Available";
+            }
+
+            // divides total minutes by 60 and removes the decimal
+            // ex. 169 / 60 = 2.81 -> 2h
+            const hours = Math.floor(minutes / 60);
+            // modulo gives us the remainder of minutes not surpassing 60
+            // ex. 169 % 60 = 49m therefore, 2h 49m
+            const mins = minutes % 60;
+            
+            // if the movie is 1 hour or longer, show 2h 49m, otherwise show 45m
+            return hours ? `${hours}h ${mins}m` : `${mins}m`
+        }
+
         loadMovie();
     }, [id]);
 
@@ -70,13 +102,16 @@ function MoviePage() {
                     ) : (
                         <p>No Poster Available</p>
                     )}
-                    {/* title + year + summary elements */}
+                    {/* title + year + summary + runtime/genre elements */}
                     <div className="movie-info">
-                        <h1>
-                            {movie.title}
-                            {movie.year && <span>({movie.year})</span>}
-                        </h1>
-                        <h2>{movie.summary}</h2>
+                        <h1>{movie.title}</h1>
+                        <h3>{movie.year && <span>{movie.year}</span>}</h3>
+                        <p>
+                            {movie.runtime && <span>{movie.runtime}</span>}
+                            {movie.runtime && movie.genre.length > 0 && <span> • </span>}
+                            {movie.genre.length > 0 && <span>{movie.genre.join(", ")}</span>}
+                        </p>
+                        <h3>{movie.summary}</h3>
                     </div>
                 </div>
             )}
