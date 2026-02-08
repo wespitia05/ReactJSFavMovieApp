@@ -144,6 +144,21 @@ function MoviePage() {
                         <h3><i>{movie.tagline}</i></h3>
                         <h3>{movie.summary}</h3>
                     </div>
+                    <div className="movie-modal">
+                        <div className="movie-modal-content">
+                            <ul>
+                                <li>Rating: ⭐️⭐️⭐️⭐️⭐️</li>
+                                <hr />
+                                <li>Rated R</li>
+                                <hr />
+                                <li>Change Poster</li>
+                                <hr />
+                                <li>Change Backdrop</li>
+                                <hr />
+                                <li>Streaming</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             )}
         </div>
