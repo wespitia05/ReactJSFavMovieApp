@@ -168,6 +168,11 @@ function MoviePage() {
                             {movie.runtime && movie.genre.length > 0 && <span> • </span>}
                             {/* if there is more than one genre, separate with a comma */}
                             {movie.genre.length > 0 && <span>{movie.genre.join(", ")}</span>}
+                            {/* only show bullet if runtime, genre and rating exists */}
+                            {movie.runtime && movie.genre.length > 0 && movie.rating && <span> • </span>}
+                            {movie.rating && (
+                                <span className="movie-rating">{movie.rating}</span>
+                            )}
                         </p>
                         <h3><i>{movie.tagline}</i></h3>
                         <h3>{movie.summary}</h3>
