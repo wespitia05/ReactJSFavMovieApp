@@ -43,7 +43,7 @@ async function getMovieDetails(movieId) {
     // ? starts the query parameters
     // language=en-US returns english text
     const url = `${base_url}/movie/${movieId}?` +
-    `language=en-US&&append_to_response=credits&api_key=${api}`;
+    `language=en-US&append_to_response=credits,release_dates&api_key=${api}`;
 
     // res is our response object, sends an http request to the tmdb
     // await pauses until the response comes back

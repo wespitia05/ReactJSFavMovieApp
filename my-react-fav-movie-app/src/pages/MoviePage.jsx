@@ -39,6 +39,33 @@ function MoviePage() {
                     // if we found the director, set the name
                     if (director) {
                         directorName = director.name;
+                        console.log(`Director: ${directorName}`); // log for debugging
+                    }
+                }
+
+                // initialize certification as an empty string
+                let certification = "";
+
+                // only try if the release dates exist (certification exists in there)
+                if (data.release_dates && data.release_dates.results) {
+                    // results is an array of countries, we find our own by looping through
+                    // the array until we find the first match and we save it in usRelease constant
+                    const usRelease = data.release_dates.results.find(
+                        (rating) => rating.iso_3166_1 === "US"
+                    );
+
+                    // if we found the US entry AND that entry has a release_date array
+                    if (usRelease && usRelease.release_dates) {
+                        // loops through all US release entries and finds the first one that has a 
+                        // certification and its not an empty string, and saves it in the rated constant
+                        const rated = usRelease.release_dates.find(
+                            (d) => d.certification && d.certification.trim() !== ""
+                        );
+                        // if we found the valid rating, save it in our certification variable
+                        if (rated) {
+                            certification = rated.certification;
+                            console.log(`Rated: ${certification}`); // log for debugging
+                        }
                     }
                 }
 
@@ -61,7 +88,8 @@ function MoviePage() {
                     genre: data.genres ? data.genres.map((genre) => genre.name) : [],
                     // pass the directors name from tmdb
                     director: directorName,
-                    tagline: data.tagline
+                    tagline: data.tagline,
+                    rating: certification
                 };
 
                 // store the object in state
