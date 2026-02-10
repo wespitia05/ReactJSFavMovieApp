@@ -64,7 +64,7 @@ async function getMovieDetails(movieId) {
 
 // async so we can use await and returns an object
 // our parameter is movieId which is what we use to get the backdrop on the movie selected
-async function getBackdrop(movieId) {
+async function getImages(movieId) {
     // build our full request url
     // ${base_url}/movie/${movieId}/images is the endpoint that searches across movies, tv and people
     // ? starts the query parameters
@@ -82,7 +82,7 @@ async function getBackdrop(movieId) {
         // if tmdb returns 401, 404, etc, we throw an error
         throw new Error("TMDB Backdrop Imaged Failed");
     }
-    
+
     // converts the response body into a json, data becomes the parsed json
     const data = await res.json();
     // return the parsed json to whoever calls getMovieDetails
@@ -90,4 +90,4 @@ async function getBackdrop(movieId) {
 }
 
 // exports function for other files to import
-export {searchMulti, getMovieDetails, getBackdrop}
+export {searchMulti, getMovieDetails, getImages}
