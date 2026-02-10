@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import SearchBar from "../components/SearchBar";
-import { getMovieDetails } from "../api/tmdb";
+import { getMovieDetails, getBackdrop } from "../api/tmdb";
 
 function MoviePage() {
     // get the movie id from the url (/movie/:id)
@@ -13,6 +13,10 @@ function MoviePage() {
     const [loading, setLoading] = useState(true);
     // error stores any error messages
     const [error, setError] = useState("");
+    // backdrop will store the value of our backdrop based on the movie
+    const [backdrop, setBackdrop] = useState([]);
+    // backdropIndex will store the index of the backdrop based on its location in the array of backdrops
+    const [backdropIndex, setBackdropIndex] = useState(0);
 
     // this runs when the page loads or when the id changes
     useEffect(() => {
