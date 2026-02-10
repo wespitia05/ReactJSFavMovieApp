@@ -179,6 +179,16 @@ function MoviePage() {
             {loading && <p>Loading…</p>}
             {error && <p>{error}</p>}
 
+            {movie?.backdrop ? (
+                <img
+                    src={movie.backdrop}
+                    alt={`${movie?.title} backdrop`}
+                    className="movie-backdrop"
+                />
+            ) : (
+                <p>No Backdrop Available</p>
+            )}
+
             {!loading && !error && movie && (
                 <div className="movie-basic">
                     {/* poster element */}
