@@ -94,7 +94,20 @@ function MoviePage() {
 
                 // log for debugging
                 console.log("Backdrop Count: ", backdropList.length);
-                console.log("Poster Count: ", posterList.length)
+                console.log("Poster Count: ", posterList.length);
+
+                // accesses one poster object from the array, if the poster exists get its file_path otherwise return null
+                const currentPosterPath = posterList[posterIndex]?.file_path || null;
+                // if current poster path exists, prepend tmdb's image base url. otherwise return null
+                const currentPosterUrl = currentPosterPath
+                    ? `https://image.tmdb.org/t/p/original${currentPosterPath}`
+                    : null;
+                // accesses one backdrop object from the array, if the backdrop exists get its file_path otherwise return null
+                const currentBackdropPath = backdropList[backdropIndex]?.file_path || null;
+                // if current poster path exists, prepend tmdb's image base url. otherwise return null
+                const currentBackdropUrl = currentBackdropPath
+                    ? `https://image.tmdb.org/t/p/original${currentBackdropPath}`
+                    : null;
 
                 // create object of movie data we want to display
                 const movieData = {
@@ -103,7 +116,7 @@ function MoviePage() {
                     // release_date looks like "2014-11-05", .slice(0,4) returns only first 4 indexes (2014). if not date, return msg
                     year: data.release_date ? data.release_date.slice(0,4) : "Release Data Unavailable",
                     // prepend image base url to tmdb path given, if poster doesn't exist return null
-                    poster: data.poster_path ? `https://images.tmdb.org/t/p/original${data.poster_path}` : null,
+                    poster: currentPosterUrl,
                     // pull movie overview from tmdb
                     summary: data.overview || "No Summary Available",
                     // pass the runtime through our helper function to format
@@ -116,7 +129,8 @@ function MoviePage() {
                     // pass the directors name from tmdb
                     director: directorName,
                     tagline: data.tagline,
-                    rating: certification
+                    rating: certification,
+                    backdrop: currentBackdropUrl
                 };
 
                 // store the object in state
