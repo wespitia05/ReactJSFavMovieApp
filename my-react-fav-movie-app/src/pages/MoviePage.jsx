@@ -170,6 +170,7 @@ function MoviePage() {
                             {movie.genre.length > 0 && <span>{movie.genre.join(", ")}</span>}
                             {/* only show bullet if runtime, genre and rating exists */}
                             {movie.runtime && movie.genre.length > 0 && movie.rating && <span> • </span>}
+                            {/* only render the rating if it exists */}
                             {movie.rating && (
                                 <span className="movie-rating">{movie.rating}</span>
                             )}
@@ -181,8 +182,6 @@ function MoviePage() {
                         <div className="movie-modal-content">
                             <ul>
                                 <li>Rating: ⭐️⭐️⭐️⭐️⭐️</li>
-                                <hr />
-                                <li>Rated R</li>
                                 <hr />
                                 <li>Change Poster</li>
                                 <hr />
