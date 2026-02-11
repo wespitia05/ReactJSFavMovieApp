@@ -173,21 +173,13 @@ function MoviePage() {
     }, [id]);
 
     return (
-        <div className="movie-app">
+        <div className="movie-app" style={{
+            backgroundImage: movie?.backdrop ? `url(${movie.backdrop})` : "none",
+            }}>
             <SearchBar />
 
             {loading && <p>Loading…</p>}
             {error && <p>{error}</p>}
-
-            {movie?.backdrop ? (
-                <img
-                    src={movie.backdrop}
-                    alt={`${movie?.title} backdrop`}
-                    className="movie-backdrop"
-                />
-            ) : (
-                <p>No Backdrop Available</p>
-            )}
 
             {!loading && !error && movie && (
                 <div className="movie-basic">
