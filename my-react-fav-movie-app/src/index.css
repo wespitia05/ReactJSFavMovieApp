@@ -32,7 +32,19 @@ body {
     font-size: 1.25rem;
     border-radius: 6px;
     border: 2px solid white;
-    background-color: transparent;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 8px;
+    backdrop-filter: blur(8px);
+    color: white;
+}
+
+.search-input::placeholder {
+    color: white;
+}
+
+.search-input:hover {
+    background: rgba(255, 255, 255, 0.16);
 }
   
 .search-button {
@@ -98,7 +110,7 @@ body {
 }
 
 .results-item:hover {
-    background-color: #1c1c1c;
+    border: 1px solid white;
 }
 
 .results-title {
