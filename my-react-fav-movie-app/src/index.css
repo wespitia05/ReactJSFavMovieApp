@@ -8,12 +8,27 @@ body {
   
 /* layout */
 .movie-app {
+    position: relative;
     padding: 24px;
     max-width: 85%;
     margin: 0 auto;
+    z-index: 1;
+}
+
+.backdrop-container {
+    width: 100%;
+    height: 100vh;
     background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
+}
+
+.backdrop-container::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background: linear-gradient(to bottom, transparent, #0f0f0f);
 }
   
 /* SEARCH BAR STYLING */
@@ -132,7 +147,7 @@ body {
 .movie-basic {
     padding: 24px;
     max-width: 85%;
-    margin: 0 auto;
+    margin-top: 55vh;
     display: flex;
 }
 
