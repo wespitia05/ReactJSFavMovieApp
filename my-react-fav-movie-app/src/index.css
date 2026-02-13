@@ -165,6 +165,10 @@ body {
     margin: 30px;
 }
 
+.movie-info h1 {
+    font-size: 2.5rem;
+}
+
 .movie-info u {
     cursor: pointer;
     transition: .25s ease;
@@ -184,10 +188,9 @@ body {
 }
 
 .movie-modal {
-    display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0;
+    margin: 40px 0;
 }
 
 .movie-modal-content {

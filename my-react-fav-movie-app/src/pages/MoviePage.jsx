@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import SearchBar from "../components/SearchBar";
 import { getMovieDetails, getImages } from "../api/tmdb";
+import CastList from "../components/CastList";
 
 function MoviePage() {
     // get the movie id from the url (/movie/:id)
@@ -130,7 +131,8 @@ function MoviePage() {
                     director: directorName,
                     tagline: data.tagline,
                     rating: certification,
-                    backdrop: currentBackdropUrl
+                    backdrop: currentBackdropUrl,
+                    cast:data.credits?.cast || []
                 };
 
                 // store the object in state
@@ -184,60 +186,63 @@ function MoviePage() {
                     {error && <p>{error}</p>}
 
                     {!loading && !error && movie && (
-                        <div className="movie-basic">
-                            {/* poster element */}
-                            {movie.poster ? (
-                                <img
-                                    src={movie.poster}
-                                    alt={`${movie.title} poster`}
-                                    className="movie-poster"
-                                />
-                            ) : (
-                                <p>No Poster Available</p>
-                            )}
-                            {/* title + year + summary + runtime/genre elements */}
-                            <div className="movie-info">
-                                <h1>{movie.title}</h1>
-                                <h3>
-                                    {/* only render the year if it exists */}
-                                    {movie.year && <span><u>{movie.year}</u></span>}
-                                    {/* only show the bullet if both year and director exist */}
-                                    {movie.year && movie.director && <span> • </span>}
-                                    {/* renders the director text */}
-                                    {movie.director && <span>Directed By <u>{movie.director}</u></span>}
-                                </h3>
-                                <p>
-                                    {/* only render the runtime if it exists */}
-                                    {movie.runtime && <span>{movie.runtime}</span>}
-                                    {/* only show bullet if noth runtime and genre exists */}
-                                    {movie.runtime && movie.genre.length > 0 && <span> • </span>}
-                                    {/* if there is more than one genre, separate with a comma */}
-                                    {movie.genre.length > 0 && <span>{movie.genre.join(", ")}</span>}
-                                    {/* only show bullet if runtime, genre and rating exists */}
-                                    {movie.runtime && movie.genre.length > 0 && movie.rating && <span> • </span>}
-                                    {/* only render the rating if it exists */}
-                                    {movie.rating && (
-                                        <span className="movie-rating">{movie.rating}</span>
-                                    )}
-                                </p>
-                                <h3><i>{movie.tagline}</i></h3>
-                                <h3>{movie.summary}</h3>
-                            </div>
-                            <div className="movie-modal">
-                                <div className="movie-modal-content">
-                                    <ul>
-                                        <li>Rating: ⭐️⭐️⭐️⭐️⭐️</li>
-                                        <hr />
-                                        <li>Change Poster</li>
-                                        <hr />
-                                        <li>Change Backdrop</li>
-                                        <hr />
-                                        <li>Streaming</li>
-                                    </ul>
+                        <>
+                            <div className="movie-basic">
+                                {/* poster element */}
+                                {movie.poster ? (
+                                    <img
+                                        src={movie.poster}
+                                        alt={`${movie.title} poster`}
+                                        className="movie-poster"
+                                    />
+                                ) : (
+                                    <p>No Poster Available</p>
+                                )}
+                                {/* title + year + summary + runtime/genre elements */}
+                                <div className="movie-info">
+                                    <h1>{movie.title}</h1>
+                                    <h3>
+                                        {/* only render the year if it exists */}
+                                        {movie.year && <span><u>{movie.year}</u></span>}
+                                        {/* only show the bullet if both year and director exist */}
+                                        {movie.year && movie.director && <span> • </span>}
+                                        {/* renders the director text */}
+                                        {movie.director && <span>Directed By <u>{movie.director}</u></span>}
+                                    </h3>
+                                    <p>
+                                        {/* only render the runtime if it exists */}
+                                        {movie.runtime && <span>{movie.runtime}</span>}
+                                        {/* only show bullet if noth runtime and genre exists */}
+                                        {movie.runtime && movie.genre.length > 0 && <span> • </span>}
+                                        {/* if there is more than one genre, separate with a comma */}
+                                        {movie.genre.length > 0 && <span>{movie.genre.join(", ")}</span>}
+                                        {/* only show bullet if runtime, genre and rating exists */}
+                                        {movie.runtime && movie.genre.length > 0 && movie.rating && <span> • </span>}
+                                        {/* only render the rating if it exists */}
+                                        {movie.rating && (
+                                            <span className="movie-rating">{movie.rating}</span>
+                                        )}
+                                    </p>
+                                    <h3><i>{movie.tagline}</i></h3>
+                                    <h3>{movie.summary}</h3>
+                                    <CastList cast={movie.cast} />
+                                </div>
+                                <div className="movie-modal">
+                                    <div className="movie-modal-content">
+                                        <ul>
+                                            <li>Rating: ⭐️⭐️⭐️⭐️⭐️</li>
+                                            <hr />
+                                            <li>Change Poster</li>
+                                            <hr />
+                                            <li>Change Backdrop</li>
+                                            <hr />
+                                            <li>Streaming</li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    )}
+                        </>
+                    )}                   
                 </div>
             </div>
         </>
