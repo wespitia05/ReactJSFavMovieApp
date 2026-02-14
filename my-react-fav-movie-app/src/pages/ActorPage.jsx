@@ -15,7 +15,10 @@ function ActorPage() {
     const [error, setError] = useState("");
     // profileUrl will store the value of the actors profile image
     const [profileUrl, setProfileUrl] = useState(null);
+    // bio will store the biography of the selected actor
     const [bio, setBio] = useState("");
+    // movies will store the movies the actor has been in
+    const [movies, setMovies] = useState([]);
 
     // this runs when the page loads or when the id changes
     useEffect(() => {
@@ -46,6 +49,13 @@ function ActorPage() {
                 // log for debugging
                 console.log("Movies " + data.name + " has starred in: ", credits.cast);
                 console.log("Movies " + data.name + " has worked on: ", credits.crew);
+
+                // only movies the actor has acted in
+                const actorMovies = credits.cast || [];
+                // only movies the actor has worked on
+                const crewMovies = credits.crew || [];
+
+                setMovies(actorMovies);
             }
             // catch any errors
             catch (err) {
@@ -79,6 +89,13 @@ function ActorPage() {
                             <div className="actor-films">
                                 <p>Films Starring</p>
                                 <h1>{actor}</h1>
+                                <ul>
+                                    {movies.map((movie) => (
+                                        <li key={movie.id}>
+                                        {movie.title}
+                                        </li>
+                                    ))}
+                                </ul>
                             </div>
                             <div className="actor-info">
                                 <p>Biography</p>
