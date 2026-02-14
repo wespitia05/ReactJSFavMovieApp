@@ -15,6 +15,7 @@ function ActorPage() {
     const [error, setError] = useState("");
     // profileUrl will store the value of the actors profile image
     const [profileUrl, setProfileUrl] = useState(null);
+    const [bio, setBio] = useState("");
 
     // this runs when the page loads or when the id changes
     useEffect(() => {
@@ -27,15 +28,18 @@ function ActorPage() {
 
                 // get full actor data from tmdb
                 const data = await getActorDetails(id);
+                // log for debugging
+                // console.log(data);
+
                 // store the object in state
                 setActor(data.name);
+                setBio(data.biography || "No biography available.");
+
                 // url will extract the path to the actors image profile and set it
                 const url = data.profile_path
                     ? `https://image.tmdb.org/t/p/original${data.profile_path}`
                     : null;
                 setProfileUrl(url);
-                // check in console if actor name is extracted properly
-                // console.log("Actor Name: ", data.name);
             }
             // catch any errors
             catch (err) {
@@ -69,6 +73,9 @@ function ActorPage() {
                             <div className="actor-films">
                                 <p>Films Starring</p>
                                 <h1>{actor}</h1>
+                            </div>
+                            <div className="actor-info">
+                                <p>{bio}</p>
                             </div>                          
                         </div>
                     </>

@@ -55,6 +55,7 @@ body {
 
 .search-input::placeholder {
     color: white;
+    font-family: monospace;
 }
 
 .search-input:hover {
