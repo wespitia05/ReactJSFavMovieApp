@@ -39,7 +39,7 @@ async function searchMulti(query) {
 // our parameter is movieId which is what we use to get info on the movie selected
 async function getMovieDetails(movieId) {
     // build our full request url
-    // ${base_url}/movie/${movieId} is the endpoint that searches across movies, tv and people
+    // ${base_url}/movie/${movieId} is the endpoint that searches across movies
     // ? starts the query parameters
     // language=en-US returns english text
     const url = `${base_url}/movie/${movieId}?` +
@@ -53,7 +53,7 @@ async function getMovieDetails(movieId) {
     // if res.ok is not true...
     if (!res.ok) {
         // if tmdb returns 401, 404, etc, we throw an error
-        throw new Error("TMDb movie details failed")
+        throw new Error("TMDB movie details failed")
     };
 
     // converts the response body into a json, data becomes the parsed json
@@ -66,7 +66,7 @@ async function getMovieDetails(movieId) {
 // our parameter is movieId which is what we use to get the backdrop on the movie selected
 async function getImages(movieId) {
     // build our full request url
-    // ${base_url}/movie/${movieId}/images is the endpoint that searches across movies, tv and people
+    // ${base_url}/movie/${movieId}/images is the endpoint that searches across movie images
     // ? starts the query parameters
     // language=en-US returns english text
     const url = `${base_url}/movie/${movieId}/images?` +
@@ -80,7 +80,32 @@ async function getImages(movieId) {
     // if res.ok is not true...
     if (!res.ok) {
         // if tmdb returns 401, 404, etc, we throw an error
-        throw new Error("TMDB Backdrop Imaged Failed");
+        throw new Error("TMDB backdrop images failed");
+    }
+
+    // converts the response body into a json, data becomes the parsed json
+    const data = await res.json();
+    // return the parsed json to whoever calls getMovieDetails
+    return data;
+}
+
+// async so we can use await and returns an object
+// our parameter is actorId which is what we use to get information on the actor that was selected
+async function getActorDetails(actorId) {
+    // build our full request url
+    // ${base_url}/movie/${actorId} is the endpoint that searches across people
+    // ? starts the query parameters
+    // language=en-US returns english text
+    const url = `${base_url}/person/${actorId}?language=en-US&api_key=${api}`;
+    // res is our response object, sends an http request to the tmdb
+    // await pauses until the response comes back
+    const res = await fetch(url);
+
+    // res.ok is true for status codes 200-299
+    // if res.ok is not true...
+    if (!res.ok) {
+        // if tmdb returns 401, 404, etc, we throw an error
+        throw new Error("TMDB actor details failed");
     }
 
     // converts the response body into a json, data becomes the parsed json
