@@ -75,7 +75,8 @@ function ActorPage() {
                                 <h1>{actor}</h1>
                             </div>
                             <div className="actor-info">
-                                <p>{bio}</p>
+                                <p>Biography</p>
+                                <h4>{bio}</h4>
                             </div>                          
                         </div>
                     </>
