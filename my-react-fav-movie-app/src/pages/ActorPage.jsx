@@ -136,13 +136,15 @@ function ActorPage() {
                                 <p>Films Starring</p>
                                 <h1>{actor}</h1>
                                 {/* actor job drop down */}
-                                <select value={selectedJob} onChange={(event) => setSelectedJob(event.target.value)}>
-                                    {jobOptions.map((role) => (
-                                        <option key={role} value={role}>
-                                            {role}
-                                        </option>
-                                    ))}
-                                </select>
+                                <div className="role-select-container">
+                                    <select value={selectedJob} onChange={(event) => setSelectedJob(event.target.value)} className="role-select">
+                                        {jobOptions.map((role) => (
+                                            <option key={role} value={role}>
+                                                {role}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
                                 <ul>
                                     {selectedJob === "Acting" ? actorMovies.map((movie) => (
                                         <li key={`${selectedJob} - ${movie.id}`}>

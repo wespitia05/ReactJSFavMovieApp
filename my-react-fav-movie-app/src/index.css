@@ -346,6 +346,9 @@ body {
 
 .actor-films h1 {
     margin-top: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    padding-bottom: 8px;
+    width: 100%;
 }
 
 .actor-films p {
@@ -374,4 +377,22 @@ body {
     font-weight: lighter;
     overflow: hidden;
     white-space: pre-line;
+}
+
+.role-select-container {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    padding-bottom: 8px;
+    width: 100%;
+}
+
+.role-select {
+    font-family: monospace;
+    background: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+.role-select:focus {
+    outline: none;
 }
