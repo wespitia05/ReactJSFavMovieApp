@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import SearchBar from "../components/SearchBar";
-import { getActorDetails } from "../api/tmdb";
+import { getActorDetails, getActorMovies } from "../api/tmdb";
 
 function ActorPage() {
     // get the actor id from the url (/actor/:id)
@@ -29,7 +29,7 @@ function ActorPage() {
                 // get full actor data from tmdb
                 const data = await getActorDetails(id);
                 // log for debugging
-                console.log(data);
+                // console.log(data);
 
                 // store the object in state
                 setActor(data.name);
@@ -40,6 +40,12 @@ function ActorPage() {
                     ? `https://image.tmdb.org/t/p/original${data.profile_path}`
                     : null;
                 setProfileUrl(url);
+
+                // get list of movies selected actor has been in
+                const credits = await getActorMovies(id);
+                // log for debugging
+                console.log("Movies " + data.name + " has starred in: ", credits.cast);
+                console.log("Movies " + data.name + " has worked on: ", credits.crew);
             }
             // catch any errors
             catch (err) {
