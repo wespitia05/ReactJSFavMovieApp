@@ -93,7 +93,7 @@ async function getImages(movieId) {
 // our parameter is actorId which is what we use to get information on the actor that was selected
 async function getActorDetails(actorId) {
     // build our full request url
-    // ${base_url}/movie/${actorId} is the endpoint that searches across people
+    // ${base_url}/person/${actorId} is the endpoint that searches across people
     // ? starts the query parameters
     // language=en-US returns english text
     const url = `${base_url}/person/${actorId}?language=en-US&api_key=${api}`;
@@ -114,5 +114,31 @@ async function getActorDetails(actorId) {
     return data;
 }
 
+// async so we can use await and returns an object
+// our parameter is actorId which is what we use to get information on the actor that was selected
+async function getActorMovies(actorId) {
+    // build our full request url
+    // ${base_url}/person/${actorId}/movie_credits is the endpoint that searches across movies actors have been in
+    // ? starts the query parameters
+    // language=en-US returns english text
+    const url = `${base_url}/person/${actorId}/movie_credits?language=en-US&api_key=${api}`;
+
+    // res is our response object, sends an http request to the tmdb
+    // await pauses until the response comes back
+    const res = await fetch(url);
+
+    // res.ok is true for status codes 200-299
+    // if res.ok is not true...
+    if (!res.ok) {
+        // if tmdb returns 401, 404, etc, we throw an error
+        throw new Error("TMDB actor details failed");
+    }
+
+    // converts the response body into a json, data becomes the parsed json
+    const data = await res.json();
+    // return the parsed json to whoever calls getMovieDetails
+    return data;
+}
+
 // exports function for other files to import
-export {searchMulti, getMovieDetails, getImages, getActorDetails}
+export {searchMulti, getMovieDetails, getImages, getActorDetails, getActorMovies}

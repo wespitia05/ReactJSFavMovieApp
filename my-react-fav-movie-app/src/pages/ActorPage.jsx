@@ -29,7 +29,7 @@ function ActorPage() {
                 // get full actor data from tmdb
                 const data = await getActorDetails(id);
                 // log for debugging
-                // console.log(data);
+                console.log(data);
 
                 // store the object in state
                 setActor(data.name);
