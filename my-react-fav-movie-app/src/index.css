@@ -186,6 +186,7 @@ body {
     line-height: 1;
 }
 
+/* MOVIE MODAL STYLING */
 .movie-modal {
     justify-content: center;
     align-items: center;
@@ -228,6 +229,7 @@ body {
     margin: 6px 0;
 }
 
+/* MOVIE TABS STYLING */
 .movie-tabs {
     display: flex;
     gap: 18px;
@@ -262,6 +264,7 @@ body {
     font-size: 0.9rem;
 }
 
+/* CAST LIST STYLING */
 .cast-list {
     list-style: none;
     padding: 0;
@@ -289,4 +292,32 @@ body {
 .cast-character {
     opacity: 0.9;
     margin-left: 5px;
+}
+
+/* CREW LIST STYLING */
+.crew-list {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 5px 40px;
+}
+
+.crew-item {
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.crew-job {
+    font-size: 1rem;
+}
+
+.crew-person {
+    font-weight: bold;
+    cursor: pointer;
+    transition: .25s ease;
+}
+
+.crew-person:hover {
+    color: hsl(204, 92%, 55%);
 }

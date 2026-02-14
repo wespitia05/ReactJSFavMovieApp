@@ -1,13 +1,13 @@
 // this function will return the crew member list
 function CrewList({crew = []}) {
     // show only important roles
-    const jobs = ["Director", "Producer", "Executive Producer", "Writer", "Casting", "Editor", "Cinematography", 
+    const jobs = ["Director", "Producer", "Executive Producer", "Writer", "Casting", "Editor", "Director of Photography", 
                   "Screenplay", "Original Writer", "Novel",  "Original Music Composer", "Costume Design", 
                   "Sound Designer", "Visual Effects Supervisor", "Visual Effects Producer", "Lighting", 
                   "Production Design"];
 
     // log for debugging, prints jobs of all crew members              
-    // console.log([...new Set(crew.map((p) => p.job))]);
+    console.log([...new Set(crew.map((p) => p.job))]);
 
     // filter through and only get the names of the crew members we want
     const filterJobs = crew.filter((person) => jobs.includes(person.job));
@@ -47,9 +47,16 @@ function CrewList({crew = []}) {
         <div className="crew">
             <ul className="crew-list">
                 {rows.map(([job, names]) => (
-                    <li key={job} className="crew-items">
-                        <span className="crew-job">{job}</span>
-                        <span className="crew-name">{names.join(", ")}</span>
+                    <li key={job} className="crew-item">
+                        <span className="crew-job">{job}: </span>
+                        <span className="crew-name">
+                        {names.map((name, index) => (
+                            <span key={name} className="crew-person">
+                                {name}
+                                {index < names.length - 1 && ", "}
+                            </span>
+                        ))}
+                        </span>
                     </li>
                 ))}
             </ul>
