@@ -19,6 +19,12 @@ function ActorPage() {
     const [bio, setBio] = useState("");
     // movies will store the movies the actor has been in
     const [movies, setMovies] = useState([]);
+    // crewMovies will store the movies the actor has worked on
+    const [crewMovies, setCrewMovies] = useState({}); // {"Producer": [movies...], "Executive Producer": [movies...]}
+    // jobOptions will store the different job available for selected actor
+    const [jobOptions, setJobOptions] = useState([]); // ["Acting", "Producer", ...]
+    // selectedJob will store the current selected job to be displayed
+    const [selectedJob, setSelectedJob] = useState("Acting");
 
     // this runs when the page loads or when the id changes
     useEffect(() => {
@@ -52,10 +58,31 @@ function ActorPage() {
 
                 // only movies the actor has acted in
                 const actorMovies = credits.cast || [];
-                // only movies the actor has worked on
-                const crewMovies = credits.crew || [];
-
+                // store the object in state
                 setMovies(actorMovies);
+
+                // only movies the actor has worked on
+                const actorCrewMovies = credits.crew || [];
+                const group = {}; // job -> array of movies
+
+                actorCrewMovies.forEach((item) => {
+                    const job = item.job;
+                    if (!job) {
+                        return null;
+                    }
+
+                    if (!group[job]) {
+                        group[job] = [];
+                    }
+
+                    if (!group[job].some((dup) => dup.id === item.id)) {
+                        group[job].push(item);
+                    }
+                });
+                // store object in state
+                setCrewMovies(group);
+                // log for debugging
+                console.log(group);
             }
             // catch any errors
             catch (err) {
