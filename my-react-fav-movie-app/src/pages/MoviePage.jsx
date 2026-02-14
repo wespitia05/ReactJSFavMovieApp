@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import SearchBar from "../components/SearchBar";
 import { getMovieDetails, getImages } from "../api/tmdb";
 import CastList from "../components/CastList";
+import CrewList from "../components/CrewList";
 
 function MoviePage() {
     // get the movie id from the url (/movie/:id)
@@ -134,7 +135,8 @@ function MoviePage() {
                     tagline: data.tagline,
                     rating: certification,
                     backdrop: currentBackdropUrl,
-                    cast:data.credits?.cast || []
+                    cast: data.credits?.cast || [],
+                    crew: data.credits?.crew || []
                 };
 
                 // store the object in state
@@ -254,7 +256,7 @@ function MoviePage() {
                                     {/* this will determine what content is being displayed when the tab is active */}
                                     <div className="movie-tab-content">
                                         {activeTab === "cast" && <CastList cast={movie.cast} />}
-                                        {activeTab === "crew" && <p>Coming next: crew list</p>}
+                                        {activeTab === "crew" && <CrewList crew={movie.crew} />}
                                         {activeTab === "details" && <p>Coming next: runtime, rating, language, etc.</p>}
                                         {activeTab === "genres" && <p>{movie.genre?.join(", ")}</p>}
                                         {activeTab === "releases" && <p>Coming next: release dates + certifications</p>}
