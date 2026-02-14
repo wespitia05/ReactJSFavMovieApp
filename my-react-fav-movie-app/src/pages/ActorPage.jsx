@@ -35,7 +35,7 @@ function ActorPage() {
                     : null;
                 setProfileUrl(url);
                 // check in console if actor name is extracted properly
-                console.log("Actor Name: ", data.name);
+                // console.log("Actor Name: ", data.name);
             }
             // catch any errors
             catch (err) {
@@ -59,15 +59,19 @@ function ActorPage() {
                 {error && <p>{error}</p>}
 
                 {!loading && !error && (
-                    <div>
-                        {profileUrl ? (
-                            <img src={profileUrl} alt={`${actor} profile`} />
-                        ) : (
-                            <p>No profile image available.</p>
-                        )}
-
-                        <h1>{actor}</h1>
-                    </div>
+                    <>
+                        <div className="actor-basic">
+                            {profileUrl ? (
+                                <img src={profileUrl} alt={`${actor} profile`} className="actor-profile-img"/>
+                            ) : (
+                                <p>No profile image available.</p>
+                            )}
+                            <div className="actor-films">
+                                <p>Films Starring</p>
+                                <h1>{actor}</h1>
+                            </div>                          
+                        </div>
+                    </>
                 )}
             </div>
         </>

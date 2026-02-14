@@ -321,3 +321,34 @@ body {
 .crew-person:hover {
     color: hsl(204, 92%, 55%);
 }
+
+/* ACTOR PAGE STYLING */
+.actor-basic {
+    padding: 24px;
+    max-width: 85%;
+    display: flex;
+}
+
+.actor-profile-img {
+    width: 325px;
+    height: 100%;
+    border-radius: 5px;
+}
+
+.actor-films {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 0 30px;
+}
+
+.actor-films h1 {
+    margin-top: 0;
+}
+
+.actor-films p {
+    font-size: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    padding-bottom: 8px;
+    width: 100%;
+}

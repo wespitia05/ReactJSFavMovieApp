@@ -51,7 +51,7 @@ function MoviePage() {
                     // if we found the director, set the name
                     if (director) {
                         directorName = director.name;
-                        console.log(`Director: ${directorName}`); // log for debugging
+                        // console.log(`Director: ${directorName}`); // log for debugging
                     }
                 }
 
@@ -76,7 +76,7 @@ function MoviePage() {
                         // if we found the valid rating, save it in our certification variable
                         if (rated) {
                             certification = rated.certification;
-                            console.log(`Rated: ${certification}`); // log for debugging
+                            // console.log(`Rated: ${certification}`); // log for debugging
                         }
                     }
                 }
@@ -97,8 +97,8 @@ function MoviePage() {
                 setPosterIndex(0);
 
                 // log for debugging
-                console.log("Backdrop Count: ", backdropList.length);
-                console.log("Poster Count: ", posterList.length);
+                // console.log("Backdrop Count: ", backdropList.length);
+                // console.log("Poster Count: ", posterList.length);
 
                 // accesses one poster object from the array, if the poster exists get its file_path otherwise return null
                 const currentPosterPath = posterList[posterIndex]?.file_path || null;
