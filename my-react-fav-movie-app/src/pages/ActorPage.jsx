@@ -18,7 +18,7 @@ function ActorPage() {
     // bio will store the biography of the selected actor
     const [bio, setBio] = useState("");
     // movies will store the movies the actor has been in
-    const [movies, setMovies] = useState([]);
+    const [actorMovies, setActorMovies] = useState([]);
     // crewMovies will store the movies the actor has worked on
     const [crewMovies, setCrewMovies] = useState({}); // {"Producer": [movies...], "Executive Producer": [movies...]}
     // jobOptions will store the different job available for selected actor
@@ -59,22 +59,29 @@ function ActorPage() {
                 // only movies the actor has acted in
                 const actorMovies = credits.cast || [];
                 // store the object in state
-                setMovies(actorMovies);
+                setActorMovies(actorMovies);
 
                 // only movies the actor has worked on
                 const actorCrewMovies = credits.crew || [];
                 const group = {}; // job -> array of movies
 
+                // loop through each movie the actor has under their name
                 actorCrewMovies.forEach((item) => {
+                    // job constant will extract the job title
                     const job = item.job;
+
+                    // if a movie has no job defined, return null
                     if (!job) {
                         return null;
                     }
 
+                    // create job group if it doesn't exist
                     if (!group[job]) {
                         group[job] = [];
                     }
 
+                    // check if the job already contains a movie with this id
+                    // if not, we push it
                     if (!group[job].some((dup) => dup.id === item.id)) {
                         group[job].push(item);
                     }
@@ -82,7 +89,19 @@ function ActorPage() {
                 // store object in state
                 setCrewMovies(group);
                 // log for debugging
-                console.log(group);
+                // console.log(group);
+
+                // always include Acting + all unique crew jobs
+                const crewJobs = Object.keys(group).sort();
+                // create the array of options
+                const options = ["Acting", ...crewJobs];
+                // store object in state
+                setJobOptions(options);
+
+                // keep selectedRole valid if actor has no crew roles
+                if (selectedJob !== "Acting" && !group[selectedRole]) {
+                setSelectedJob("Acting");
+                }
             }
             // catch any errors
             catch (err) {
@@ -116,11 +135,22 @@ function ActorPage() {
                             <div className="actor-films">
                                 <p>Films Starring</p>
                                 <h1>{actor}</h1>
+                                {/* actor job drop down */}
+                                <select value={selectedJob} onChange={(event) => setSelectedJob(event.target.value)}>
+                                    {jobOptions.map((role) => (
+                                        <option key={role} value={role}>
+                                            {role}
+                                        </option>
+                                    ))}
+                                </select>
                                 <ul>
-                                    {movies.map((movie) => (
-                                        <li key={movie.id}>
-                                        {movie.title}
+                                    {selectedJob === "Acting" ? actorMovies.map((movie) => (
+                                        <li key={`${selectedJob} - ${movie.id}`}>
+                                            {movie.title}
                                         </li>
+                                    ))
+                                    : (crewMovies[selectedJob] || []).map((movie) => (
+                                        <li>{movie.title}</li>
                                     ))}
                                 </ul>
                             </div>
