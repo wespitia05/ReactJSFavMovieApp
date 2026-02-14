@@ -115,4 +115,4 @@ async function getActorDetails(actorId) {
 }
 
 // exports function for other files to import
-export {searchMulti, getMovieDetails, getImages}
+export {searchMulti, getMovieDetails, getImages, getActorDetails}

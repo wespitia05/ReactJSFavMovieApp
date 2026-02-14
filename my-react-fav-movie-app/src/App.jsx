@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MainPage from "./pages/MainPage";
 import MoviePage from "./pages/MoviePage.jsx";
 import SearchResults from "./pages/SearchResults.jsx";
+import ActorPage from "./pages/ActorPage.jsx";
 
 function App() {
     return (

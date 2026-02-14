@@ -45,7 +45,14 @@ function ActorPage() {
 
     return(
         <>
-            <p>hello {actor.name}</p>
+            <div className="movie-app">
+                <SearchBar />
+
+                {loading && <p>Loading…</p>}
+                {error && <p>{error}</p>}
+
+                {!loading && !error && <h1>{actor}</h1>}
+            </div>
         </>
     );
 }
