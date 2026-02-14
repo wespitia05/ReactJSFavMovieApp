@@ -13,6 +13,8 @@ function ActorPage() {
     const [loading, setLoading] = useState(true);
     // error stores any error messages
     const [error, setError] = useState("");
+    // profileUrl will store the value of the actors profile image
+    const [profileUrl, setProfileUrl] = useState(null);
 
     // this runs when the page loads or when the id changes
     useEffect(() => {
@@ -27,8 +29,13 @@ function ActorPage() {
                 const data = await getActorDetails(id);
                 // store the object in state
                 setActor(data.name);
-                // check in console if actor data is extracted properly
-                console.log("Actor Data: ", data.name);
+                // url will extract the path to the actors image profile and set it
+                const url = data.profile_path
+                    ? `https://image.tmdb.org/t/p/original${data.profile_path}`
+                    : null;
+                setProfileUrl(url);
+                // check in console if actor name is extracted properly
+                console.log("Actor Name: ", data.name);
             }
             // catch any errors
             catch (err) {
@@ -51,7 +58,17 @@ function ActorPage() {
                 {loading && <p>Loading…</p>}
                 {error && <p>{error}</p>}
 
-                {!loading && !error && <h1>{actor}</h1>}
+                {!loading && !error && (
+                    <div>
+                        {profileUrl ? (
+                            <img src={profileUrl} alt={`${actor} profile`} />
+                        ) : (
+                            <p>No profile image available.</p>
+                        )}
+
+                        <h1>{actor}</h1>
+                    </div>
+                )}
             </div>
         </>
     );
