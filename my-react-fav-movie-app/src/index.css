@@ -238,3 +238,21 @@ body {
     padding-bottom: 8px;
     width: 100%;
 }
+
+.movie-tab {
+    background: transparent;
+    border: none;
+    color: rgb(0, 255, 187);
+    font-size: 1.4rem;
+    cursor: pointer;
+}
+
+.movie-tab:hover {
+    transform: scale(1.05);
+    text-decoration: underline;
+}
+
+.movie-tab.active {
+    color: white;
+    text-decoration: underline;
+}
