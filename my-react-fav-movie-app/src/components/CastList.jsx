@@ -10,8 +10,6 @@ function CastList({cast = []}) {
 
     return(
         <div className="cast">
-            <h2 className="cast-title">Cast</h2>
-
             <ul className="cast-list">
                 {topCast.map((person) => (
                     <li key={person.id} className="cast-item">

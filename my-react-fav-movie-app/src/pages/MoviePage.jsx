@@ -227,6 +227,38 @@ function MoviePage() {
                                     </p>
                                     <h3><i>{movie.tagline}</i></h3>
                                     <h3>{movie.summary}</h3>
+                                    <div className="movie-tabs">
+                                        {/* these tab buttons control what is currently being displayed */}
+                                        <button
+                                            className={`movie-tab ${activeTab === "cast" ? "active" : ""}`}
+                                            onClick={() => setActiveTab("cast")}
+                                            type="button">Cast</button>
+                                        <button
+                                            className={`movie-tab ${activeTab === "crew" ? "active" : ""}`}
+                                            onClick={() => setActiveTab("crew")}
+                                            type="button">Crew</button>
+                                        <button
+                                            className={`movie-tab ${activeTab === "details" ? "active" : ""}`}
+                                            onClick={() => setActiveTab("details")}
+                                            type="button">Details</button>
+                                        <button
+                                            className={`movie-tab ${activeTab === "genres" ? "active" : ""}`}
+                                            onClick={() => setActiveTab("genres")}
+                                            type="button">Genres</button>
+
+                                        <button
+                                            className={`movie-tab ${activeTab === "releases" ? "active" : ""}`}
+                                            onClick={() => setActiveTab("releases")}
+                                            type="button">Releases</button>
+                                    </div>
+                                    {/* this will determine what content is being displayed when the tab is active */}
+                                    <div className="movie-tab-content">
+                                        {activeTab === "cast" && <CastList cast={movie.cast} />}
+                                        {activeTab === "crew" && <p>Coming next: crew list</p>}
+                                        {activeTab === "details" && <p>Coming next: runtime, rating, language, etc.</p>}
+                                        {activeTab === "genres" && <p>{movie.genre?.join(", ")}</p>}
+                                        {activeTab === "releases" && <p>Coming next: release dates + certifications</p>}
+                                    </div>
                                 </div>
                                 <div className="movie-modal">
                                     <div className="movie-modal-content">
@@ -241,38 +273,6 @@ function MoviePage() {
                                         </ul>
                                     </div>
                                 </div>
-                            </div>
-                            <div className="movie-tabs">
-                                {/* these tab buttons control what is currently being displayed */}
-                                <button
-                                    className={`movie-tab ${activeTab === "cast" ? "active" : ""}`}
-                                    onClick={() => setActiveTab("cast")}
-                                    type="button">Cast</button>
-                                <button
-                                    className={`movie-tab ${activeTab === "crew" ? "active" : ""}`}
-                                    onClick={() => setActiveTab("crew")}
-                                    type="button">Crew</button>
-                                <button
-                                    className={`movie-tab ${activeTab === "details" ? "active" : ""}`}
-                                    onClick={() => setActiveTab("details")}
-                                    type="button">Details</button>
-                                <button
-                                    className={`movie-tab ${activeTab === "genres" ? "active" : ""}`}
-                                    onClick={() => setActiveTab("genres")}
-                                    type="button">Genres</button>
-
-                                <button
-                                    className={`movie-tab ${activeTab === "releases" ? "active" : ""}`}
-                                    onClick={() => setActiveTab("releases")}
-                                    type="button">Releases</button>
-                            </div>
-                            {/* this will determine what content is being displayed when the tab is active */}
-                            <div className="movie-tab-content">
-                                {activeTab === "cast" && <CastList cast={movie.cast} />}
-                                {activeTab === "crew" && <p>Coming next: crew list</p>}
-                                {activeTab === "details" && <p>Coming next: runtime, rating, language, etc.</p>}
-                                {activeTab === "genres" && <p>{movie.genre?.join(", ")}</p>}
-                                {activeTab === "releases" && <p>Coming next: release dates + certifications</p>}
                             </div>
                         </>
                     )}                   
