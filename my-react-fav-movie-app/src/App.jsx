@@ -10,6 +10,7 @@ function App() {
                 <Route path="/" element={<MainPage />} />
                 <Route path="/movie/:id" element={<MoviePage />} />
                 <Route path="/search" element={<SearchResults />} />
+                <Route path="/actor/:id" element={<ActorPage />} />
             </Routes>
         </BrowserRouter>
     );    
