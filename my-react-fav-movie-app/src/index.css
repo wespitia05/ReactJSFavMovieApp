@@ -240,11 +240,13 @@ body {
 }
 
 .movie-tab {
+    font-family: monospace;
     background: transparent;
     border: none;
     color: rgb(0, 255, 187);
     font-size: 1.4rem;
     cursor: pointer;
+    transition: .25s ease;
 }
 
 .movie-tab:hover {
@@ -255,4 +257,37 @@ body {
 .movie-tab.active {
     color: white;
     text-decoration: underline;
+}
+
+.movie-tab-content {
+    font-size: 0.9rem;
+}
+
+.cast-list {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 5px 40px;
+}
+
+.cast-item {
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.cast-name {
+    font-weight: bold;
+    text-decoration: underline;
+    cursor: pointer;
+    transition: .25s ease;
+}
+
+.cast-name:hover {
+    color: hsl(204, 92%, 55%);;
+}
+
+.cast-character {
+    opacity: 0.9;
+    margin-left: 5px;
 }
