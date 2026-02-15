@@ -94,26 +94,37 @@ function ActorPage() {
 
     // this function returns the age of the actor based on their birthday
     function calculateAge(birthdayStr) {
+        // if there is no birthday or an empty string, return null
         if (!birthdayStr) {
             return null;
         }
 
+        // convert string to date object
         const birthDate = new Date(birthdayStr);
+        // if the string was invalid (like "abc"), new Date() becomes an invalid date
+        // birthDate.getTime() would return Nan
         if (Number.isNaN(birthDate.getTime())) {
             return null;
         }
 
+        // this gets the current date today
         const today = new Date();
 
+        // basic year subtraction, gets todays year and the actors birth year
         let years = today.getFullYear() - birthDate.getFullYear();
+        // this is where we check if the birthday has passed todays date or not
         const birthdayPassed = 
+            // if the birthday happened already, true
+            // if the birthday has NOT happened, false
             today.getMonth() > birthDate.getMonth() ||
             (today.getMonth() === birthDate.getMonth() && today.getDate() >= birthDate.getDate());
 
+        // if the birthday has NOT happened this year, subtract 1
         if (!birthdayPassed) {
             years -= 1;
         }
 
+        // return the calculated age
         return years;
     }
 
