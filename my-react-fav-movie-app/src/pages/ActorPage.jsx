@@ -38,7 +38,9 @@ function ActorPage() {
     const [birthday, setBirthday] = useState("");
     // placeOfBirth will store the place of birth of the actor
     const [placeOfBirth, setPlaceOfBirth] = useState("");
+    const [age, setAge] = useState(null);
 
+    // this constant stores all the role texts based on the job of the actor
     const roleText = { 
         Acting: "Films Starring",
         "Executive Producer": "Films Executive Produced By",
@@ -85,8 +87,34 @@ function ActorPage() {
         Driver: "Films Driven By"
     };
 
+    // this function gets the role text based on the job
     function getRoleText(job) {
         return roleText[job] || `Films ${job} by`;
+    }
+
+    // this function returns the age of the actor based on their birthday
+    function calculateAge(birthdayStr) {
+        if (!birthdayStr) {
+            return null;
+        }
+
+        const birthDate = new Date(birthdayStr);
+        if (Number.isNaN(birthDate.getTime())) {
+            return null;
+        }
+
+        const today = new Date();
+
+        let years = today.getFullYear() - birthDate.getFullYear();
+        const birthdayPassed = 
+            today.getMonth() > birthDate.getMonth() ||
+            (today.getMonth() === birthDate.getMonth() && today.getDate() >= birthDate.getDate());
+
+        if (!birthdayPassed) {
+            years -= 1;
+        }
+
+        return years;
     }
 
     // this runs when the page loads or when the id changes
@@ -108,6 +136,7 @@ function ActorPage() {
                 setBio(data.biography || "No biography available."); // store actor's bio
                 setKnownFor(data.known_for_department || "Unknown"); // store what actor is known for
                 setPlaceOfBirth(data.place_of_birth || "Unknown"); // store where the actor was born
+                setAge(calculateAge(data.birthday));
 
                 // url will extract the path to the actors image profile and set it
                 const url = data.profile_path
@@ -247,6 +276,7 @@ function ActorPage() {
                                 </p>
                                 <p>
                                     <strong>Birthday:</strong> {birthday}
+                                    {age !== null && <span> ({age} years old)</span>}
                                 </p>
                                 <p>
                                     <strong>Place of Birth:</strong> {placeOfBirth}
