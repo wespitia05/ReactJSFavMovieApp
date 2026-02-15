@@ -58,6 +58,8 @@ function ActorPage() {
 
                 // only movies the actor has acted in
                 const actorMovies = credits.cast || [];
+                // sorts movies by popularity
+                actorMovies.sort((a, b) => b.popularity - a.popularity);
                 // store the object in state
                 setActorMovies(actorMovies);
 
@@ -86,6 +88,8 @@ function ActorPage() {
                         group[job].push(item);
                     }
                 });
+                // sorts the movies actor worked on by popularity as well
+                group[job].sort((a, b) => b.popularity - a.popularity);
                 // store object in state
                 setCrewMovies(group);
                 // log for debugging
