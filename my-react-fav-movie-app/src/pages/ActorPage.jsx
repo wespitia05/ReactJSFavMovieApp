@@ -29,6 +29,28 @@ function ActorPage() {
     // selectedJob will store the current selected job to be displayed
     const [selectedJob, setSelectedJob] = useState("Acting");
 
+    const roleText = { 
+        Acting: "Films Starring",
+        "Executive Producer": "Films Executive Produced By",
+        Producer: "Films Produced By",
+        "Co-Producer": "Films Co-Produced By",
+        Story: "Films With Story By",
+        Writer: "Films Written By",
+        Thanks: "Films Thanked By", 
+        "Memory Of": "Films In Memory Of",
+        Director: "Films Directed By",
+        "Co-Writer": "Films Co-Written By",
+        Presenter: "Films Presented By",
+        Screenplay: "Films With Screenplay By",
+        "Original Story": "Films With Original Story By",
+        Characters: "Films With Characters By",
+        Choreographer: "Films Choreographed By"
+    };
+
+    function getRoleText(job) {
+        return roleText[job] || `Films ${job} by`;
+    }
+
     // this runs when the page loads or when the id changes
     useEffect(() => {
         // async function to fetch actor data
@@ -97,7 +119,7 @@ function ActorPage() {
                 // store object in state
                 setCrewMovies(group);
                 // log for debugging
-                // console.log(group);
+                console.log(group);
 
                 // always include Acting + all unique crew jobs
                 const crewJobs = Object.keys(group).sort();
@@ -141,7 +163,9 @@ function ActorPage() {
                                 <p>No profile image available.</p>
                             )}
                             <div className="actor-films">
-                                <p>Films Starring</p>
+                                <p className="actor-role-heading">
+                                    {getRoleText(selectedJob)}
+                                </p>
                                 <h1>{actor}</h1>
                                 {/* actor job drop down */}
                                 <div className="role-select-container">
