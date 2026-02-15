@@ -331,7 +331,7 @@ body {
 }
 
 .actor-profile-img {
-    width: 285px;
+    width: 250px;
     height: 100%;
     border-radius: 5px;
 }
@@ -359,11 +359,12 @@ body {
 }
 
 .actor-info {
-    width: 60%;
+    width: 50%;
     padding: 0 16px;
     background-color: hsl(0, 0%, 10%);
     border: 2px solid hsl(0, 0%, 20%);
     border-radius: 8px;
+    height: max-content;
 }
 
 .actor-info p {
@@ -379,6 +380,38 @@ body {
     white-space: pre-line;
 }
 
+.actor-movies-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.actor-movie-poster, .actor-movie-poster-placeholder {
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    border-radius: 8px;
+    object-fit: cover;
+    cursor: pointer;
+    transition: .25s ease;
+}
+
+.actor-movie-poster:hover, .actor-movie-poster-placeholder:hover {
+    transform: scale(1.05);
+}
+
+.actor-movie-poster-placeholder {
+    background: rgba(255, 255, 255, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255,255,255,0.6);
+    font-size: 0.8rem;
+}
+
+/* ACTOR JOB DROPDOWN MENU */
 .role-select-container {
     border-bottom: 1px solid rgba(255, 255, 255, 0.15);
     padding-bottom: 8px;

@@ -145,15 +145,47 @@ function ActorPage() {
                                         ))}
                                     </select>
                                 </div>
-                                <ul>
-                                    {selectedJob === "Acting" ? actorMovies.map((movie) => (
-                                        <li key={`${selectedJob} - ${movie.id}`}>
-                                            {movie.title}
-                                        </li>
-                                    ))
-                                    : (crewMovies[selectedJob] || []).map((movie) => (
-                                        <li>{movie.title}</li>
-                                    ))}
+                                <ul className="actor-movies-list">
+                                    {selectedJob === "Acting"
+                                        ? actorMovies.map((movie) => {
+                                            const posterUrl = movie.poster_path
+                                            ? `https://image.tmdb.org/t/p/original${movie.poster_path}`
+                                            : null;
+
+                                            return (
+                                                <li key={movie.id} className="actor-movie-item">
+                                                    {posterUrl ? (
+                                                    <img
+                                                        src={posterUrl}
+                                                        alt={`${movie.title} poster`}
+                                                        className="actor-movie-poster"
+                                                    />
+                                                    ) : (
+                                                    <div className="actor-movie-poster-placeholder">No Image</div>
+                                                    )}
+                                                </li>
+                                            );
+                                        })
+                                        : (crewMovies[selectedJob] || []).map((movie) => {
+                                            const posterUrl = movie.poster_path
+                                            ? `https://image.tmdb.org/t/p/original${movie.poster_path}`
+                                            : null;
+
+                                            return (
+                                                <li key={`${selectedJob}-${movie.id}`} className="actor-movie-item">
+                                                    {posterUrl ? (
+                                                    <img
+                                                        src={posterUrl}
+                                                        alt={`${movie.title} poster`}
+                                                        className="actor-movie-poster"
+                                                    />
+                                                    ) : (
+                                                    <div className="actor-movie-poster-placeholder">No Image</div>
+                                                    )}
+                                                </li>
+                                            );
+                                        })
+                                    }
                                 </ul>
                             </div>
                             <div className="actor-info">
