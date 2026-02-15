@@ -359,7 +359,7 @@ body {
 }
 
 .actor-info {
-    width: 50%;
+    max-width: 25%;
     padding: 0 16px;
     background-color: hsl(0, 0%, 10%);
     border: 2px solid hsl(0, 0%, 20%);
