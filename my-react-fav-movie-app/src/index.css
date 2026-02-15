@@ -334,13 +334,23 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
     width: 40vw;
+    gap: 0;
 }
 
 .actor-profile-img {
     width: 250px;
     height: 375px;
     border-radius: 5px;
+}
+
+.actor-personal strong {
+    font-size: 1rem;
+}
+
+.actor-personal p {
+    font-size: .9rem;
 }
 
 .actor-films {

@@ -32,6 +32,12 @@ function ActorPage() {
     const [knownFor, setKnownFor] = useState("");
     // knownCredits will store the amount of credits the actor is known for
     const [knownCredits, setKnownCredit] = useState(0);
+    // gender will store the gender of the actor
+    const [gender, setGender] = useState("");
+    // birthday will store the birthday of the actor
+    const [birthday, setBirthday] = useState("");
+    // placeOfBirth will store the place of birth of the actor
+    const [placeOfBirth, setPlaceOfBirth] = useState("");
 
     const roleText = { 
         Acting: "Films Starring",
@@ -101,6 +107,7 @@ function ActorPage() {
                 setActor(data.name); // store actor's name
                 setBio(data.biography || "No biography available."); // store actor's bio
                 setKnownFor(data.known_for_department || "Unknown"); // store what actor is known for
+                setPlaceOfBirth(data.place_of_birth || "Unknown"); // store where the actor was born
 
                 // url will extract the path to the actors image profile and set it
                 const url = data.profile_path
@@ -171,6 +178,32 @@ function ActorPage() {
                 const uniqueIds = new Set([...actorMovies, ...actorCrewMovies].map((actorWork) => actorWork.id));
                 // get the size of the unique id's and set it
                 setKnownCredit(uniqueIds.size);
+
+                // gender is returned as either 0, 1 or 2
+                // use if statements to return gender text based on number
+                let genderText = "Not Specified";
+                if (data.gender === 1) {
+                    genderText = "Female";
+                }
+                if (data.gender === 2) {
+                    genderText = "Male";
+                }
+                // store object in state
+                setGender(genderText);
+
+                // birthday is returned as yyyy-mm-dd
+                // formats birthday into a string
+                let formatBirthday = "Unknown";
+                if (data.birthday) {
+                    const date = new Date(data.birthday);
+                    formatBirthday = date.toLocaleDateString("en-US", {
+                        year: "numeric", // number year
+                        month: "long", // string month
+                        day: "numeric" // number day
+                    });
+                }
+                // store object in state
+                setBirthday(formatBirthday);
             }
             // catch any errors
             catch (err) {
@@ -208,6 +241,15 @@ function ActorPage() {
                                 </p>
                                 <p>
                                     <strong>Known Credits:</strong> {knownCredits}
+                                </p>
+                                <p>
+                                    <strong>Gender:</strong> {gender}
+                                </p>
+                                <p>
+                                    <strong>Birthday:</strong> {birthday}
+                                </p>
+                                <p>
+                                    <strong>Place of Birth:</strong> {placeOfBirth}
                                 </p>
                             </div>
                             <div className="actor-films">
