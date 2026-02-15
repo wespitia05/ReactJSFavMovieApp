@@ -2,10 +2,13 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import SearchBar from "../components/SearchBar";
 import { getActorDetails, getActorMovies } from "../api/tmdb";
+import { useNavigate } from "react-router-dom";
 
 function ActorPage() {
     // get the actor id from the url (/actor/:id)
     const {id} = useParams();
+    // this constant we will use to navigate from one page to the next
+    const navigate = useNavigate();
 
     // actor will store only the values we want to display
     const [actor, setActor] = useState(null);
@@ -81,15 +84,16 @@ function ActorPage() {
                     if (!group[job]) {
                         group[job] = [];
                     }
-
                     // check if the job already contains a movie with this id
                     // if not, we push it
                     if (!group[job].some((dup) => dup.id === item.id)) {
                         group[job].push(item);
                     }
                 });
-                // sorts the movies actor worked on by popularity as well
-                group[job].sort((a, b) => b.popularity - a.popularity);
+                // sort movies inside each job (newest first)
+                Object.keys(group).forEach((job) => {
+                    group[job].sort((a, b) => b.popularity - a.popularity);
+                });
                 // store object in state
                 setCrewMovies(group);
                 // log for debugging
@@ -157,7 +161,7 @@ function ActorPage() {
                                             : null;
 
                                             return (
-                                                <li key={movie.id} className="actor-movie-item">
+                                                <li key={movie.id} className="actor-movie-item" onClick={() => navigate(`/movie/${movie.id}`)}>
                                                     {posterUrl ? (
                                                     <img
                                                         src={posterUrl}
@@ -176,7 +180,7 @@ function ActorPage() {
                                             : null;
 
                                             return (
-                                                <li key={`${selectedJob}-${movie.id}`} className="actor-movie-item">
+                                                <li key={`${selectedJob}-${movie.id}`} className="actor-movie-item" onClick={() => navigate(`/movie/${movie.id}`)}>
                                                     {posterUrl ? (
                                                     <img
                                                         src={posterUrl}
