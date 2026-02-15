@@ -330,9 +330,16 @@ body {
     display: flex;
 }
 
+.actor-personal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 40vw;
+}
+
 .actor-profile-img {
     width: 250px;
-    height: 100%;
+    height: 375px;
     border-radius: 5px;
 }
 
@@ -359,7 +366,7 @@ body {
 }
 
 .actor-info {
-    max-width: 25%;
+    max-width: 20%;
     padding: 0 16px;
     background-color: hsl(0, 0%, 10%);
     border: 2px solid hsl(0, 0%, 20%);

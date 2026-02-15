@@ -28,6 +28,10 @@ function ActorPage() {
     const [jobOptions, setJobOptions] = useState([]); // ["Acting", "Producer", ...]
     // selectedJob will store the current selected job to be displayed
     const [selectedJob, setSelectedJob] = useState("Acting");
+    // knownFor will store what the actor is known for, in this case acting
+    const [knownFor, setKnownFor] = useState("");
+    // knownCredits will store the amount of credits the actor is known for
+    const [knownCredits, setKnownCredit] = useState(0);
 
     const roleText = { 
         Acting: "Films Starring",
@@ -94,8 +98,9 @@ function ActorPage() {
                 // console.log(data);
 
                 // store the object in state
-                setActor(data.name);
-                setBio(data.biography || "No biography available.");
+                setActor(data.name); // store actor's name
+                setBio(data.biography || "No biography available."); // store actor's bio
+                setKnownFor(data.known_for_department || "Unknown"); // store what actor is known for
 
                 // url will extract the path to the actors image profile and set it
                 const url = data.profile_path
@@ -140,6 +145,7 @@ function ActorPage() {
                         group[job].push(item);
                     }
                 });
+
                 // sort movies inside each job (newest first)
                 Object.keys(group).forEach((job) => {
                     group[job].sort((a, b) => b.popularity - a.popularity);
@@ -147,7 +153,7 @@ function ActorPage() {
                 // store object in state
                 setCrewMovies(group);
                 // log for debugging
-                console.log(group);
+                // console.log(group);
 
                 // always include Acting + all unique crew jobs
                 const crewJobs = Object.keys(group).sort();
@@ -160,6 +166,11 @@ function ActorPage() {
                 if (selectedJob !== "Acting" && !group[selectedRole]) {
                 setSelectedJob("Acting");
                 }
+
+                // get the number of projects the actor is know to have a role in, both cast and crew
+                const uniqueIds = new Set([...actorMovies, ...actorCrewMovies].map((actorWork) => actorWork.id));
+                // get the size of the unique id's and set it
+                setKnownCredit(uniqueIds.size);
             }
             // catch any errors
             catch (err) {
@@ -185,11 +196,20 @@ function ActorPage() {
                 {!loading && !error && (
                     <>
                         <div className="actor-basic">
-                            {profileUrl ? (
-                                <img src={profileUrl} alt={`${actor} profile`} className="actor-profile-img"/>
-                            ) : (
-                                <p>No profile image available.</p>
-                            )}
+                            <div className="actor-personal">
+                                {profileUrl ? (
+                                    <img src={profileUrl} alt={`${actor} profile`} className="actor-profile-img"/>
+                                ) : (
+                                    <p>No profile image available.</p>
+                                )}
+                                <br></br>
+                                <p>
+                                    <strong>Known For:</strong> {knownFor}
+                                </p>
+                                <p>
+                                    <strong>Known Credits:</strong> {knownCredits}
+                                </p>
+                            </div>
                             <div className="actor-films">
                                 <p className="actor-role-heading">
                                     {getRoleText(selectedJob)}
