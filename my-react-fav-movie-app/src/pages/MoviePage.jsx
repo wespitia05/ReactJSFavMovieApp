@@ -4,10 +4,13 @@ import SearchBar from "../components/SearchBar";
 import { getMovieDetails, getImages } from "../api/tmdb";
 import CastList from "../components/CastList";
 import CrewList from "../components/CrewList";
+import { useNavigate } from "react-router-dom";
 
 function MoviePage() {
     // get the movie id from the url (/movie/:id)
     const {id} = useParams();
+    // this constant we will use to navigate from one page to the next
+    const navigate = useNavigate();
 
     // movie will store only the values we want to display
     const [movie, setMovie] = useState(null);
@@ -19,9 +22,9 @@ function MoviePage() {
     const [backdrop, setBackdrop] = useState([]);
     // backdropIndex will store the index of the backdrop based on its location in the array of backdrops
     const [backdropIndex, setBackdropIndex] = useState(0);
-    // poster will store the value of our backdrop based on the movie
+    // poster will store the value of our poster based on the movie
     const [poster, setPoster] = useState([]);
-    // posterIndex will store the index of the backdrop based on its location in the array of backdrops
+    // posterIndex will store the index of the poster based on its location in the array of backdrops
     const [posterIndex, setPosterIndex] = useState(0);
     // activeTabe will store the currently active tab with the initial state displaying the cast
     const [activeTab, setActiveTab] = useState("cast");
@@ -38,8 +41,8 @@ function MoviePage() {
                 // get full movie data from tmdb
                 const data = await getMovieDetails(id);
 
-                // initialize directorName as an empty string
-                let directorName = "";
+                // initialize directorInfo as null
+                let directorInfo = null;
 
                 // only try to read crew if credits exists
                 if (data.credits && data.credits.crew) {
@@ -48,11 +51,15 @@ function MoviePage() {
                         (person) => person.job === "Director"
                     );
 
-                    // if we found the director, set the name
+                    // check if the director exists
                     if (director) {
-                        directorName = director.name;
-                        // console.log(`Director: ${directorName}`); // log for debugging
-                    }
+                        // if the director exists, set the id and name to be the director id and director name
+                        directorInfo = {
+                            id: director.id,
+                            name: director.name
+                        };
+                        console.log(directorInfo);
+                    }                    
                 }
 
                 // initialize certification as an empty string
@@ -131,7 +138,7 @@ function MoviePage() {
                     // we just return the genre name only
                     genre: data.genres ? data.genres.map((genre) => genre.name) : [],
                     // pass the directors name from tmdb
-                    director: directorName,
+                    director: directorInfo,
                     tagline: data.tagline,
                     rating: certification,
                     backdrop: currentBackdropUrl,
@@ -211,7 +218,17 @@ function MoviePage() {
                                         {/* only show the bullet if both year and director exist */}
                                         {movie.year && movie.director && <span> • </span>}
                                         {/* renders the director text */}
-                                        {movie.director && <span>Directed By <u>{movie.director}</u></span>}
+                                        {movie.director && (
+                                            <span>
+                                                Directed By{" "}
+                                                <u
+                                                    className="movie-director"
+                                                    onClick={() => navigate(`/person/${movie.director.id}?job=Director`)}
+                                                >
+                                                    {movie.director.name}
+                                                </u>
+                                            </span>
+                                        )}
                                     </h3>
                                     <p>
                                         {/* only render the runtime if it exists */}

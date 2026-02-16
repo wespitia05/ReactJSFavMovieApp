@@ -90,7 +90,8 @@ function ActorPage() {
         "Original Music Composer": "Films With Music Composed By",
         "Set Designer": "Films With Set Designs By",
         Casting: "Films Cast By", 
-        Driver: "Films Driven By"
+        Driver: "Films Driven By",
+        "Art Direction": "Films With Art Direction By"
     };
 
     // this function gets the role text based on the job
