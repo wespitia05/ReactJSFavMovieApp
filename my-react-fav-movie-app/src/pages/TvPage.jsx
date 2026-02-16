@@ -182,7 +182,7 @@ function TvPage() {
                                                         <span key={creator.id}>
                                                             <u
                                                                 className="tv-creator"
-                                                                onClick={() => navigate(`/person/${creator.id}?job=Creator`)}
+                                                                onClick={() => navigate(`/person/${creator.id}?job=Creator&media=tv`)}
                                                             >
                                                                 {creator.name}
                                                             </u>

@@ -45,6 +45,8 @@ function ActorPage() {
     // placeOfBirth will store the place of birth of the actor
     const [placeOfBirth, setPlaceOfBirth] = useState("");
     const [age, setAge] = useState(null);
+    const mediaFromUrl = params.get("media");
+    const isTvContext = mediaFromUrl === "tv";
 
     // this constant stores all the role texts based on the job of the actor
     const roleText = { 
@@ -94,9 +96,26 @@ function ActorPage() {
         "Art Direction": "Films With Art Direction By"
     };
 
+    // this constant stores all the role texts based on the job of the tv show person
+    const roleTextTv = {
+        Acting: "TV Shows Starring",
+        Casting: "TV Shows Casted By",
+        Creator: "TV Shows Created By",
+        Director: "TV Shows Directed By",
+        Editor: "TV Shows Edited By",
+        "Costume Design": "TV Shows With Costumes Designed By",
+        Writer: "TV Shows Written By",
+        "Executive Producer": "TV Shows Executively Produced By",
+        Producer: "TV Shows Produced By",
+        Story: "TV Shows With Story By",
+        "Original Music Composer": "TV Shows With Music Composed By",
+        "Production Design": "TV Shows With Production Designed By"
+    };
+
     // this function gets the role text based on the job
     function getRoleText(job) {
-        return roleText[job] || `Films ${job} by`;
+        const map = isTvContext ? roleTextTv : roleText;
+        return map[job] || (isTvContext ? `TV shows ${job.toLowerCase()} by` : `Films ${job.toLowerCase()} by`);
     }
 
     // this function returns the age of the actor based on their birthday
