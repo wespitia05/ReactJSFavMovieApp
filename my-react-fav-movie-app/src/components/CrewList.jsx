@@ -11,7 +11,7 @@ function CrewList({crew = []}) {
     const navigate = useNavigate();
 
     // log for debugging, prints jobs of all crew members              
-    // console.log([...new Set(crew.map((p) => p.job))]);
+    console.log([...new Set(crew.map((p) => p.job))]);
 
     // filter through and only get the names of the crew members we want
     const filterJobs = crew.filter((person) => jobs.includes(person.job));

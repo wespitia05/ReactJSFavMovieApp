@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import SearchBar from "../components/SearchBar";
 import { getTvDetails, getTvImages } from "../api/tmdb";
+import CastList from "../components/CastList";
+import CrewList from "../components/CrewList";
 
 function TvPage() {
     // get the tv id from the url (/tv/:id)
@@ -21,6 +23,8 @@ function TvPage() {
     const [poster, setPoster] = useState([]);
     // posterIndex will store the index of the poster based on its location in the array of backdrops
     const [posterIndex, setPosterIndex] = useState(0);
+    // activeTabe will store the currently active tab with the initial state displaying the cast
+    const [activeTab, setActiveTab] = useState("cast");
 
     // this runs when the page loads or when the id changes
     useEffect(() => {
@@ -110,7 +114,9 @@ function TvPage() {
                     // pull the status of the show (ongoing or ended)
                     status: data.status,
                     // pull the creators of the show
-                    creators: creators
+                    creators: creators,
+                    cast: data.credits?.cast || [],
+                    crew: data.credits?.crew || []
                 };
 
                 // store the object in state
@@ -199,6 +205,38 @@ function TvPage() {
                                         </p>
                                         <h3><i>{tv.tagline}</i></h3>
                                         <h3>{tv.summary}</h3>
+                                        <div className="tv-tabs">
+                                            {/* these tab buttons control what is currently being displayed */}
+                                            <button
+                                                className={`tv-tab ${activeTab === "cast" ? "active" : ""}`}
+                                                onClick={() => setActiveTab("cast")}
+                                                type="button">Cast</button>
+                                            <button
+                                                className={`tv-tab ${activeTab === "crew" ? "active" : ""}`}
+                                                onClick={() => setActiveTab("crew")}
+                                                type="button">Crew</button>
+                                            <button
+                                                className={`tv-tab ${activeTab === "details" ? "active" : ""}`}
+                                                onClick={() => setActiveTab("details")}
+                                                type="button">Details</button>
+                                            <button
+                                                className={`tv-tab ${activeTab === "genres" ? "active" : ""}`}
+                                                onClick={() => setActiveTab("genres")}
+                                                type="button">Genres</button>
+
+                                            <button
+                                                className={`tv-tab ${activeTab === "releases" ? "active" : ""}`}
+                                                onClick={() => setActiveTab("releases")}
+                                                type="button">Releases</button>
+                                        </div>
+                                        {/* this will determine what content is being displayed when the tab is active */}
+                                        <div className="tv-tab-content">
+                                            {activeTab === "cast" && <CastList cast={tv.cast} />}
+                                            {activeTab === "crew" && <CrewList crew={tv.crew} />}
+                                            {activeTab === "details" && <p>Coming next: runtime, rating, language, etc.</p>}
+                                            {activeTab === "genres" && <p>Coming next: genres, themes</p>}
+                                            {activeTab === "releases" && <p>Coming next: release dates + certifications</p>}
+                                        </div>
                                     </div>
                             </div>
                         </>

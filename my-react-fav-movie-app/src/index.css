@@ -491,3 +491,38 @@ body {
     color: hsl(0, 0%, 90%);
     line-height: 1;
 }
+
+/* TV TABS STYLING */
+.tv-tabs {
+    display: flex;
+    gap: 18px;
+    margin-top: 14px;
+    justify-content: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    padding-bottom: 8px;
+    width: 100%;
+}
+
+.tv-tab {
+    font-family: monospace;
+    background: transparent;
+    border: none;
+    color: rgb(0, 255, 187);
+    font-size: 1.4rem;
+    cursor: pointer;
+    transition: .25s ease;
+}
+
+.tv-tab:hover {
+    transform: scale(1.05);
+    text-decoration: underline;
+}
+
+.tv-tab.active {
+    color: white;
+    text-decoration: underline;
+}
+
+.tv-tab-content {
+    font-size: 0.9rem;
+}
