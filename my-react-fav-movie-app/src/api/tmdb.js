@@ -167,5 +167,32 @@ async function getTvDetails(tvId) {
     return data;
 }
 
+// async so we can use await and returns an object
+// our parameter is tvId which is what we use to get the backdrop on the tv show selected
+async function getTvImages(tvId) {
+    // build our full request url
+    // ${base_url}/tv/${tvId}/images is the endpoint that searches across tv show images
+    // "?" starts the query parameters
+    // language=en-US returns english text
+    const url = `${base_url}/tv/${tvId}/images?` +
+    `include_image_language=en,null&api_key=${api}`;
+
+    // res is our response object, sends an http request to the tmdb
+    // await pauses until the response comes back
+    const res = await fetch(url);
+
+    // res.ok is true for status codes 200-299
+    // if res.ok is not true...
+    if (!res.ok) {
+        // if tmdb returns 401, 404, etc, we throw an error
+        throw new Error("TMDB backdrop images failed");
+    }
+
+    // converts the response body into a json, data becomes the parsed json
+    const data = await res.json();
+    // return the parsed json to whoever calls getTvDetails
+    return data;
+}
+
 // exports function for other files to import
-export {searchMulti, getMovieDetails, getImages, getActorDetails, getActorMovies, getTvDetails}
+export {searchMulti, getMovieDetails, getImages, getActorDetails, getActorMovies, getTvDetails, getTvImages}
