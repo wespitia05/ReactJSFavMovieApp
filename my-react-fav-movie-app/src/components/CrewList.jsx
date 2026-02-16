@@ -6,7 +6,7 @@ function CrewList({crew = []}) {
     const jobs = ["Director", "Producer", "Executive Producer", "Writer", "Casting", "Editor", "Director of Photography", 
                   "Screenplay", "Original Writer", "Novel",  "Original Music Composer", "Costume Design", 
                   "Sound Designer", "Visual Effects Supervisor", "Visual Effects Producer", "Lighting", 
-                  "Production Design"];
+                  "Production Design", "Writing", "Production", "Directing", "Co-Executive Producer"];
     // this constant we will use to navigate from one page to the next
     const navigate = useNavigate();
 

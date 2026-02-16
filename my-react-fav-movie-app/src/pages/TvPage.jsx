@@ -4,10 +4,13 @@ import SearchBar from "../components/SearchBar";
 import { getTvDetails, getTvImages } from "../api/tmdb";
 import CastList from "../components/CastList";
 import CrewList from "../components/CrewList";
+import { useNavigate } from "react-router-dom";
 
 function TvPage() {
     // get the tv id from the url (/tv/:id)
     const {id} = useParams();
+    // this constant we will use to navigate from one page to the next
+    const navigate = useNavigate();
 
     // tv will store only the values we want displayed
     const [tv, setTv] = useState(null);
@@ -37,6 +40,8 @@ function TvPage() {
 
                 // get full tv show data from tmdb
                 const data = await getTvDetails(id);
+                console.log("tv cast count: ", data.credits.cast?.length);
+                console.log("tv crew count: ", data.credits.crew?.length);
 
                 // initialize certification as an empty string
                 let certification = "";
