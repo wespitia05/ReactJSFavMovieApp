@@ -216,9 +216,9 @@ function ActorPage() {
                     }
                     // check if the job already contains a movie with this id
                     // if not, we push it
-                    if (!group[job].some((dup) => dup.id === item.id)) {
+                    if (!group[job].some((dup) => dup.id === item.id && dup.media_type === item.media_type)) {
                         group[job].push(item);
-                    }
+                    }    
                 });
 
                 // sort movies inside each job (newest first)
@@ -348,46 +348,50 @@ function ActorPage() {
                                     </select>
                                 </div>
                                 <ul className="actor-movies-list">
-                                    {selectedJob === "Acting"
-                                        ? actorMovies.map((movie) => {
-                                            const posterUrl = movie.poster_path
-                                            ? `https://image.tmdb.org/t/p/original${movie.poster_path}`
+                                    {(() => {
+                                        // 1) pick the right list based on the selected job
+                                        const list =
+                                        selectedJob === "Acting"
+                                            ? actorMovies
+                                            : (crewMovies[selectedJob] || []);
+                                        // dedupe by media_type + id
+                                        const uniqueList = Array.from(
+                                            new Map(list.map((item) => [`${item.media_type}-${item.id}`, item])).values()
+                                        );
+
+                                        // 2) render the list
+                                        return uniqueList.map((item) => {
+                                        const title = item.title || item.name || "Untitled";
+                                        const posterUrl = item.poster_path
+                                            ? `https://image.tmdb.org/t/p/original${item.poster_path}`
                                             : null;
 
-                                            return (
-                                                <li key={movie.id} className="actor-movie-item" onClick={() => navigate(`/movie/${movie.id}`)}>
-                                                    {posterUrl ? (
-                                                    <img
-                                                        src={posterUrl}
-                                                        alt={`${movie.title} poster`}
-                                                        className="actor-movie-poster"
-                                                    />
-                                                    ) : (
-                                                    <div className="actor-movie-poster-placeholder">No Image</div>
-                                                    )}
-                                                </li>
-                                            );
-                                        })
-                                        : (crewMovies[selectedJob] || []).map((movie) => {
-                                            const posterUrl = movie.poster_path
-                                            ? `https://image.tmdb.org/t/p/original${movie.poster_path}`
-                                            : null;
+                                        // 3) route based on media type
+                                        const mediaType = item.media_type; // "movie" or "tv"
+                                        const targetUrl =
+                                            mediaType === "tv"
+                                            ? `/tv/${item.id}`
+                                            : `/movie/${item.id}`;
 
-                                            return (
-                                                <li key={`${selectedJob}-${movie.id}`} className="actor-movie-item" onClick={() => navigate(`/movie/${movie.id}`)}>
-                                                    {posterUrl ? (
+                                        return (
+                                            <li
+                                                key={`${selectedJob}-${mediaType}-${item.id}`}
+                                                className="actor-movie-item"
+                                                onClick={() => navigate(targetUrl)}
+                                            >
+                                                {posterUrl ? (
                                                     <img
                                                         src={posterUrl}
-                                                        alt={`${movie.title} poster`}
+                                                        alt={`${title} poster`}
                                                         className="actor-movie-poster"
                                                     />
-                                                    ) : (
-                                                    <div className="actor-movie-poster-placeholder">No Image</div>
-                                                    )}
-                                                </li>
-                                            );
-                                        })
-                                    }
+                                            ) : (
+                                                <div className="actor-movie-poster-placeholder">No Image</div>
+                                            )}
+                                            </li>
+                                        );
+                                        });
+                                    })()}
                                 </ul>
                             </div>
                             <div className="actor-info">
