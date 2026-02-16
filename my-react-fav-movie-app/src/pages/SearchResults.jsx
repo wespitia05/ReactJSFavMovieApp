@@ -61,7 +61,7 @@ function SearchResults() {
         loadResults();
     }, [query]);
 
-    // this function handles when select a movie from the results
+    // this function handles when select a movie or tv from the results
     function handleResultClick(item) {
         if (item.media_type === "movie") {
             navigate(`/movie/${item.id}`);
@@ -69,7 +69,11 @@ function SearchResults() {
             return;
         }
 
-        console.log("TV clicked (route later):", item.id);
+        if (item.media_type === "tv") {
+            navigate(`/tv/${item.id}`);
+            setResults([]); // clears results after we click on a movie
+            return;
+        }
     }
 
     return(
