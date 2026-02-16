@@ -18,7 +18,7 @@ function CastList({cast = []}) {
             <ul className="cast-list">
                 {topCast.map((person) => (
                     <li key={person.id} className="cast-item">
-                        <span className="cast-name" onClick={() => navigate(`/actor/${person.id}`)}>{person.name}</span>
+                        <span className="cast-name" onClick={() => navigate(`/person/${person.id}`)}>{person.name}</span>
                         {person.character && (
                         <span className="cast-character"> as {person.character}</span>
                         )}

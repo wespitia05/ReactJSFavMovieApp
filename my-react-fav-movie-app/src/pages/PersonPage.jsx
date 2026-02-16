@@ -2,13 +2,19 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import SearchBar from "../components/SearchBar";
 import { getActorDetails, getActorMovies } from "../api/tmdb";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 function ActorPage() {
     // get the actor id from the url (/actor/:id)
     const {id} = useParams();
     // this constant we will use to navigate from one page to the next
     const navigate = useNavigate();
+    // this constant we will use to locate a parameter
+    const location = useLocation();
+    // this constant we will use to search through the different parameters in the url
+    const params = new URLSearchParams(location.search);
+    // this constant will get the job parameter for the chosen person
+    const jobFromUrl = params.get("job");
 
     // actor will store only the values we want to display
     const [actor, setActor] = useState(null);
@@ -208,6 +214,17 @@ function ActorPage() {
                 const options = ["Acting", ...crewJobs];
                 // store object in state
                 setJobOptions(options);
+
+                // this will handle selecting a crew member to view their information
+                // first check if the job exists and its included in the dropdown menu
+                if (jobFromUrl && options.includes(jobFromUrl)) {
+                    // if it is, set that selected job to be displayed first (rather than acting as the default)
+                    setSelectedJob(jobFromUrl);
+                } 
+                // if not, then keep the default
+                else {
+                    setSelectedJob("Acting");
+                }        
 
                 // keep selectedRole valid if actor has no crew roles
                 if (selectedJob !== "Acting" && !group[selectedRole]) {

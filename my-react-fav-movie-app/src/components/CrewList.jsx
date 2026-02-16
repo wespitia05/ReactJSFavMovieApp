@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom";
+
 // this function will return the crew member list
 function CrewList({crew = []}) {
     // show only important roles
@@ -5,6 +7,8 @@ function CrewList({crew = []}) {
                   "Screenplay", "Original Writer", "Novel",  "Original Music Composer", "Costume Design", 
                   "Sound Designer", "Visual Effects Supervisor", "Visual Effects Producer", "Lighting", 
                   "Production Design"];
+    // this constant we will use to navigate from one page to the next
+    const navigate = useNavigate();
 
     // log for debugging, prints jobs of all crew members              
     console.log([...new Set(crew.map((p) => p.job))]);
@@ -25,9 +29,12 @@ function CrewList({crew = []}) {
         }
 
         // if the name is not already in the array for that job, add it
-        if (!groupJobs[job].includes(person.name)) {
-            groupJobs[job].push(person.name);
-        }
+        if (!groupJobs[job].some((p) => p.id === person.id)) {
+            groupJobs[job].push({
+                id: person.id,
+                name: person.name
+            });
+        }        
     });
 
     // turn object into an array we can map over, in the order of our jobs constant
@@ -50,12 +57,18 @@ function CrewList({crew = []}) {
                     <li key={job} className="crew-item">
                         <span className="crew-job">{job}: </span>
                         <span className="crew-name">
-                        {names.map((name, index) => (
-                            <span key={name} className="crew-person">
-                                {name}
-                                {index < names.length - 1 && ", "}
-                            </span>
-                        ))}
+                            {names.map((person, index) => (
+                                <span
+                                    key={person.id}
+                                    className="crew-person"
+                                    onClick={() =>
+                                        navigate(`/person/${person.id}?job=${encodeURIComponent(job)}`)
+                                    }
+                                >
+                                    {person.name}
+                                    {index < names.length - 1 && ", "}
+                                </span>
+                            ))}
                         </span>
                     </li>
                 ))}
