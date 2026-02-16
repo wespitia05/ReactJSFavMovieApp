@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import SearchBar from "../components/SearchBar";
-import { getActorDetails, getActorMovies } from "../api/tmdb";
+import { getActorDetails, getPersonCredits } from "../api/tmdb";
 import { useNavigate, useLocation } from "react-router-dom";
 
 function ActorPage() {
@@ -105,11 +105,13 @@ function ActorPage() {
         Editor: "TV Shows Edited By",
         "Costume Design": "TV Shows With Costumes Designed By",
         Writer: "TV Shows Written By",
+        Screenplay: "TV Shows With Screenplay Written By",
         "Executive Producer": "TV Shows Executively Produced By",
         Producer: "TV Shows Produced By",
-        Story: "TV Shows With Story By",
+        Story: "TV Shows With Story Written By",
         "Original Music Composer": "TV Shows With Music Composed By",
-        "Production Design": "TV Shows With Production Designed By"
+        "Production Design": "TV Shows With Production Designed By",
+        Thanks: "TV Shows Thanked By"
     };
 
     // this function gets the role text based on the job
@@ -182,7 +184,7 @@ function ActorPage() {
                 setProfileUrl(url);
 
                 // get list of movies selected actor has been in
-                const credits = await getActorMovies(id);
+                const credits = await getPersonCredits(id);
                 // log for debugging
                 console.log("Movies " + data.name + " has starred in: ", credits.cast);
                 console.log("Movies " + data.name + " has worked on: ", credits.crew);
@@ -247,8 +249,8 @@ function ActorPage() {
                 }        
 
                 // keep selectedRole valid if actor has no crew roles
-                if (selectedJob !== "Acting" && !group[selectedRole]) {
-                setSelectedJob("Acting");
+                if (selectedJob !== "Acting" && !group[selectedJob]) {
+                    setSelectedJob("Acting");
                 }
 
                 // get the number of projects the actor is know to have a role in, both cast and crew

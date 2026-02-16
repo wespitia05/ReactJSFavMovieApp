@@ -116,12 +116,12 @@ async function getActorDetails(actorId) {
 
 // async so we can use await and returns an object
 // our parameter is actorId which is what we use to get information on the actor that was selected
-async function getActorMovies(actorId) {
+async function getPersonCredits(personId) {
     // build our full request url
     // ${base_url}/person/${actorId}/movie_credits is the endpoint that searches across movies actors have been in
     // ? starts the query parameters
     // language=en-US returns english text
-    const url = `${base_url}/person/${actorId}/movie_credits?language=en-US&api_key=${api}`;
+    const url = `${base_url}/person/${personId}/combined_credits?language=en-US&api_key=${api}`;
 
     // res is our response object, sends an http request to the tmdb
     // await pauses until the response comes back
@@ -195,4 +195,4 @@ async function getTvImages(tvId) {
 }
 
 // exports function for other files to import
-export {searchMulti, getMovieDetails, getImages, getActorDetails, getActorMovies, getTvDetails, getTvImages}
+export {searchMulti, getMovieDetails, getImages, getActorDetails, getPersonCredits, getTvDetails, getTvImages}
