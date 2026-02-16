@@ -44,6 +44,16 @@ function TvPage() {
                     }
                 }
 
+                // initialize creators as an empty array
+                let creators = [];
+
+                // only try to read the creators if it exists
+                if (data.created_by && data.created_by.length > 0) {
+                    creators = data.created_by.map((person) => ({
+                      id: person.id,
+                      name: person.name
+                    }));
+                }
 
                 // awaits api call to retrieve images object (which hold posters and backdrops)
                 const images = await getTvImages(id);
@@ -95,7 +105,12 @@ function TvPage() {
                     episodes: data.number_of_episodes,
                     // pull the tagline for the show
                     tagline: data.tagline || "No Tagline Available",
-                    summary: data.overview || "No Overview Available"
+                    // pull the overview for the show
+                    summary: data.overview || "No Overview Available",
+                    // pull the status of the show (ongoing or ended)
+                    status: data.status,
+                    // pull the creators of the show
+                    creators: creators
                 };
 
                 // store the object in state
@@ -143,6 +158,29 @@ function TvPage() {
                                     )}
                                     <div className="tv-info">
                                         <h1>{tv.title}</h1>
+                                        <h3>
+                                            {/* only render the year if it exists */}
+                                            {tv.year && <span><u>{tv.year}</u></span>}
+                                            {/* only show the bullet if both year and creator exist */}
+                                            {tv.year && tv.creators && <span> • </span>}
+                                            {/* renders the creators text */}
+                                            {tv.creators && (
+                                                <span>
+                                                    Created By{" "}
+                                                    {tv.creators.map((creator, index) => (
+                                                        <span key={creator.id}>
+                                                            <u
+                                                                className="tv-creator"
+                                                                onClick={() => navigate(`/person/${creator.id}?job=Creator`)}
+                                                            >
+                                                                {creator.name}
+                                                            </u>
+                                                            {index < tv.creators.length - 1 && ", "}
+                                                        </span>
+                                                    ))}
+                                                </span>
+                                            )}
+                                        </h3>
                                         <p>
                                             {/* only render seasons if it exists */}
                                             {tv.seasons && (<span>{tv.seasons} Season{tv.seasons > 1 ? "s" : ""}</span>)}
@@ -153,7 +191,7 @@ function TvPage() {
                                             {/* only show bullet if seasons/episodes AND rating exist */}
                                             {(tv.seasons || tv.episodes) && tv.rating && <span> • </span>}
                                             {/* only render rating if it exists */}
-                                            {tv.rating && (<span className="movie-rating">{tv.rating}</span>)}
+                                            {tv.rating && (<span className="tv-rating">{tv.rating}</span>)}
                                             {/* only show bullet if rating AND status exist */}
                                             {tv.rating && tv.status && <span> • </span>}
                                             {/* only render status if it exists */}
