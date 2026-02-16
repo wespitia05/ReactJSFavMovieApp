@@ -34,6 +34,17 @@ function TvPage() {
                 // get full tv show data from tmdb
                 const data = await getTvDetails(id);
 
+                // initialize certification as an empty string
+                let certification = "";
+
+                if (data.content_ratings && data.content_ratings.results) {
+                    const us = data.content_ratings.results.find((r) => r.iso_3166_1 === "US");
+                    if (us && us.rating) {
+                        certification = us.rating;
+                    }
+                }
+
+
                 // awaits api call to retrieve images object (which hold posters and backdrops)
                 const images = await getTvImages(id);
                 // create backdrop list based on array of backdrops, otherwise use empty array
@@ -73,7 +84,15 @@ function TvPage() {
                     // prepend image base url to tmdb path given, if poster doesn't exist return null
                     poster: currentPosterUrl,
                     // prepend image base url to tmdb path given, if backdrop doesn't exist return null
-                    backdrop: currentBackdropUrl
+                    backdrop: currentBackdropUrl,
+                    // release_date looks like "2014-11-05", .slice(0,4) returns only first 4 indexes (2014). if not date, return msg
+                    year: data.first_air_date ? data.first_air_date.slice(0, 4) : "Release Data Unavailable",
+                    // pull the tv shows rating certification
+                    rating: certification,
+                    // pull the number of seasons the tv show has
+                    seasons: data.number_of_seasons,
+                    // pull the number of episodes the tv show has
+                    episodes: data.number_of_episodes
                 };
 
                 // store the object in state
@@ -119,8 +138,26 @@ function TvPage() {
                                     ) : (
                                         <p>No Poster Available</p>
                                     )}
+                                    <div className="tv-info">
+                                        <h1>{tv.title}</h1>
+                                        <p>
+                                            {/* only render seasons if it exists */}
+                                            {tv.seasons && (<span>{tv.seasons} Season{tv.seasons > 1 ? "s" : ""}</span>)}
+                                            {/* only show bullet if seasons AND episodes exist */}
+                                            {tv.seasons && tv.episodes && <span> • </span>}
+                                            {/* only render episodes if it exists */}
+                                            {tv.episodes && (<span>{tv.episodes} Episode{tv.episodes > 1 ? "s" : ""}</span>)}
+                                            {/* only show bullet if seasons/episodes AND rating exist */}
+                                            {(tv.seasons || tv.episodes) && tv.rating && <span> • </span>}
+                                            {/* only render rating if it exists */}
+                                            {tv.rating && (<span className="movie-rating">{tv.rating}</span>)}
+                                            {/* only show bullet if rating AND status exist */}
+                                            {tv.rating && tv.status && <span> • </span>}
+                                            {/* only render status if it exists */}
+                                            {tv.status && (<span>{tv.status}</span>)}
+                                        </p>
+                                    </div>
                             </div>
-                            <h1>{tv.title}</h1>
                         </>
                     )}
                 </div>

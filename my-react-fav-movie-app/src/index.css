@@ -447,3 +447,29 @@ body {
 .role-select:focus {
     outline: none;
 }
+
+/* TV SHOW PAGE STYLING */
+.tv-basic {
+    padding: 24px;
+    max-width: 85%;
+    margin-top: 55vh;
+    display: flex;
+}
+
+.tv-poster {
+    width: 325px;
+    height: 100%;
+    border-radius: 5px;
+}
+
+.tv-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    margin: 30px;
+}
+
+.tv-info h1 {
+    font-size: 2.5rem;
+}
