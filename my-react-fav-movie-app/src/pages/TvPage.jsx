@@ -92,7 +92,10 @@ function TvPage() {
                     // pull the number of seasons the tv show has
                     seasons: data.number_of_seasons,
                     // pull the number of episodes the tv show has
-                    episodes: data.number_of_episodes
+                    episodes: data.number_of_episodes,
+                    // pull the tagline for the show
+                    tagline: data.tagline || "No Tagline Available",
+                    summary: data.overview || "No Overview Available"
                 };
 
                 // store the object in state
@@ -156,6 +159,8 @@ function TvPage() {
                                             {/* only render status if it exists */}
                                             {tv.status && (<span>{tv.status}</span>)}
                                         </p>
+                                        <h3><i>{tv.tagline}</i></h3>
+                                        <h3>{tv.summary}</h3>
                                     </div>
                             </div>
                         </>
