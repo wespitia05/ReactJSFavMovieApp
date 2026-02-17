@@ -159,90 +159,103 @@ function TvPage() {
                             <div className="tv-basic">
                                 {/* poster element */}
                                 {tv.poster ? (
-                                        <img
-                                            src={tv.poster}
-                                            alt={`${tv.title} poster`}
-                                            className="tv-poster"
-                                        />
-                                    ) : (
-                                        <p>No Poster Available</p>
-                                    )}
-                                    <div className="tv-info">
-                                        <h1>{tv.title}</h1>
-                                        <h3>
-                                            {/* only render the year if it exists */}
-                                            {tv.year && <span><u>{tv.year}</u></span>}
-                                            {/* only show the bullet if both year and creator exist */}
-                                            {tv.year && tv.creators && <span> • </span>}
-                                            {/* renders the creators text */}
-                                            {tv.creators && (
-                                                <span>
-                                                    Created By{" "}
-                                                    {tv.creators.map((creator, index) => (
-                                                        <span key={creator.id}>
-                                                            <u
-                                                                className="tv-creator"
-                                                                onClick={() => navigate(`/person/${creator.id}?job=Creator&media=tv`)}
-                                                            >
-                                                                {creator.name}
-                                                            </u>
-                                                            {index < tv.creators.length - 1 && ", "}
-                                                        </span>
-                                                    ))}
-                                                </span>
-                                            )}
-                                        </h3>
-                                        <p>
-                                            {/* only render seasons if it exists */}
-                                            {tv.seasons && (<span>{tv.seasons} Season{tv.seasons > 1 ? "s" : ""}</span>)}
-                                            {/* only show bullet if seasons AND episodes exist */}
-                                            {tv.seasons && tv.episodes && <span> • </span>}
-                                            {/* only render episodes if it exists */}
-                                            {tv.episodes && (<span>{tv.episodes} Episode{tv.episodes > 1 ? "s" : ""}</span>)}
-                                            {/* only show bullet if seasons/episodes AND rating exist */}
-                                            {(tv.seasons || tv.episodes) && tv.rating && <span> • </span>}
-                                            {/* only render rating if it exists */}
-                                            {tv.rating && (<span className="tv-rating">{tv.rating}</span>)}
-                                            {/* only show bullet if rating AND status exist */}
-                                            {tv.rating && tv.status && <span> • </span>}
-                                            {/* only render status if it exists */}
-                                            {tv.status && (<span>{tv.status}</span>)}
-                                        </p>
-                                        <h3><i>{tv.tagline}</i></h3>
-                                        <h3>{tv.summary}</h3>
-                                        <div className="tv-tabs">
-                                            {/* these tab buttons control what is currently being displayed */}
-                                            <button
-                                                className={`tv-tab ${activeTab === "cast" ? "active" : ""}`}
-                                                onClick={() => setActiveTab("cast")}
-                                                type="button">Cast</button>
-                                            <button
-                                                className={`tv-tab ${activeTab === "crew" ? "active" : ""}`}
-                                                onClick={() => setActiveTab("crew")}
-                                                type="button">Crew</button>
-                                            <button
-                                                className={`tv-tab ${activeTab === "details" ? "active" : ""}`}
-                                                onClick={() => setActiveTab("details")}
-                                                type="button">Details</button>
-                                            <button
-                                                className={`tv-tab ${activeTab === "genres" ? "active" : ""}`}
-                                                onClick={() => setActiveTab("genres")}
-                                                type="button">Genres</button>
+                                    <img
+                                        src={tv.poster}
+                                        alt={`${tv.title} poster`}
+                                        className="tv-poster"
+                                    />
+                                ) : (
+                                    <p>No Poster Available</p>
+                                )}
+                                <div className="tv-info">
+                                    <h1>{tv.title}</h1>
+                                    <h3>
+                                        {/* only render the year if it exists */}
+                                        {tv.year && <span><u>{tv.year}</u></span>}
+                                        {/* only show the bullet if both year and creator exist */}
+                                        {tv.year && tv.creators && <span> • </span>}
+                                        {/* renders the creators text */}
+                                        {tv.creators && (
+                                            <span>
+                                                Created By{" "}
+                                                {tv.creators.map((creator, index) => (
+                                                    <span key={creator.id}>
+                                                        <u
+                                                            className="tv-creator"
+                                                            onClick={() => navigate(`/person/${creator.id}?job=Creator&media=tv`)}
+                                                        >
+                                                            {creator.name}
+                                                        </u>
+                                                        {index < tv.creators.length - 1 && ", "}
+                                                    </span>
+                                                ))}
+                                            </span>
+                                        )}
+                                    </h3>
+                                    <p>
+                                        {/* only render seasons if it exists */}
+                                        {tv.seasons && (<span>{tv.seasons} Season{tv.seasons > 1 ? "s" : ""}</span>)}
+                                        {/* only show bullet if seasons AND episodes exist */}
+                                        {tv.seasons && tv.episodes && <span> • </span>}
+                                        {/* only render episodes if it exists */}
+                                        {tv.episodes && (<span>{tv.episodes} Episode{tv.episodes > 1 ? "s" : ""}</span>)}
+                                        {/* only show bullet if seasons/episodes AND rating exist */}
+                                        {(tv.seasons || tv.episodes) && tv.rating && <span> • </span>}
+                                        {/* only render rating if it exists */}
+                                        {tv.rating && (<span className="tv-rating">{tv.rating}</span>)}
+                                        {/* only show bullet if rating AND status exist */}
+                                        {tv.rating && tv.status && <span> • </span>}
+                                        {/* only render status if it exists */}
+                                        {tv.status && (<span>{tv.status}</span>)}
+                                    </p>
+                                    <h3><i>{tv.tagline}</i></h3>
+                                    <h3>{tv.summary}</h3>
+                                    <div className="tv-tabs">
+                                        {/* these tab buttons control what is currently being displayed */}
+                                        <button
+                                            className={`tv-tab ${activeTab === "cast" ? "active" : ""}`}
+                                            onClick={() => setActiveTab("cast")}
+                                            type="button">Cast</button>
+                                        <button
+                                            className={`tv-tab ${activeTab === "crew" ? "active" : ""}`}
+                                            onClick={() => setActiveTab("crew")}
+                                            type="button">Crew</button>
+                                        <button
+                                            className={`tv-tab ${activeTab === "details" ? "active" : ""}`}
+                                            onClick={() => setActiveTab("details")}
+                                            type="button">Details</button>
+                                        <button
+                                            className={`tv-tab ${activeTab === "genres" ? "active" : ""}`}
+                                            onClick={() => setActiveTab("genres")}
+                                            type="button">Genres</button>
 
-                                            <button
-                                                className={`tv-tab ${activeTab === "releases" ? "active" : ""}`}
-                                                onClick={() => setActiveTab("releases")}
-                                                type="button">Releases</button>
-                                        </div>
-                                        {/* this will determine what content is being displayed when the tab is active */}
-                                        <div className="tv-tab-content">
-                                            {activeTab === "cast" && <CastList cast={tv.cast} />}
-                                            {activeTab === "crew" && <CrewList crew={tv.crew} />}
-                                            {activeTab === "details" && <p>Coming next: runtime, rating, language, etc.</p>}
-                                            {activeTab === "genres" && <p>Coming next: genres, themes</p>}
-                                            {activeTab === "releases" && <p>Coming next: release dates + certifications</p>}
-                                        </div>
+                                        <button
+                                            className={`tv-tab ${activeTab === "releases" ? "active" : ""}`}
+                                            onClick={() => setActiveTab("releases")}
+                                            type="button">Releases</button>
                                     </div>
+                                    {/* this will determine what content is being displayed when the tab is active */}
+                                    <div className="tv-tab-content">
+                                        {activeTab === "cast" && <CastList cast={tv.cast} />}
+                                        {activeTab === "crew" && <CrewList crew={tv.crew} />}
+                                        {activeTab === "details" && <p>Coming next: runtime, rating, language, etc.</p>}
+                                        {activeTab === "genres" && <p>Coming next: genres, themes</p>}
+                                        {activeTab === "releases" && <p>Coming next: release dates + certifications</p>}
+                                    </div>
+                                </div>
+                                <div className="movie-modal">
+                                    <div className="movie-modal-content">
+                                        <ul>
+                                            <li>Rating: ⭐️⭐️⭐️⭐️⭐️</li>
+                                            <hr />
+                                            <li>Change Poster</li>
+                                            <hr />
+                                            <li>Change Backdrop</li>
+                                            <hr />
+                                            <li>Streaming</li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
                         </>
                     )}
