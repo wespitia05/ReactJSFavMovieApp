@@ -62,7 +62,7 @@ function CrewList({crew = []}) {
                                     key={person.id}
                                     className="crew-person"
                                     onClick={() =>
-                                        navigate(`/person/${person.id}?job=${encodeURIComponent(person.job)}&media=tv`)
+                                        navigate(`/person/${person.id}?job=${encodeURIComponent(job)}&media=tv`)
                                     }
                                 >
                                     {person.name}
