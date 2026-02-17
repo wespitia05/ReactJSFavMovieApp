@@ -1,8 +1,7 @@
-import { use } from "react";
 import { useNavigate } from "react-router-dom";
 
 // this function will handle returning the list of cast members
-function CastList({cast = []}) {
+function CastList({cast = [], media="movie"}) {
     // will be used to navigate to another page
     const navigate = useNavigate();
     // only show first 20 cast members
@@ -18,7 +17,7 @@ function CastList({cast = []}) {
             <ul className="cast-list">
                 {topCast.map((person) => (
                     <li key={person.id} className="cast-item">
-                        <span className="cast-name" onClick={() => navigate(`/person/${person.id}`)}>{person.name}</span>
+                        <span className="cast-name" onClick={() => navigate(`/person/${person.id}?job=Acting&media=${media}`)}>{person.name}</span>
                         {person.character && (
                         <span className="cast-character"> as {person.character}</span>
                         )}
