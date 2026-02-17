@@ -346,6 +346,10 @@ function ActorPage() {
                                             </option>
                                         ))}
                                     </select>
+                                    <select value={selectedJob} onChange={(event) => setSelectedJob(event.target.value)} className="role-select">
+                                        <option value="movie">Movies</option>
+                                        <option value="tv">TV Shows</option>
+                                    </select>
                                 </div>
                                 <ul className="actor-movies-list">
                                     {(() => {
