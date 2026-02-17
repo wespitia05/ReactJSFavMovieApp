@@ -40,8 +40,9 @@ function TvPage() {
 
                 // get full tv show data from tmdb
                 const data = await getTvDetails(id);
-                console.log("tv cast count: ", data.credits.cast?.length);
-                console.log("tv crew count: ", data.credits.crew?.length);
+                // log for debugging
+                // console.log("tv cast count: ", data.credits.cast?.length);
+                // console.log("tv crew count: ", data.credits.crew?.length);
 
                 // initialize certification as an empty string
                 let certification = "";
@@ -120,8 +121,12 @@ function TvPage() {
                     status: data.status,
                     // pull the creators of the show
                     creators: creators,
+                    // pull the array of cast members
                     cast: data.credits?.cast || [],
-                    crew: data.credits?.crew || []
+                    // pull the array of crew members
+                    crew: data.credits?.crew || [],
+                    // pull the different genres
+                    genres: data.genres ? data.genres.map((genre) => genre.name) : []
                 };
 
                 // store the object in state
@@ -207,6 +212,12 @@ function TvPage() {
                                         {tv.rating && tv.status && <span> • </span>}
                                         {/* only render status if it exists */}
                                         {tv.status && (<span>{tv.status}</span>)}
+                                    </p>
+                                    <p>
+                                        {/* if there is more than one genre, separate with a comma */}
+                                        {tv?.genres?.length > 0 && (
+                                            <span>{tv.genres.join(", ")}</span>
+                                        )}
                                     </p>
                                     <h3><i>{tv.tagline}</i></h3>
                                     <h3>{tv.summary}</h3>
