@@ -434,6 +434,8 @@ body {
     border-bottom: 1px solid rgba(255, 255, 255, 0.15);
     padding-bottom: 8px;
     width: 100%;
+    display: flex;
+    justify-content: space-between;
 }
 
 .role-select {

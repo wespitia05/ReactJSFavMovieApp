@@ -46,7 +46,9 @@ function ActorPage() {
     const [placeOfBirth, setPlaceOfBirth] = useState("");
     const [age, setAge] = useState(null);
     const mediaFromUrl = params.get("media");
-    const isTvContext = mediaFromUrl === "tv";
+    const defaultMedia = mediaFromUrl === "tv" ? "tv" : "movie";
+    const [selectedMedia, setSelectedMedia] = useState(defaultMedia);
+    const isTvContext = selectedMedia === "tv";
 
     // this constant stores all the role texts based on the job of the actor
     const roleText = { 
@@ -189,16 +191,18 @@ function ActorPage() {
                 console.log("Movies " + data.name + " has starred in: ", credits.cast);
                 console.log("Movies " + data.name + " has worked on: ", credits.crew);
 
-                // only movies the actor has acted in
-                const actorMovies = credits.cast || [];
-                // sorts movies by popularity
+                // only credits that match selected media (movie or tv)
+                const filteredCast = (credits.cast || []).filter((item) => item.media_type === selectedMedia);
+                const filteredCrew = (credits.crew || []).filter((item) => item.media_type === selectedMedia);
+
+                // only movies/tv the actor has acted in (based on selectedMedia)
+                const actorMovies = filteredCast;
                 actorMovies.sort((a, b) => b.popularity - a.popularity);
-                // store the object in state
                 setActorMovies(actorMovies);
 
-                // only movies the actor has worked on
-                const actorCrewMovies = credits.crew || [];
-                const group = {}; // job -> array of movies
+                // only movies/tv the actor has worked on (based on selectedMedia)
+                const actorCrewMovies = filteredCrew;
+                const group = {};
 
                 // loop through each movie the actor has under their name
                 actorCrewMovies.forEach((item) => {
@@ -295,7 +299,7 @@ function ActorPage() {
             }
         }
         loadActor();
-    }, [id]);
+    }, [id, selectedMedia]);
 
     return(
         <>
@@ -346,7 +350,7 @@ function ActorPage() {
                                             </option>
                                         ))}
                                     </select>
-                                    <select value={selectedJob} onChange={(event) => setSelectedJob(event.target.value)} className="role-select">
+                                    <select value={selectedMedia} onChange={(event) => setSelectedMedia(event.target.value)} className="role-select">
                                         <option value="movie">Movies</option>
                                         <option value="tv">TV Shows</option>
                                     </select>
