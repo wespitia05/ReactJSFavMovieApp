@@ -247,8 +247,8 @@ function TvPage() {
                                     </div>
                                     {/* this will determine what content is being displayed when the tab is active */}
                                     <div className="tv-tab-content">
-                                        {activeTab === "cast" && <CastList cast={tv.cast} />}
-                                        {activeTab === "crew" && <CrewList crew={tv.crew} />}
+                                        {activeTab === "cast" && <CastList cast={tv.cast} media="tv"/>}
+                                        {activeTab === "crew" && <CrewList crew={tv.crew} media="tv"/>}
                                         {activeTab === "details" && <p>Coming next: runtime, rating, language, etc.</p>}
                                         {activeTab === "genres" && <p>Coming next: genres, themes</p>}
                                         {activeTab === "releases" && <p>Coming next: release dates + certifications</p>}

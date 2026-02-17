@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
 // this function will return the crew member list
-function CrewList({crew = []}) {
+function CrewList({crew = [], media="movie"}) {
     // show only important roles
     const jobs = ["Director", "Producer", "Executive Producer", "Writer", "Casting", "Editor", "Director of Photography", 
                   "Screenplay", "Original Writer", "Novel",  "Original Music Composer", "Costume Design", 
@@ -62,7 +62,7 @@ function CrewList({crew = []}) {
                                     key={person.id}
                                     className="crew-person"
                                     onClick={() =>
-                                        navigate(`/person/${person.id}?job=${encodeURIComponent(job)}&media=tv`)
+                                        navigate(`/person/${person.id}?job=${encodeURIComponent(job)}&media=${media}`)
                                     }
                                 >
                                     {person.name}

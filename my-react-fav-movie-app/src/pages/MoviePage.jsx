@@ -272,8 +272,8 @@ function MoviePage() {
                                     </div>
                                     {/* this will determine what content is being displayed when the tab is active */}
                                     <div className="movie-tab-content">
-                                        {activeTab === "cast" && <CastList cast={movie.cast} />}
-                                        {activeTab === "crew" && <CrewList crew={movie.crew} />}
+                                        {activeTab === "cast" && <CastList cast={movie.cast} media="movie"/>}
+                                        {activeTab === "crew" && <CrewList crew={movie.crew} media="movie"/>}
                                         {activeTab === "details" && <p>Coming next: runtime, rating, language, etc.</p>}
                                         {activeTab === "genres" && <p>{movie.genre?.join(", ")}</p>}
                                         {activeTab === "releases" && <p>Coming next: release dates + certifications</p>}
