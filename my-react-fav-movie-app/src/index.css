@@ -458,9 +458,14 @@ body {
     display: flex;
 }
 
+.tv-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
 .tv-poster {
     width: 325px;
-    height: 100%;
     border-radius: 5px;
 }
 

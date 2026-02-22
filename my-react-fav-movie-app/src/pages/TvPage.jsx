@@ -28,6 +28,8 @@ function TvPage() {
     const [posterIndex, setPosterIndex] = useState(0);
     // activeTabe will store the currently active tab with the initial state displaying the cast
     const [activeTab, setActiveTab] = useState("cast");
+    // selectedSeason will store the season the user wants to view
+    const [selectedSeason, setSelectedSeason] = useState("");
 
     // this runs when the page loads or when the id changes
     useEffect(() => {
@@ -126,7 +128,8 @@ function TvPage() {
                     // pull the array of crew members
                     crew: data.credits?.crew || [],
                     // pull the different genres
-                    genres: data.genres ? data.genres.map((genre) => genre.name) : []
+                    genres: data.genres ? data.genres.map((genre) => genre.name) : [],
+                    seasonList: data.seasons || []
                 };
 
                 // store the object in state
@@ -162,16 +165,41 @@ function TvPage() {
                     {!loading && !error && tv && (
                         <>
                             <div className="tv-basic">
-                                {/* poster element */}
-                                {tv.poster ? (
-                                    <img
-                                        src={tv.poster}
-                                        alt={`${tv.title} poster`}
-                                        className="tv-poster"
-                                    />
-                                ) : (
-                                    <p>No Poster Available</p>
-                                )}
+                                <div className="tv-left">
+                                    {/* poster element */}
+                                    {tv.poster ? (
+                                        <img
+                                            src={tv.poster}
+                                            alt={`${tv.title} poster`}
+                                            className="tv-poster"
+                                        />
+                                    ) : (
+                                        <p>No Poster Available</p>
+                                    )}
+                                    {tv?.seasonList?.length > 0 && (
+                                        <div className="season-select">
+                                            <select
+                                                className="season-dropdown"
+                                                value={selectedSeason}
+                                                onChange={(e) => setSelectedSeason(e.target.value)}
+                                            >
+                                            <option value="">Select a season</option>
+
+                                            {tv.seasonList
+                                                // optional: remove specials (Season 0) if you want
+                                                .filter((s) => s.season_number !== 0)
+                                                .map((season) => (
+                                                <option key={season.id} value={season.season_number}>
+                                                    Season {season.season_number}
+                                                    {season.name && season.name !== `Season ${season.season_number}`
+                                                    ? ` — ${season.name}`
+                                                    : ""}
+                                                </option>
+                                            ))}
+                                            </select>
+                                        </div>
+                                    )}
+                                </div>
                                 <div className="tv-info">
                                     <h1>{tv.title}</h1>
                                     <h3>

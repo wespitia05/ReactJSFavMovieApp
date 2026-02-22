@@ -95,7 +95,8 @@ function ActorPage() {
         "Set Designer": "Films With Set Designs By",
         Casting: "Films Cast By", 
         Driver: "Films Driven By",
-        "Art Direction": "Films With Art Direction By"
+        "Art Direction": "Films With Art Direction By",
+        Novel: "Films With Novel Written By"
     };
 
     // this constant stores all the role texts based on the job of the tv show person
