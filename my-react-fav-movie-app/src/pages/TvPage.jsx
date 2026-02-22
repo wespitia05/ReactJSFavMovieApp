@@ -177,14 +177,9 @@ function TvPage() {
                                         <p>No Poster Available</p>
                                     )}
                                     {tv?.seasonList?.length > 0 && (
-                                        <div className="season-select">
-                                            <select
-                                                className="season-dropdown"
-                                                value={selectedSeason}
-                                                onChange={(e) => setSelectedSeason(e.target.value)}
-                                            >
-                                            <option value="">Select a season</option>
-
+                                        <div className="season-select-container">
+                                            <select className="season-select" value={selectedSeason} onChange={(e) => setSelectedSeason(e.target.value)}>
+                                            <option value="">Select A Season</option>
                                             {tv.seasonList
                                                 // optional: remove specials (Season 0) if you want
                                                 .filter((s) => s.season_number !== 0)

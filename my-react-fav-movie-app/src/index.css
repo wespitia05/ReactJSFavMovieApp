@@ -469,6 +469,27 @@ body {
     border-radius: 5px;
 }
 
+.season-select-container {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    padding-bottom: 8px;
+    padding-top: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.season-select {
+    font-family: monospace;
+    background: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+.season-select:focus {
+    outline: none;
+}
+
 .tv-info {
     display: flex;
     flex-direction: column;
