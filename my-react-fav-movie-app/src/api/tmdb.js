@@ -194,5 +194,32 @@ async function getTvImages(tvId) {
     return data;
 }
 
+// async so we can use await and returns an object
+// our parameter is tvId which is what we use to get info on the tv show selected
+async function getTvSeasonDetails(tvId, seasonNumber) {
+    // build our full request url
+    // ${base_url}/tv/${tvId}/season/{seasonNumber} is the endpoint that searches across tv show seasons
+    // "?" starts the query parameters
+    // language=en-US returns english text
+    const url = `${base_url}/tv/${tvId}/season/${seasonNumber}?` +
+    `language=en-US&append_to_response=credits,content_ratings,aggregate_credits&api_key=${api}`;
+
+    // res is our response object, sends an http request to the tmdb
+    // await pauses until the response comes back
+    const res = await fetch(url);
+
+    // res.ok is true for status codes 200-299
+    // if res.ok is not true...
+    if (!res.ok) {
+        // if tmdb returns 401, 404, etc, we throw an error
+        throw new Error("TMDB TV season details failed")
+    };
+
+    // converts the response body into a json, data becomes the parsed json
+    const data = await res.json();
+    // return the parsed json to whoever calls getTvDetails
+    return data;
+}
+
 // exports function for other files to import
-export {searchMulti, getMovieDetails, getImages, getActorDetails, getPersonCredits, getTvDetails, getTvImages}
+export {searchMulti, getMovieDetails, getImages, getActorDetails, getPersonCredits, getTvDetails, getTvImages, getTvSeasonDetails}
