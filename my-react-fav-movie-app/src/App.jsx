@@ -4,6 +4,7 @@ import MoviePage from "./pages/MoviePage.jsx";
 import SearchResults from "./pages/SearchResults.jsx";
 import PersonPage from "./pages/PersonPage.jsx";
 import TvPage from "./pages/TvPage.jsx";
+import TvSeasonPage from "./pages/TvSeasonPage.jsx";
 
 function App() {
     return (
@@ -14,6 +15,7 @@ function App() {
                 <Route path="/search" element={<SearchResults />} />
                 <Route path="/person/:id" element={<PersonPage />} />
                 <Route path="/tv/:id" element={<TvPage />} />
+                <Route path="/tv/:id/season/:seasonNumber" element={<TvSeasonPage />} />
             </Routes>
         </BrowserRouter>
     );    
