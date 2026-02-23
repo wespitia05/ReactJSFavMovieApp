@@ -181,6 +181,10 @@ function TvPage() {
                                             <select className="season-select" value={selectedSeason} 
                                                 onChange={(e) => {
                                                     const seasonNumber = e.target.value;
+                                                    if (seasonNumber === "overall") {
+                                                        navigate(`/tv/${id}`);
+                                                        return;
+                                                    }
                                                     setSelectedSeason(seasonNumber);
                                                   
                                                     if (seasonNumber) {
@@ -188,7 +192,7 @@ function TvPage() {
                                                     }
                                                 }}
                                             >
-                                            <option value="">Select A Season</option>
+                                            <option value="overall">Select A Season</option>
                                             {tv.seasonList
                                                 // optional: remove specials (Season 0) if you want
                                                 .filter((s) => s.season_number !== 0)
