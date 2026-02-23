@@ -2,12 +2,15 @@ import { useParams } from "react-router-dom";
 import { getTvDetails, getTvImages, getTvSeasonDetails } from "../api/tmdb";
 import { useEffect, useState } from "react";
 import SearchBar from "../components/SearchBar";
+import CastList from "../components/CastList";
+import CrewList from "../components/CrewList";
 
 function TvSeasonPage() {
     // gets the tv show id and season number from the url
     const {id, seasonNumber} = useParams();
 
     const [season, setSeason] = useState(null);
+    const [tv, setTv] = useState(null);
     const [selectedSeason, setSelectedSeason] = useState(null);
     const [backdrop, setBackdrop] = useState([]);
     const [backdropIndex, setBackdropIndex] = useState(0);
@@ -15,6 +18,7 @@ function TvSeasonPage() {
     const [posterIndex, setPosterIndex] = useState(0);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
+    const [activeTab, setActiveTab] = useState("cast");
 
     useEffect(() => {
         async function loadSeason() {
@@ -155,6 +159,43 @@ function TvSeasonPage() {
                                     </p>
                                     <h3><i>{season.tagline}</i></h3>
                                     <h3>{season.summary}</h3>
+                                    <div className="tv-tabs">
+                                        {/* these tab buttons control what is currently being displayed */}
+                                        <button
+                                            className={`tv-tab ${activeTab === "cast" ? "active" : ""}`}
+                                            onClick={() => setActiveTab("cast")}
+                                            type="button">Cast</button>
+                                        <button
+                                            className={`tv-tab ${activeTab === "crew" ? "active" : ""}`}
+                                            onClick={() => setActiveTab("crew")}
+                                            type="button">Crew</button>
+                                        <button
+                                            className={`tv-tab ${activeTab === "details" ? "active" : ""}`}
+                                            onClick={() => setActiveTab("details")}
+                                            type="button">Details</button>
+                                        <button
+                                            className={`tv-tab ${activeTab === "genres" ? "active" : ""}`}
+                                            onClick={() => setActiveTab("genres")}
+                                            type="button">Genres</button>
+
+                                        <button
+                                            className={`tv-tab ${activeTab === "releases" ? "active" : ""}`}
+                                            onClick={() => setActiveTab("releases")}
+                                            type="button">Releases</button>
+                                    </div>
+                                </div>
+                                <div className="movie-modal">
+                                    <div className="movie-modal-content">
+                                        <ul>
+                                            <li>Rating: ⭐️⭐️⭐️⭐️⭐️</li>
+                                            <hr />
+                                            <li>Change Poster</li>
+                                            <hr />
+                                            <li>Change Backdrop</li>
+                                            <hr />
+                                            <li>Streaming</li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </>
