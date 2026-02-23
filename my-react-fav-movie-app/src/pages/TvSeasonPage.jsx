@@ -72,7 +72,8 @@ function TvSeasonPage() {
                     tagline: data.tagline || "No Tagline Available",   
                     summary: seasonData.overview || data.overview || "No Overview Available",
                     creators,
-                    episodes: seasonData.episodes?.length || 0
+                    episodes: seasonData.episodes?.length || 0,
+                    genres: data.genres ? data.genres.map((genre) => genre.name) : []
                 };
             
                 setSeason(tvSeasonData);
@@ -146,6 +147,11 @@ function TvSeasonPage() {
                                         {season.episodes > 0 && <span>{season.episodes} Episodes</span>}
                                         {season.number !== undefined && season.episodes > 0 && season.rating && <span> • </span>}
                                         {season.rating && <span className="tv-rating">{season.rating}</span>}
+                                    </p>
+                                    <p>
+                                        {season?.genres?.length > 0 && (
+                                            <span>{season.genres.join(", ")}</span>
+                                        )}
                                     </p>
                                     <h3><i>{season.tagline}</i></h3>
                                     <h3>{season.summary}</h3>
