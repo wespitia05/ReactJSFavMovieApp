@@ -4,10 +4,12 @@ import { useEffect, useState } from "react";
 import SearchBar from "../components/SearchBar";
 import CastList from "../components/CastList";
 import CrewList from "../components/CrewList";
+import { useNavigate } from "react-router-dom";
 
 function TvSeasonPage() {
     // gets the tv show id and season number from the url
     const {id, seasonNumber} = useParams();
+    const navigate = useNavigate();
 
     const [season, setSeason] = useState(null);
     const [tv, setTv] = useState(null);
@@ -77,7 +79,8 @@ function TvSeasonPage() {
                     summary: seasonData.overview || data.overview || "No Overview Available",
                     creators,
                     episodes: seasonData.episodes?.length || 0,
-                    genres: data.genres ? data.genres.map((genre) => genre.name) : []
+                    genres: data.genres ? data.genres.map((genre) => genre.name) : [],
+                    seasonList: data.seasons || []
                 };
             
                 setSeason(tvSeasonData);
@@ -118,6 +121,33 @@ function TvSeasonPage() {
                                         />
                                     ) : (
                                         <p>No Poster Available</p>
+                                    )}
+                                    {season?.seasonList?.length > 0 && (
+                                        <div className="season-select-container">
+                                            <select className="season-select" value={selectedSeason} 
+                                                onChange={(e) => {
+                                                    const seasonNumber = e.target.value;
+                                                    setSelectedSeason(seasonNumber);
+                                                  
+                                                    if (seasonNumber) {
+                                                      navigate(`/tv/${id}/season/${seasonNumber}`);
+                                                    }
+                                                }}
+                                            >
+                                            <option value="">Select A Season</option>
+                                            {season.seasonList
+                                                // optional: remove specials (Season 0) if you want
+                                                .filter((s) => s.season_number !== 0)
+                                                .map((season) => (
+                                                <option key={season.id} value={season.season_number}>
+                                                    Season {season.season_number}
+                                                    {season.name && season.name !== `Season ${season.season_number}`
+                                                    ? ` — ${season.name}`
+                                                    : ""}
+                                                </option>
+                                            ))}
+                                            </select>
+                                        </div>
                                     )}
                                 </div>
                                 <div className="tv-info">
