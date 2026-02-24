@@ -36,6 +36,22 @@ function TvSeasonPage() {
 
                 // 3) Season-level credits
                 const credits = await getTvSeasonCredits(id, seasonNumber);
+
+                // season cast and crew is saved a bit differently
+                // these two constants basically loop through more cast and crew members,
+                // returning the cast name and their character, and the crew name and job title
+                const seasonCast = (credits.cast || []).map((person) => ({
+                    id: person.id,
+                    name: person.name,
+                    character: person.roles?.[0]?.character || "",
+                }));
+                const seasonCrew = (credits.crew || []).flatMap((person) =>
+                    (person.jobs || []).map((j) => ({
+                        id: person.id,
+                        name: person.name,
+                        job: j.job,
+                    }))
+                );
             
                 // --- certification (US rating) from SHOW ---
                 let certification = "";
@@ -84,8 +100,8 @@ function TvSeasonPage() {
                     episodes: seasonData.episodes?.length || 0,
                     genres: data.genres ? data.genres.map((genre) => genre.name) : [],
                     seasonList: data.seasons || [],
-                    cast: credits.cast || [], 
-                    crew: credits.crew || []
+                    cast: seasonCast, 
+                    crew: seasonCrew
                 };
             
                 setSeason(tvSeasonData);
@@ -221,6 +237,14 @@ function TvSeasonPage() {
                                             className={`tv-tab ${activeTab === "releases" ? "active" : ""}`}
                                             onClick={() => setActiveTab("releases")}
                                             type="button">Releases</button>
+                                    </div>
+                                    {/* this will determine what content is being displayed when the tab is active */}
+                                    <div className="tv-tab-content">
+                                        {activeTab === "cast" && <CastList cast={season.cast} media="tv"/>}
+                                        {activeTab === "crew" && <CrewList crew={season.crew} media="tv"/>}
+                                        {activeTab === "details" && <p>Coming next: runtime, rating, language, etc.</p>}
+                                        {activeTab === "genres" && <p>Coming next: genres, themes</p>}
+                                        {activeTab === "releases" && <p>Coming next: release dates + certifications</p>}
                                     </div>
                                 </div>
                                 <div className="movie-modal">

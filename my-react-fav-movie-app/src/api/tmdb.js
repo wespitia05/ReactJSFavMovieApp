@@ -228,7 +228,7 @@ async function getTvSeasonCredits(tvId, seasonNumber) {
     // ${base_url}/tv/${tvId}/season/{seasonNumber}/credits is the endpoint that searches across tv show seasons
     // "?" starts the query parameters
     // language=en-US returns english text
-    const url = `${base_url}/tv/${tvId}/season/${seasonNumber}/credits?` +
+    const url = `${base_url}/tv/${tvId}/season/${seasonNumber}/aggregate_credits?` +
     `language=en-US&api_key=${api}`;
 
     // res is our response object, sends an http request to the tmdb
