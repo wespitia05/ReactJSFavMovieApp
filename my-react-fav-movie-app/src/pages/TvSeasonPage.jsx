@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { getTvDetails, getTvImages, getTvSeasonDetails } from "../api/tmdb";
+import { getTvDetails, getTvImages, getTvSeasonDetails, getTvSeasonCredits } from "../api/tmdb";
 import { useEffect, useState } from "react";
 import SearchBar from "../components/SearchBar";
 import CastList from "../components/CastList";
@@ -33,6 +33,9 @@ function TvSeasonPage() {
             
                 // 2) Season-level data (season number, poster, overview, episodes, etc.)
                 const seasonData = await getTvSeasonDetails(id, seasonNumber);
+
+                // 3) Season-level credits
+                const credits = await getTvSeasonCredits(id, seasonNumber);
             
                 // --- certification (US rating) from SHOW ---
                 let certification = "";
@@ -80,7 +83,9 @@ function TvSeasonPage() {
                     creators,
                     episodes: seasonData.episodes?.length || 0,
                     genres: data.genres ? data.genres.map((genre) => genre.name) : [],
-                    seasonList: data.seasons || []
+                    seasonList: data.seasons || [],
+                    cast: credits.cast || [], 
+                    crew: credits.crew || []
                 };
             
                 setSeason(tvSeasonData);
