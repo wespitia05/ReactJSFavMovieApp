@@ -323,6 +323,31 @@ body {
     color: hsl(204, 92%, 55%);
 }
 
+/* DETAILS LIST STYLING */
+.details-row {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 5px 40px;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.details-label {
+    font-size: 1rem;
+}
+
+.details-value {
+    font-weight: bold;
+    cursor: pointer;
+    transition: .25s ease;
+}
+
+.details-value:hover {
+    color: hsl(204, 92%, 55%);
+}
+
 /* ACTOR PAGE STYLING */
 .actor-basic {
     padding: 24px;
