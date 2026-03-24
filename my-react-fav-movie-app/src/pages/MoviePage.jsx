@@ -5,6 +5,7 @@ import { getMovieDetails, getImages } from "../api/tmdb";
 import CastList from "../components/CastList";
 import CrewList from "../components/CrewList";
 import { useNavigate } from "react-router-dom";
+import Details from "../components/Details";
 
 function MoviePage() {
     // get the movie id from the url (/movie/:id)
@@ -143,7 +144,18 @@ function MoviePage() {
                     rating: certification,
                     backdrop: currentBackdropUrl,
                     cast: data.credits?.cast || [],
-                    crew: data.credits?.crew || []
+                    crew: data.credits?.crew || [],
+                    studios: data.production_companies
+                        ? data.production_companies.map((studio) => studio.name)
+                        : [],
+
+                    countries: data.production_countries
+                        ? data.production_countries.map((country) => country.name)
+                        : [],
+
+                    languages: data.spoken_languages
+                        ? data.spoken_languages.map((language) => language.english_name)
+                        : []
                 };
 
                 // store the object in state
