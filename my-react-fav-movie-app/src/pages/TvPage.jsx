@@ -5,6 +5,7 @@ import { getTvDetails, getTvImages } from "../api/tmdb";
 import CastList from "../components/CastList";
 import CrewList from "../components/CrewList";
 import { useNavigate } from "react-router-dom";
+import Details from "../components/Details";
 
 function TvPage() {
     // get the tv id from the url (/tv/:id)
@@ -129,7 +130,11 @@ function TvPage() {
                     crew: data.credits?.crew || [],
                     // pull the different genres
                     genres: data.genres ? data.genres.map((genre) => genre.name) : [],
-                    seasonList: data.seasons || []
+                    seasonList: data.seasons || [],
+                    // pull tv show details (network, country and languages)
+                    studios: data.networks ? data.networks.map((network) => network.name) : [],
+                    countries: data.origin_country || [],
+                    languages: data.spoken_languages ? data.spoken_languages.map((language) => language.english_name) : []
                 };
 
                 // store the object in state

@@ -145,6 +145,7 @@ function MoviePage() {
                     backdrop: currentBackdropUrl,
                     cast: data.credits?.cast || [],
                     crew: data.credits?.crew || [],
+                    // pull movie details (studios, country and languages)
                     studios: data.production_companies
                         ? data.production_companies.map((studio) => studio.name)
                         : [],
