@@ -148,11 +148,9 @@ function MoviePage() {
                     studios: data.production_companies
                         ? data.production_companies.map((studio) => studio.name)
                         : [],
-
                     countries: data.production_countries
                         ? data.production_countries.map((country) => country.name)
                         : [],
-
                     languages: data.spoken_languages
                         ? data.spoken_languages.map((language) => language.english_name)
                         : []
@@ -286,7 +284,7 @@ function MoviePage() {
                                     <div className="movie-tab-content">
                                         {activeTab === "cast" && <CastList cast={movie.cast} media="movie"/>}
                                         {activeTab === "crew" && <CrewList crew={movie.crew} media="movie"/>}
-                                        {activeTab === "details" && <p>Coming next: runtime, rating, language, etc.</p>}
+                                        {activeTab === "details" && <Details studios={movie.studios} countries={movie.countries} languages={movie.languages}/>}
                                         {activeTab === "genres" && <p>{movie.genre?.join(", ")}</p>}
                                         {activeTab === "releases" && <p>Coming next: release dates + certifications</p>}
                                     </div>
