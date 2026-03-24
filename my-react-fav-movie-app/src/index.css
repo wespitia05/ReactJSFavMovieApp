@@ -338,13 +338,13 @@ body {
     font-size: 1rem;
 }
 
-.details-value {
+.details-item {
     font-weight: bold;
     cursor: pointer;
     transition: .25s ease;
 }
 
-.details-value:hover {
+.details-item:hover {
     color: hsl(204, 92%, 55%);
 }
 
