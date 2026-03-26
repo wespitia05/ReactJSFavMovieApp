@@ -5,6 +5,7 @@ import SearchBar from "../components/SearchBar";
 import CastList from "../components/CastList";
 import CrewList from "../components/CrewList";
 import { useNavigate } from "react-router-dom";
+import Details from "../components/Details";
 
 function TvSeasonPage() {
     // gets the tv show id and season number from the url
@@ -101,7 +102,11 @@ function TvSeasonPage() {
                     genres: data.genres ? data.genres.map((genre) => genre.name) : [],
                     seasonList: data.seasons || [],
                     cast: seasonCast, 
-                    crew: seasonCrew
+                    crew: seasonCrew,
+                    // pull tv show details (network, country and languages)
+                    studios: data.networks ? data.networks.map((network) => network.name) : [],
+                    countries: data.origin_country || [],
+                    languages: data.spoken_languages ? data.spoken_languages.map((language) => language.english_name) : []
                 };
             
                 setSeason(tvSeasonData);
