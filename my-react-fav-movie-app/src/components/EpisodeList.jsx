@@ -10,7 +10,7 @@ function EpisodeList({ episodes = [] }) {
         <div className="episode-list">
             {episodes.map((episode) => (
                 <div key={episode.id} className="episode-item">
-                    <span>
+                    <span className="episode-number">
                         {episode.episode_number}
                     </span>
                     <span className="episode-title">

@@ -348,6 +348,18 @@ body {
     color: hsl(204, 92%, 55%);
 }
 
+/* EPISODES LIST STYLING */
+.episode-item {
+    list-style: none;
+    padding: 0;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.episode-number {
+    padding-right: 10px;
+}
+
 /* ACTOR PAGE STYLING */
 .actor-basic {
     padding: 24px;
