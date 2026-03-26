@@ -5,7 +5,7 @@ import SearchBar from "../components/SearchBar";
 import CastList from "../components/CastList";
 import CrewList from "../components/CrewList";
 import { useNavigate } from "react-router-dom";
-import Details from "../components/Details";
+import EpisodeList from "../components/EpisodeList";
 
 function TvSeasonPage() {
     // gets the tv show id and season number from the url
@@ -103,10 +103,8 @@ function TvSeasonPage() {
                     seasonList: data.seasons || [],
                     cast: seasonCast, 
                     crew: seasonCrew,
-                    // pull tv show details (network, country and languages)
-                    studios: data.networks ? data.networks.map((network) => network.name) : [],
-                    countries: data.origin_country || [],
-                    languages: data.spoken_languages ? data.spoken_languages.map((language) => language.english_name) : []
+                    // pull tv season episode list
+                    episodes: seasonData.episodes || []
                 };
             
                 setSeason(tvSeasonData);
@@ -230,9 +228,9 @@ function TvSeasonPage() {
                                             onClick={() => setActiveTab("crew")}
                                             type="button">Crew</button>
                                         <button
-                                            className={`tv-tab ${activeTab === "details" ? "active" : ""}`}
-                                            onClick={() => setActiveTab("details")}
-                                            type="button">Details</button>
+                                            className={`tv-tab ${activeTab === "episodes" ? "active" : ""}`}
+                                            onClick={() => setActiveTab("episodes")}
+                                            type="button">Episodes</button>
                                         <button
                                             className={`tv-tab ${activeTab === "genres" ? "active" : ""}`}
                                             onClick={() => setActiveTab("genres")}
@@ -247,7 +245,7 @@ function TvSeasonPage() {
                                     <div className="tv-tab-content">
                                         {activeTab === "cast" && <CastList cast={season.cast} media="tv"/>}
                                         {activeTab === "crew" && <CrewList crew={season.crew} media="tv"/>}
-                                        {activeTab === "details" && <Details studios={season.studios} countries={season.countries} languages={season.languages}/>}
+                                        {activeTab === "episodes" && <EpisodeList episodes={season.episodes}/>}
                                         {activeTab === "genres" && <p>Coming next: genres, themes</p>}
                                         {activeTab === "releases" && <p>Coming next: release dates + certifications</p>}
                                     </div>

@@ -1,3 +1,5 @@
+// this function will handle returning details on a movie or tv show
+// will display the studio, country and language information
 function Details({studios = [], countries = [], languages = []}) {
     // if nothing exists, render nothing
     if (studios.length === 0 && countries.length === 0 && languages.length === 0) {
