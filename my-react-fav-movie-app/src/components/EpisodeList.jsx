@@ -34,6 +34,9 @@ function EpisodeList({ episodes = [] }) {
                             <span className="episode-title">
                                 {" "} {episode.name}
                             </span>
+                            <span className="episode-rating">
+                                {episode.vote_average.toFixed(1)}
+                            </span>
 
                             <div className="episode-meta">
                                 {episode.air_date && (

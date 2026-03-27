@@ -366,6 +366,7 @@ body {
 .episode-title {
     font-size: 1rem;
     font-weight: bold;
+    padding-right: 15px;
 }
 
 .episode-still, .episode-still-placeholder {
@@ -374,6 +375,7 @@ body {
     border-radius: 5px;
     object-fit: cover;
     flex-shrink: 0;
+    align-self: center;
 }
 
 .episode-still-placeholder {
@@ -394,6 +396,16 @@ body {
     font-size: 0.85rem;
     line-height: 1.2;
     opacity: 0.9;
+    margin-bottom: 0;
+}
+
+.episode-rating {
+    padding: 4px 8px;
+    border-radius: 6px;
+    border: 1px solid hsl(0, 0%, 35%);
+    background: hsl(0, 0%, 15%);
+    color: hsl(0, 0%, 90%);
+    font-size: 0.8rem;
 }
 
 /* ACTOR PAGE STYLING */
