@@ -8,16 +8,36 @@ function EpisodeList({ episodes = [] }) {
 
     return(
         <div className="episode-list">
-            {episodes.map((episode) => (
-                <div key={episode.id} className="episode-item">
-                    <span className="episode-number">
-                        {episode.episode_number}
-                    </span>
-                    <span className="episode-title">
-                        {" "}{episode.name}
-                    </span>
-                </div>
-            ))}
+            {episodes.map((episode) => {
+                const stillUrl = episode.still_path
+                    ? `https://image.tmdb.org/t/p/original${episode.still_path}`
+                    : null;
+
+                return (
+                    <div key={episode.id} className="episode-item">
+                        {stillUrl ? (
+                            <img
+                                src={stillUrl}
+                                alt={`${episode.name} still`}
+                                className="episode-still"
+                            />
+                        ) : (
+                            <div className="episode-still-placeholder">
+                                No Image
+                            </div>
+                        )}
+
+                        <div className="episode-info">
+                            <span className="episode-number">
+                                {episode.episode_number}
+                            </span>
+                            <span className="episode-title">
+                                {" "} {episode.name}
+                            </span>
+                        </div>
+                    </div>
+                );
+            })}
         </div>
     );
 }

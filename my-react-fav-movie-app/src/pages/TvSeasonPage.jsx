@@ -204,7 +204,7 @@ function TvSeasonPage() {
                                         )}
                                     </h3>
                                     <p>
-                                        {season.number !== undefined && <span>Season {season.number}</span>}
+                                        {season.number !== undefined && <span>Season {season.number} • </span>}
                                         {season.number !== undefined && season.episodes > 0 && <span> • </span>}
                                         {season.episodes > 0 && <span>{season.episodes} Episodes</span>}
                                         {season.number !== undefined && season.episodes > 0 && season.rating && <span> • </span>}

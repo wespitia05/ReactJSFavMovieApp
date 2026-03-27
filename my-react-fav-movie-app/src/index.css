@@ -351,13 +351,30 @@ body {
 /* EPISODES LIST STYLING */
 .episode-item {
     list-style: none;
+    display: flex;
+    gap: 15px;
     padding: 0;
-    padding: 6px 0;
+    padding: 15px 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .episode-number {
     padding-right: 10px;
+}
+
+.episode-still, .episode-still-placeholder {
+    width: 200px;
+    border-radius: 5px;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.episode-still-placeholder {
+    background-color: #333;
+    color: #aaa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* ACTOR PAGE STYLING */
