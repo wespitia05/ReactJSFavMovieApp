@@ -34,6 +34,20 @@ function EpisodeList({ episodes = [] }) {
                             <span className="episode-title">
                                 {" "} {episode.name}
                             </span>
+
+                            <div className="episode-meta">
+                                {episode.air_date && (
+                                        <span>
+                                            {new Date(episode.air_date).toLocaleDateString("en-US", {
+                                                year: "numeric",
+                                                month: "long",
+                                                day: "numeric"
+                                            })}
+                                        </span>
+                                    )}
+                                {episode.runtime && episode.air_date && <span> • </span>}
+                                {episode.runtime && <span>{episode.runtime} min</span>}   
+                            </div>
                         </div>
                     </div>
                 );

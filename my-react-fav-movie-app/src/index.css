@@ -360,6 +360,12 @@ body {
 
 .episode-number {
     padding-right: 10px;
+    font-size: 1rem;
+}
+
+.episode-title {
+    font-size: 1rem;
+    font-weight: bold;
 }
 
 .episode-still, .episode-still-placeholder {
@@ -375,6 +381,11 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.episode-meta {
+    margin-top: 10px;
+    font-size: 0.8rem;
 }
 
 /* ACTOR PAGE STYLING */
