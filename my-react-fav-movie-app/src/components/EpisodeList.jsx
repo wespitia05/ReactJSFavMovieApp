@@ -48,6 +48,12 @@ function EpisodeList({ episodes = [] }) {
                                 {episode.runtime && episode.air_date && <span> • </span>}
                                 {episode.runtime && <span>{episode.runtime} min</span>}   
                             </div>
+
+                            {episode.overview && (
+                                <p className="episode-overview">
+                                    {episode.overview}
+                                </p>
+                            )}
                         </div>
                     </div>
                 );
