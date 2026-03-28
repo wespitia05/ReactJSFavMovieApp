@@ -272,6 +272,7 @@ body {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 5px 40px;
+    margin-top: 2px;
 }
 
 .cast-item {
@@ -302,6 +303,7 @@ body {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 5px 40px;
+    margin-top: 2px;
 }
 
 .crew-item {
@@ -332,6 +334,7 @@ body {
     gap: 5px 40px;
     padding: 6px 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    margin-top: 2px;
 }
 
 .details-label {
@@ -345,6 +348,32 @@ body {
 }
 
 .details-item:hover {
+    color: hsl(204, 92%, 55%);
+}
+
+/* GENRES LIST STYLING */
+.genres-list {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 5px 40px;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    margin-top: 2px;
+}
+
+.genres-label {
+    font-size: 1rem;
+}
+
+.genre-item {
+    font-weight: bold;
+    cursor: pointer;
+    transition: .25s ease;
+}
+
+.genre-item:hover {
     color: hsl(204, 92%, 55%);
 }
 
