@@ -299,7 +299,7 @@ function TvPage() {
                                         {activeTab === "cast" && <CastList cast={tv.cast} media="tv"/>}
                                         {activeTab === "crew" && <CrewList crew={tv.crew} media="tv"/>}
                                         {activeTab === "details" && <Details studios={tv.studios} countries={tv.countries} languages={tv.languages}/>}
-                                        {activeTab === "genres" && <p>Coming next: genres, themes</p>}
+                                        {activeTab === "genres" && <Genres genres={tv.genres} keywords={tv.keywords}/>}
                                         {activeTab === "releases" && <p>Coming next: release dates + certifications</p>}
                                     </div>
                                 </div>

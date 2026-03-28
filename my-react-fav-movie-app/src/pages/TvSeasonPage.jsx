@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { getTvDetails, getTvImages, getTvSeasonDetails, getTvSeasonCredits } from "../api/tmdb";
+import { getTvDetails, getTvImages, getTvSeasonDetails, getTvSeasonCredits, getTvKeywords } from "../api/tmdb";
 import { useEffect, useState } from "react";
 import SearchBar from "../components/SearchBar";
 import CastList from "../components/CastList";
@@ -87,6 +87,11 @@ function TvSeasonPage() {
                 const currentBackdropUrl = currentBackdropPath
                     ? `https://image.tmdb.org/t/p/original${currentBackdropPath}`
                     : null;
+
+                // awaits api call to retrieve keywords object
+                const keywordData = await getTvKeywords(id);
+                // returns list of keywords
+                const keywordList = keywordData.results ? keywordData.results.map((keyword) => keyword.name) : [];
             
                 const tvSeasonData = {
                     title: data.name,
@@ -104,7 +109,9 @@ function TvSeasonPage() {
                     cast: seasonCast, 
                     crew: seasonCrew,
                     // pull tv season episode list
-                    episodes: seasonData.episodes || []
+                    episodes: seasonData.episodes || [],
+                    // pulls keywords from selected movie
+                    keywords: keywordList
                 };
             
                 setSeason(tvSeasonData);
@@ -246,7 +253,7 @@ function TvSeasonPage() {
                                         {activeTab === "cast" && <CastList cast={season.cast} media="tv"/>}
                                         {activeTab === "crew" && <CrewList crew={season.crew} media="tv"/>}
                                         {activeTab === "episodes" && <EpisodeList episodes={season.episodes}/>}
-                                        {activeTab === "genres" && <p>Coming next: genres, themes</p>}
+                                        {activeTab === "genres" && <Genres genres={season.genres} keywords={season.keywords}/>}
                                         {activeTab === "releases" && <p>Coming next: release dates + certifications</p>}
                                     </div>
                                 </div>
