@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import SearchBar from "../components/SearchBar";
-import { getMovieDetails, getImages } from "../api/tmdb";
+import { getMovieDetails, getImages, getMovieKeywords } from "../api/tmdb";
 import CastList from "../components/CastList";
 import CrewList from "../components/CrewList";
 import { useNavigate } from "react-router-dom";
@@ -121,6 +121,11 @@ function MoviePage() {
                     ? `https://image.tmdb.org/t/p/original${currentBackdropPath}`
                     : null;
 
+                // awaits api call to retrieve keywords object
+                const keywordData = await getMovieKeywords(id);
+                // returns list of keywords
+                const keywordList = keywordData.keywords ? keywordData.keywords.map((keyword) => keyword.name) : [];
+
                 // create object of movie data we want to display
                 const movieData = {
                     // pull movie title directly from tmbd
@@ -154,7 +159,9 @@ function MoviePage() {
                         : [],
                     languages: data.spoken_languages
                         ? data.spoken_languages.map((language) => language.english_name)
-                        : []
+                        : [],
+                    // pulls keywords from selected movie
+                    keywords: keywordList
                 };
 
                 // store the object in state
