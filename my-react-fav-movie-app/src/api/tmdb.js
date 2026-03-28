@@ -131,7 +131,7 @@ async function getPersonCredits(personId) {
     // if res.ok is not true...
     if (!res.ok) {
         // if tmdb returns 401, 404, etc, we throw an error
-        throw new Error("TMDB actor details failed");
+        throw new Error("TMDB actor credits failed");
     }
 
     // converts the response body into a json, data becomes the parsed json
@@ -185,7 +185,7 @@ async function getTvImages(tvId) {
     // if res.ok is not true...
     if (!res.ok) {
         // if tmdb returns 401, 404, etc, we throw an error
-        throw new Error("TMDB backdrop images failed");
+        throw new Error("TMDB tv backdrop images failed");
     }
 
     // converts the response body into a json, data becomes the parsed json
@@ -239,7 +239,7 @@ async function getTvSeasonCredits(tvId, seasonNumber) {
     // if res.ok is not true...
     if (!res.ok) {
         // if tmdb returns 401, 404, etc, we throw an error
-        throw new Error("TMDB TV season details failed")
+        throw new Error("TMDB TV season credits failed")
     };
 
     // converts the response body into a json, data becomes the parsed json
@@ -264,7 +264,32 @@ async function getMovieKeywords(movieId) {
     // if res.ok is not true...
     if (!res.ok) {
         // if tmdb returns 401, 404, etc, we throw an error
-        throw new Error("TMDB movie details failed")
+        throw new Error("TMDB movie keywords failed")
+    };
+
+    // converts the response body into a json, data becomes the parsed json
+    const data = await res.json();
+    // return the parsed json to whoever calls getMovieDetails
+    return data;
+}
+
+// async so we can use await and returns an object
+// our parameter is tvId which is what we use to get info on the tv show selected
+async function getTvKeywords(tvId) {
+    // build our full request url
+    // ${base_url}/movie/${movieId} is the endpoint that searches across movies
+    // "?" starts the query parameters
+    const url = `${base_url}/tv/${tvId}/keywords?api_key=${api}`;
+
+    // res is our response object, sends an http request to the tmdb
+    // await pauses until the response comes back
+    const res = await fetch(url);
+
+    // res.ok is true for status codes 200-299
+    // if res.ok is not true...
+    if (!res.ok) {
+        // if tmdb returns 401, 404, etc, we throw an error
+        throw new Error("TMDB tv keywords failed")
     };
 
     // converts the response body into a json, data becomes the parsed json
@@ -274,4 +299,6 @@ async function getMovieKeywords(movieId) {
 }
 
 // exports function for other files to import
-export {searchMulti, getMovieDetails, getImages, getActorDetails, getPersonCredits, getTvDetails, getTvImages, getTvSeasonDetails, getTvSeasonCredits, getMovieKeywords}
+export {searchMulti, getMovieDetails, getImages, getActorDetails, getPersonCredits, 
+        getTvDetails, getTvImages, getTvSeasonDetails, getTvSeasonCredits, getMovieKeywords, 
+        getTvKeywords}

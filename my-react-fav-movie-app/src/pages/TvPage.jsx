@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import SearchBar from "../components/SearchBar";
-import { getTvDetails, getTvImages } from "../api/tmdb";
+import { getTvDetails, getTvImages, getTvKeywords } from "../api/tmdb";
 import CastList from "../components/CastList";
 import CrewList from "../components/CrewList";
 import { useNavigate } from "react-router-dom";
 import Details from "../components/Details";
+import Genres from "../components/Genres";
 
 function TvPage() {
     // get the tv id from the url (/tv/:id)
@@ -100,6 +101,11 @@ function TvPage() {
                     ? `https://image.tmdb.org/t/p/original${currentBackdropPath}`
                     : null;
 
+                // awaits api call to retrieve keywords object
+                const keywordData = await getTvKeywords(id);
+                // returns list of keywords
+                const keywordList = keywordData.results ? keywordData.results.map((keyword) => keyword.name) : [];
+
                 // create object of tv show data we want to display
                 const tvData = {
                     // pull movie title directly from tmbd
@@ -134,7 +140,9 @@ function TvPage() {
                     // pull tv show details (network, country and languages)
                     studios: data.networks ? data.networks.map((network) => network.name) : [],
                     countries: data.origin_country || [],
-                    languages: data.spoken_languages ? data.spoken_languages.map((language) => language.english_name) : []
+                    languages: data.spoken_languages ? data.spoken_languages.map((language) => language.english_name) : [],
+                    // pulls keywords from selected movie
+                    keywords: keywordList
                 };
 
                 // store the object in state
