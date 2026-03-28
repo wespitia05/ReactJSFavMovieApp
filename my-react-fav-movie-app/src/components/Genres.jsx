@@ -1,3 +1,8 @@
+// this function will capitalize the first letter of each word
+function capitalizeWords(text) {
+    return text.replace (/\b\w/g, (char) =>  char.toUpperCase());
+}
+
 // this function will handle returning genres and themes
 // on the movie selected
 function Genres({ genres = [], keywords = []}) {
@@ -28,7 +33,7 @@ function Genres({ genres = [], keywords = []}) {
                     <span className="genres-value">
                         {keywords.map((keyword, index) => (
                             <span key={keyword} className="genre-item">
-                                {keyword}
+                                {capitalizeWords(keyword)}
                                 {index < keywords.length - 1 && ", "}
                             </span>
                         ))}

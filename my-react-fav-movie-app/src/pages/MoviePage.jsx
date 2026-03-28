@@ -6,6 +6,7 @@ import CastList from "../components/CastList";
 import CrewList from "../components/CrewList";
 import { useNavigate } from "react-router-dom";
 import Details from "../components/Details";
+import Genres from "../components/Genres";
 
 function MoviePage() {
     // get the movie id from the url (/movie/:id)
@@ -293,7 +294,7 @@ function MoviePage() {
                                         {activeTab === "cast" && <CastList cast={movie.cast} media="movie"/>}
                                         {activeTab === "crew" && <CrewList crew={movie.crew} media="movie"/>}
                                         {activeTab === "details" && <Details studios={movie.studios} countries={movie.countries} languages={movie.languages}/>}
-                                        {activeTab === "genres" && <p>{movie.genre?.join(", ")}</p>}
+                                        {activeTab === "genres" && <Genres genres={movie.genre} keywords={movie.keywords}/>}
                                         {activeTab === "releases" && <p>Coming next: release dates + certifications</p>}
                                     </div>
                                 </div>
