@@ -127,6 +127,31 @@ function MoviePage() {
                 // returns list of keywords
                 const keywordList = keywordData.keywords ? keywordData.keywords.map((keyword) => keyword.name) : [];
 
+                // return data on different release dates for the selected movie
+                const release = data.release_dates?.results || [];     
+                // map for the different types on releases
+                const releaseType = {
+                    1: "Premiere",
+                    2: "Theatrical Limited",
+                    3: "Theatrical",
+                    4: "Digital",
+                    5: "Physical",
+                    6: "TV"
+                };
+                // go through each release data and organize it into an array
+                const releaseData = release.flatMap((countryEntry) =>
+                    (countryEntry.release_dates || []).map((release) => ({
+                        country: countryEntry.iso_3166_1,
+                        type: release.type,
+                        typeLabel: releaseType[release.type] || "Unknown",
+                        date: release.release_date,
+                        rating: release.certification || "Unrated",
+                        city: release.note || ""
+                    }))
+                );
+                // print the release data in console for debugging purposes
+                console.log("Release Data:", releaseData);
+
                 // create object of movie data we want to display
                 const movieData = {
                     // pull movie title directly from tmbd
