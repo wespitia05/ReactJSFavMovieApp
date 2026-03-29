@@ -150,7 +150,20 @@ function MoviePage() {
                     }))
                 );
                 // print the release data in console for debugging purposes
-                console.log("Release Data:", releaseData);
+                // console.log("Release Data:", releaseData);
+                
+                // create empty object for grouping the release data
+                const groupRelease = {};
+                // go through each release data and group them based on type
+                releaseData.forEach((release) => {
+                    const type = release.typeLabel;
+                    // if group release type doesn't exist, create new array for it
+                    if (!groupRelease[type]) {
+                        groupRelease[type] = [];
+                    }
+                    // push that data into that group release type
+                    groupRelease[type].push(release);
+                });
 
                 // create object of movie data we want to display
                 const movieData = {
@@ -187,7 +200,8 @@ function MoviePage() {
                         ? data.spoken_languages.map((language) => language.english_name)
                         : [],
                     // pulls keywords from selected movie
-                    keywords: keywordList
+                    keywords: keywordList,
+                    releases: groupRelease
                 };
 
                 // store the object in state
