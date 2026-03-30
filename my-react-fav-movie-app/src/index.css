@@ -10,7 +10,7 @@ body {
 .movie-app {
     position: relative;
     padding: 24px;
-    max-width: 85%;
+    max-width: 90%;
     margin: 0 auto;
     z-index: 1;
 }
@@ -146,7 +146,7 @@ body {
 /* MOVIE PAGE STYLING */
 .movie-basic {
     padding: 24px;
-    max-width: 85%;
+    max-width: 93%;
     margin-top: 55vh;
     display: flex;
 }
@@ -191,7 +191,7 @@ body {
 .movie-modal {
     justify-content: center;
     align-items: center;
-    margin: 40px 0;
+    margin: 0;
 }
 
 .movie-modal-content {
