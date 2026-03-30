@@ -146,7 +146,7 @@ function MoviePage() {
                         type: release.type,
                         typeLabel: releaseType[release.type] || "Unknown",
                         date: release.release_date,
-                        rating: release.certification || " ",
+                        rating: release.certification,
                         city: release.note || ""
                     }))
                 );

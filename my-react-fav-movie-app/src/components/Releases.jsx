@@ -37,6 +37,17 @@ function Releases({ releases = {} }) {
         }).replace(",", "");
     }
 
+    // helper function to get the country name from the country code
+    function getCountryName(code) {
+        // if no code exists, return unknown
+        if (!code) {
+            return "Unknown";
+        }
+        // create new constant that accepts the country code and returns the country name
+        const region = new Intl.DisplayNames(["en"], { type: "region" });
+        return region.of(code) || code;
+    }
+
     return (
         <div className="releases">
             {releaseTypes.map((type) => (
@@ -48,15 +59,15 @@ function Releases({ releases = {} }) {
                         .map((release, index) => (
                             <div key={`${type}-${release.country}-${release.date}-${index}`} className="release-row">
                                 <span className="release-date">
-                                    {formatDate(release.date)} {"• "}
+                                    {formatDate(release.date)} {" "}
                                 </span>
 
                                 <span className="release-country">
-                                    {release.country} {"• "}
+                                    {getCountryName(release.country)} {" "}
                                 </span>
 
                                 <span className="release-rating">
-                                    {release.rating || " "}
+                                    {release.rating}
                                 </span>
 
                                 {/* only show city for Premiere if a city exists */}

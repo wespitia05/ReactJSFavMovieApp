@@ -398,6 +398,16 @@ body {
     border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 }
 
+.release-rating {
+    font-size: 12px;
+    padding: 2px 4px;
+    border-radius: 3px;
+    border: 1px solid hsl(0, 0%, 35%);
+    background: hsl(0, 0%, 15%);
+    color: hsl(0, 0%, 90%);
+    line-height: 1;
+}
+
 /* EPISODES LIST STYLING */
 .episode-item {
     list-style: none;
