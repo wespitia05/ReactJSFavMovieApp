@@ -7,6 +7,7 @@ import CrewList from "../components/CrewList";
 import { useNavigate } from "react-router-dom";
 import Details from "../components/Details";
 import Genres from "../components/Genres";
+import Releases from "../components/Releases";
 
 function MoviePage() {
     // get the movie id from the url (/movie/:id)
@@ -334,7 +335,7 @@ function MoviePage() {
                                         {activeTab === "crew" && <CrewList crew={movie.crew} media="movie"/>}
                                         {activeTab === "details" && <Details studios={movie.studios} countries={movie.countries} languages={movie.languages}/>}
                                         {activeTab === "genres" && <Genres genres={movie.genre} keywords={movie.keywords}/>}
-                                        {activeTab === "releases" && <p>Coming next: release dates + certifications</p>}
+                                        {activeTab === "releases" && <Releases releases={movie.releases}/>}
                                     </div>
                                 </div>
                                 <div className="movie-modal">
