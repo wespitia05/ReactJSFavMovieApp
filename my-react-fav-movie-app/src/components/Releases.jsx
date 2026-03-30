@@ -80,9 +80,9 @@ function Releases({ releases = {} }) {
                                     {getFlagEmoji(release.country)} {getCountryName(release.country)} {" "}
                                 </span>
 
-                                <span className="release-rating">
-                                    {release.rating}
-                                </span>
+                                {release.rating && release.rating !== "Unrated" && (
+                                    <span className="release-rating">{release.rating}</span>
+                                )}
 
                                 {/* only show city for Premiere if a city exists */}
                                 {type === "Premiere" && release.city && (
