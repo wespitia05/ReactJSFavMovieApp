@@ -3,8 +3,18 @@
 // will display different types of releases such as:
 //      theatrical, physical, premiere, tv, etc
 function Releases({ releases = {} }) {
+    // array of release order by date
+    const releaseOrder = [
+        "Premiere",
+        "Theatrical Limited",
+        "Theatrical",
+        "Digital",
+        "Physical",
+        "TV"
+    ]
+
     // get all the release section names (premiere, theatrical, etc)
-    const releaseTypes = Object.keys(releases);
+    const releaseTypes = releaseOrder.filter(type => releases[type]);
 
     // if nothing exists, render nothing
     if (releaseTypes.length === 0) {
@@ -31,29 +41,31 @@ function Releases({ releases = {} }) {
         <div className="releases">
             {releaseTypes.map((type) => (
                 <div key={type} className="release-section">
-                    <h3 className="release-heading">{type}</h3>
+                    <p className="release-heading">{type}</p>
 
-                    {releases[type].map((release, index) => (
-                        <div key={`${type}-${release.country}-${release.date}-${index}`} className="release-row">
-                            <span className="release-date">
-                                {formatDate(release.date)} {"• "}
-                            </span>
-
-                            <span className="release-country">
-                                {release.country} {"• "}
-                            </span>
-
-                            <span className="release-rating">
-                                {release.rating || "Unrated"}
-                            </span>
-
-                            {/* only show city for Premiere if a city exists */}
-                            {type === "Premiere" && release.city && (
-                                <span className="release-city">
-                                    {release.city}
+                    {[...releases[type]]
+                        .sort((a, b) => new Date(a.date) - new Date(b.date))
+                        .map((release, index) => (
+                            <div key={`${type}-${release.country}-${release.date}-${index}`} className="release-row">
+                                <span className="release-date">
+                                    {formatDate(release.date)} {"• "}
                                 </span>
-                            )}
-                        </div>
+
+                                <span className="release-country">
+                                    {release.country} {"• "}
+                                </span>
+
+                                <span className="release-rating">
+                                    {release.rating || " "}
+                                </span>
+
+                                {/* only show city for Premiere if a city exists */}
+                                {type === "Premiere" && release.city && (
+                                    <span className="release-city">
+                                        {release.city}
+                                    </span>
+                                )}
+                            </div>
                     ))}
                 </div>
             ))}

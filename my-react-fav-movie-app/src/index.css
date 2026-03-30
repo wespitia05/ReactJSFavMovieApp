@@ -263,6 +263,7 @@ body {
 
 .movie-tab-content {
     font-size: 0.9rem;
+    width: 100%;
 }
 
 /* CAST LIST STYLING */
@@ -375,6 +376,26 @@ body {
 
 .genre-item:hover {
     color: hsl(204, 92%, 55%);
+}
+
+/* RELEASE INFO STYLING */
+.releases {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.release-section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.release-heading {
+    font-size: 1rem;
+    margin: 0;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 /* EPISODES LIST STYLING */
