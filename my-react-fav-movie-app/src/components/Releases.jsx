@@ -30,11 +30,11 @@ function Releases({ releases = {} }) {
         // create new date constant
         const date = new Date(dateString);
         // return new date string order based on US style
-        return date.toLocaleTimeString("en-US", {
+        return date.toLocaleString("en-US", {
             year: "numeric",
-            month: "long",
-            day: "numeric"
-        });
+            month: "short",
+            day: "2-digit"
+        }).replace(",", "");
     }
 
     return (
