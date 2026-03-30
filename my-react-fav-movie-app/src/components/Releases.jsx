@@ -48,6 +48,20 @@ function Releases({ releases = {} }) {
         return region.of(code) || code;
     }
 
+    // helper function to get the country emoji from the country code
+    function getFlagEmoji(code) {
+        if(!code) {
+            return "";
+        } 
+        
+        return code
+            .toUpperCase()
+            .split("")
+            .map(char => 127397 + char.charCodeAt())
+            .map(codePoint => String.fromCodePoint(codePoint))
+            .join("");
+    }
+
     return (
         <div className="releases">
             {releaseTypes.map((type) => (
@@ -63,7 +77,7 @@ function Releases({ releases = {} }) {
                                 </span>
 
                                 <span className="release-country">
-                                    {getCountryName(release.country)} {" "}
+                                    {getFlagEmoji(release.country)} {getCountryName(release.country)} {" "}
                                 </span>
 
                                 <span className="release-rating">
