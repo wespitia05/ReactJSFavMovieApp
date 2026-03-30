@@ -391,14 +391,46 @@ body {
     gap: 10px;
 }
 
+.release-row {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    align-items: start;
+    padding-bottom: 6px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.release-row:last-child {
+    border-bottom: none;
+}
+
+.release-entry {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin-right: 5px;
+}
+
+.release-country {
+    font-weight: bold;
+    line-height: 1.5;
+    margin-right: 15px;
+}
+
+.release-city {
+    font-style: italic;
+    font-weight: lighter;
+    font-size: 14px;
+}
+
 .release-heading {
     font-size: 1rem;
     margin: 0;
     padding: 10px 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.3);
 }
 
 .release-rating {
+    font-weight: lighter;
     font-size: 12px;
     padding: 2px 4px;
     border-radius: 3px;

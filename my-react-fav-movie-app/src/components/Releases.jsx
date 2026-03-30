@@ -64,36 +64,62 @@ function Releases({ releases = {} }) {
 
     return (
         <div className="releases">
-            {releaseTypes.map((type) => (
-                <div key={type} className="release-section">
-                    <p className="release-heading">{type}</p>
+            {releaseTypes.map((type) => {
+                const groupedByDate = {};
 
-                    {[...releases[type]]
-                        .sort((a, b) => new Date(a.date) - new Date(b.date))
-                        .map((release, index) => (
-                            <div key={`${type}-${release.country}-${release.date}-${index}`} className="release-row">
+                [...releases[type]]
+                    .sort((a, b) => new Date(a.date) - new Date(b.date))
+                    .forEach((release) => {
+                        const dateKey = release.date;
+
+                        if (!groupedByDate[dateKey]) {
+                            groupedByDate[dateKey] = [];
+                        }
+
+                        groupedByDate[dateKey].push(release);
+                    });
+
+                const groupedRows = Object.entries(groupedByDate);
+
+                return (
+                    <div key={type} className="release-section">
+                        <h3 className="release-heading">{type}</h3>
+
+                        {groupedRows.map(([date, entries]) => (
+                            <div key={`${type}-${date}`} className="release-row">
                                 <span className="release-date">
-                                    {formatDate(release.date)} {" "}
+                                    {formatDate(date)}
                                 </span>
 
-                                <span className="release-country">
-                                    {getFlagEmoji(release.country)} {getCountryName(release.country)} {" "}
+                                <span className="release-entries">
+                                    {entries.map((release, index) => (
+                                        <span
+                                            key={`${release.country}-${release.rating}-${index}`}
+                                            className="release-entry"
+                                        >
+                                            <span className="release-country">
+                                                {getFlagEmoji(release.country)}{" "}
+                                                {getCountryName(release.country)}{" "}
+                                                {release.rating && (
+                                                    <span className="release-rating">
+                                                        {release.rating}
+                                                    </span>
+                                                )}
+                                            </span>
+
+                                            {type === "Premiere" && release.city && (
+                                                <span className="release-city">
+                                                    {release.city}
+                                                </span>
+                                            )}
+                                        </span>
+                                    ))}
                                 </span>
-
-                                {release.rating && release.rating !== "Unrated" && (
-                                    <span className="release-rating">{release.rating}</span>
-                                )}
-
-                                {/* only show city for Premiere if a city exists */}
-                                {type === "Premiere" && release.city && (
-                                    <span className="release-city">
-                                        {release.city}
-                                    </span>
-                                )}
                             </div>
-                    ))}
-                </div>
-            ))}
+                        ))}
+                    </div>
+                );
+            })}
         </div>
     );
 }
