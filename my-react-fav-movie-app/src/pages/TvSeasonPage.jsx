@@ -6,6 +6,7 @@ import CastList from "../components/CastList";
 import CrewList from "../components/CrewList";
 import { useNavigate } from "react-router-dom";
 import EpisodeList from "../components/EpisodeList";
+import Genres from "../components/Genres";
 
 function TvSeasonPage() {
     // gets the tv show id and season number from the url
