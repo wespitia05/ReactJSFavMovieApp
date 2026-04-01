@@ -7,6 +7,7 @@ import CrewList from "../components/CrewList";
 import { useNavigate } from "react-router-dom";
 import Details from "../components/Details";
 import Genres from "../components/Genres";
+import TvReleases from "../components/TvReleases";
 
 function TvPage() {
     // get the tv id from the url (/tv/:id)
@@ -142,7 +143,9 @@ function TvPage() {
                     countries: data.origin_country || [],
                     languages: data.spoken_languages ? data.spoken_languages.map((language) => language.english_name) : [],
                     // pulls keywords from selected movie
-                    keywords: keywordList
+                    keywords: keywordList,
+                    firstAirDate: data.first_air_date || "",
+                    lastAirDate: data.last_air_date || ""
                 };
 
                 // store the object in state
@@ -300,7 +303,14 @@ function TvPage() {
                                         {activeTab === "crew" && <CrewList crew={tv.crew} media="tv"/>}
                                         {activeTab === "details" && <Details studios={tv.studios} countries={tv.countries} languages={tv.languages}/>}
                                         {activeTab === "genres" && <Genres genres={tv.genres} keywords={tv.keywords}/>}
-                                        {activeTab === "releases" && <p>Coming next: release dates + certifications</p>}
+                                        {activeTab === "releases" && <TvReleases
+                                                                        firstAirDate={tv.firstAirDate}
+                                                                        lastAirDate={tv.lastAirDate}
+                                                                        status={tv.status}
+                                                                        rating={tv.rating}
+                                                                        networks={tv.studios}
+                                                                        countries={tv.countries}
+                                                                    />}
                                     </div>
                                 </div>
                                 <div className="movie-modal">

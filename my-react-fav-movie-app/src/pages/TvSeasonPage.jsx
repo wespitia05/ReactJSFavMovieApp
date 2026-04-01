@@ -7,6 +7,7 @@ import CrewList from "../components/CrewList";
 import { useNavigate } from "react-router-dom";
 import EpisodeList from "../components/EpisodeList";
 import Genres from "../components/Genres";
+import TvReleases from "../components/TvReleases";
 
 function TvSeasonPage() {
     // gets the tv show id and season number from the url
@@ -112,7 +113,10 @@ function TvSeasonPage() {
                     // pull tv season episode list
                     episodes: seasonData.episodes || [],
                     // pulls keywords from selected movie
-                    keywords: keywordList
+                    keywords: keywordList,
+                    airDate: seasonData.air_date || "",
+                    studios: seasonData.networks ? seasonData.networks.map((network) => network.name) : [],
+                    countries: data.origin_country || []
                 };
             
                 setSeason(tvSeasonData);
@@ -255,7 +259,12 @@ function TvSeasonPage() {
                                         {activeTab === "crew" && <CrewList crew={season.crew} media="tv"/>}
                                         {activeTab === "episodes" && <EpisodeList episodes={season.episodes}/>}
                                         {activeTab === "genres" && <Genres genres={season.genres} keywords={season.keywords}/>}
-                                        {activeTab === "releases" && <p>Coming next: release dates + certifications</p>}
+                                        {activeTab === "releases" && <TvReleases
+                                                                        airDate={season.airDate}
+                                                                        rating={season.rating}
+                                                                        networks={season.studios}
+                                                                        countries={season.countries}
+                                                                    />}
                                     </div>
                                 </div>
                                 <div className="movie-modal">

@@ -732,3 +732,34 @@ body {
     font-size: 0.9rem;
     width: 100%;
 }
+
+/* TV RELEASE INFO STYLING */
+.tv-release-row {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 5px 40px;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    margin-top: 2px;
+}
+
+.tv-release-heading {
+    font-size: 1rem;
+}
+
+.tv-release-value {
+    font-weight: bold;
+}
+
+.tv-release-rating {
+    font-weight: lighter;
+    font-size: 12px;
+    padding: 2px 4px;
+    border-radius: 3px;
+    border: 1px solid hsl(0, 0%, 35%);
+    background: hsl(0, 0%, 15%);
+    color: hsl(0, 0%, 90%);
+    line-height: 1;
+}
