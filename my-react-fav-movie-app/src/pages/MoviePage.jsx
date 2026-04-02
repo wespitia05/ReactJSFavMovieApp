@@ -273,7 +273,7 @@ function MoviePage() {
                                     <h1>{movie.title}</h1>
                                     <h3>
                                         {/* only render the year if it exists */}
-                                        {movie.year && <span><u>{movie.year}</u></span>}
+                                        {movie.year && <span><u onClick={() => navigate(`/browse/year/${movie.year}`)}>{movie.year}</u></span>}
                                         {/* only show the bullet if both year and director exist */}
                                         {movie.year && movie.director && <span> • </span>}
                                         {/* renders the director text */}
