@@ -24,8 +24,8 @@ function BrowsePage() {
                 if (type === "year") {
                     const data = await getMoviesByYear(value);
 
-                    setMovies(data.results || []);
-                    setHeading(`Movies Released in ${value}`);
+                    setMovies(data || []);
+                    setHeading(`Films Released in ${value}`);
                 } else {
                     setMovies([]);
                     setHeading("Browse");
@@ -53,9 +53,9 @@ function BrowsePage() {
 
             {!loading && !error && (
                 <>
-                    <h1>{heading}</h1>
+                    <p className="movie-list-heading">{heading}</p>
 
-                    <ul className="actor-movies-list">
+                    <ul className="movies-list">
                         {movies.map((movie) => {
                             const posterUrl = movie.poster_path
                                 ? `https://image.tmdb.org/t/p/original${movie.poster_path}`
@@ -64,17 +64,17 @@ function BrowsePage() {
                             return (
                                 <li
                                     key={movie.id}
-                                    className="actor-movie-item"
+                                    className="movie-list-item"
                                     onClick={() => navigate(`/movie/${movie.id}`)}
                                 >
                                     {posterUrl ? (
                                         <img
                                             src={posterUrl}
                                             alt={`${movie.title} poster`}
-                                            className="actor-movie-poster"
+                                            className="movie-list-poster"
                                         />
                                     ) : (
-                                        <div className="actor-movie-poster-placeholder">
+                                        <div className="movie-list-poster-placeholder">
                                             No Image
                                         </div>
                                     )}

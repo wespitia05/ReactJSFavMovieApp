@@ -85,7 +85,7 @@ async function getImages(movieId) {
 
     // converts the response body into a json, data becomes the parsed json
     const data = await res.json();
-    // return the parsed json to whoever calls getMovieDetails
+    // return the parsed json to whoever calls getImages
     return data;
 }
 
@@ -110,7 +110,7 @@ async function getActorDetails(actorId) {
 
     // converts the response body into a json, data becomes the parsed json
     const data = await res.json();
-    // return the parsed json to whoever calls getMovieDetails
+    // return the parsed json to whoever calls getActorDetails
     return data;
 }
 
@@ -136,7 +136,7 @@ async function getPersonCredits(personId) {
 
     // converts the response body into a json, data becomes the parsed json
     const data = await res.json();
-    // return the parsed json to whoever calls getMovieDetails
+    // return the parsed json to whoever calls getPersonCredits
     return data;
 }
 
@@ -190,7 +190,7 @@ async function getTvImages(tvId) {
 
     // converts the response body into a json, data becomes the parsed json
     const data = await res.json();
-    // return the parsed json to whoever calls getTvDetails
+    // return the parsed json to whoever calls getTvImages
     return data;
 }
 
@@ -217,7 +217,7 @@ async function getTvSeasonDetails(tvId, seasonNumber) {
 
     // converts the response body into a json, data becomes the parsed json
     const data = await res.json();
-    // return the parsed json to whoever calls getTvDetails
+    // return the parsed json to whoever calls getTvSeasonDetails
     return data;
 }
 
@@ -244,7 +244,7 @@ async function getTvSeasonCredits(tvId, seasonNumber) {
 
     // converts the response body into a json, data becomes the parsed json
     const data = await res.json();
-    // return the parsed json to whoever calls getTvDetails
+    // return the parsed json to whoever calls getTvSeasonCredits
     return data;
 }
 
@@ -269,7 +269,7 @@ async function getMovieKeywords(movieId) {
 
     // converts the response body into a json, data becomes the parsed json
     const data = await res.json();
-    // return the parsed json to whoever calls getMovieDetails
+    // return the parsed json to whoever calls getMovieKeywords
     return data;
 }
 
@@ -294,30 +294,38 @@ async function getTvKeywords(tvId) {
 
     // converts the response body into a json, data becomes the parsed json
     const data = await res.json();
-    // return the parsed json to whoever calls getMovieDetails
+    // return the parsed json to whoever calls getTvKeywords
     return data;
 }
 
 // async so we can use await and returns an object
 // our parameter is year which is what we use to get info on the movies released that year
 async function getMoviesByYear(year) {
-    const url = `${base_url}/discover/movie?primary_release_year=${year}&include_adult=false&language=en-US&page=1&sort_by=popularity.desc&vote_count.gte=100&api_key=${api}`;
+    let allMovies = [];
 
-    // res is our response object, sends an http request to the tmdb
-    // await pauses until the response comes back
-    const res = await fetch(url);
+    // only fetch the first 3 pages worth of movies
+    for (let page = 1; page <= 3; page++) {
+        const url = `${base_url}/discover/movie?primary_release_year=${year}&include_adult=false&language=en-US&page=${page}&sort_by=popularity.desc&vote_count.gte=100&api_key=${api}`;
 
-    // res.ok is true for status codes 200-299
-    // if res.ok is not true...
-    if (!res.ok) {
-        // if tmdb returns 401, 404, etc, we throw an error
-        throw new Error("TMDB movies by year failed")
-    };
+        // res is our response object, sends an http request to the tmdb
+        // await pauses until the response comes back
+        const res = await fetch(url);
 
-    // converts the response body into a json, data becomes the parsed json
-    const data = await res.json();
-    // return the parsed json to whoever calls getMovieDetails
-    return data;
+        // res.ok is true for status codes 200-299
+        // if res.ok is not true...
+        if (!res.ok) {
+            // if tmdb returns 401, 404, etc, we throw an error
+            throw new Error("TMDB movies by year failed")
+        };
+
+        // converts the response body into a json, data becomes the parsed json
+        const data = await res.json();
+
+        allMovies = [...allMovies, ...(data.results || [])];
+    }
+
+    // return the parsed json to whoever calls getMovieByYear
+    return allMovies.slice(0, 40);
 }
 
 // exports function for other files to import

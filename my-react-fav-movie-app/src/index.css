@@ -440,6 +440,46 @@ body {
     line-height: 1;
 }
 
+/* MOVIE LIST STYLING */
+.movies-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 20px;
+}
+
+.movie-list-heading {
+    margin-top: 40px;
+    font-size: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    padding-bottom: 8px;
+    width: 100%;
+}
+
+.movie-list-poster, .movie-list-poster-placeholder {
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    border-radius: 8px;
+    object-fit: cover;
+    cursor: pointer;
+    transition: .25s ease;
+}
+
+.movie-list-poster:hover, .movie-list-poster-placeholder:hover {
+    transform: scale(1.05);
+}
+
+.movie-list-poster-placeholder {
+    background: rgba(255, 255, 255, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255,255,255,0.6);
+    font-size: 0.8rem;
+}
+
 /* EPISODES LIST STYLING */
 .episode-item {
     list-style: none;
