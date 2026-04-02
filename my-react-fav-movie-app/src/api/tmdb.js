@@ -298,7 +298,29 @@ async function getTvKeywords(tvId) {
     return data;
 }
 
+// async so we can use await and returns an object
+// our parameter is year which is what we use to get info on the movies released that year
+async function getMoviesByYear(year) {
+    const url = `${base_url}/discover/movie?primary_release_year=${year}&include_adult=false&language=en-US&page=1&sort_by=popularity.desc&api_key=${api}`;
+
+    // res is our response object, sends an http request to the tmdb
+    // await pauses until the response comes back
+    const res = await fetch(url);
+
+    // res.ok is true for status codes 200-299
+    // if res.ok is not true...
+    if (!res.ok) {
+        // if tmdb returns 401, 404, etc, we throw an error
+        throw new Error("TMDB movies by year failed")
+    };
+
+    // converts the response body into a json, data becomes the parsed json
+    const data = await res.json();
+    // return the parsed json to whoever calls getMovieDetails
+    return data;
+}
+
 // exports function for other files to import
 export {searchMulti, getMovieDetails, getImages, getActorDetails, getPersonCredits, 
         getTvDetails, getTvImages, getTvSeasonDetails, getTvSeasonCredits, getMovieKeywords, 
-        getTvKeywords}
+        getTvKeywords, getMoviesByYear}
