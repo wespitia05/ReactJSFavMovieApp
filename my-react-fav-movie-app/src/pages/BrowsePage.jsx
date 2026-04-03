@@ -19,6 +19,8 @@ function BrowsePage() {
     const [error, setError] = useState("");
     // totalResults will store only the value of the total number of movies released in that year
     const [totalResults, setTotalResults] = useState(0);
+    // sortBy will store only the value of how we will sort the movies (based on popularity)
+    const [sortBy, setSortBy] = useState("popularity.desc");
 
     // this runs when the page loads or when the id changes
     useEffect(() => {
@@ -32,7 +34,7 @@ function BrowsePage() {
                 // for now, only handle year
                 if (type === "year") {
                     // get full movies list released on specified year
-                    const data = await getMoviesByYear(value);
+                    const data = await getMoviesByYear(value, sortBy);
 
                     // put those movies into a data array
                     setMovies(data.movies || []);
@@ -57,7 +59,7 @@ function BrowsePage() {
         }
 
         loadBrowseResults();
-    }, [type, value]);
+    }, [type, value, sortBy]);
 
     return (
         <div className="movie-app">
@@ -68,7 +70,20 @@ function BrowsePage() {
 
             {!loading && !error && (
                 <>
-                    <p className="movie-list-heading">{heading}</p>
+                    <div className="browse-header">
+                        <p className="movie-list-heading">{heading}</p>
+
+                        <select
+                            className="browse-select-container"
+                            value={sortBy}
+                            onChange={(e) => setSortBy(e.target.value)}
+                        >
+                            <option value="popularity.desc">Most Popular</option>
+                            <option value="vote_average.desc">Highest Rated</option>
+                            <option value="primary_release_date.desc">Newest First</option>
+                            <option value="primary_release_date.asc">Oldest First</option>
+                        </select>
+                    </div>
                     <p className="movie-total-number">There are {totalResults} films released in {value}</p>
                     <ul className="movies-list">
                         {movies.map((movie) => {

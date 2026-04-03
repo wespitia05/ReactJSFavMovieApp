@@ -450,12 +450,28 @@ body {
     gap: 10px;
 }
 
-.movie-list-heading {
-    margin-top: 40px;
-    font-size: 1rem;
+.browse-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-    padding-bottom: 8px;
+}
+
+.movie-list-heading {
+    font-size: 1rem;
+    font-weight: bold;
     width: 100%;
+    margin-bottom: 5px;
+}
+
+.browse-select-container {
+    font-size: 1rem;
+    font-family: monospace;
+    background: transparent;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-bottom: -10px;
 }
 
 .movie-total-number {

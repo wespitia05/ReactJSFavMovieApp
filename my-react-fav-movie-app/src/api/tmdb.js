@@ -300,13 +300,13 @@ async function getTvKeywords(tvId) {
 
 // async so we can use await and returns an object
 // our parameter is year which is what we use to get info on the movies released that year
-async function getMoviesByYear(year) {
+async function getMoviesByYear(year, sortBy = "popularity.desc") {
     let allMovies = [];
     let totalResults = 0;
 
     // only fetch the first 3 pages worth of movies
     for (let page = 1; page <= 3; page++) {
-        const url = `${base_url}/discover/movie?primary_release_year=${year}&include_adult=false&language=en-US&page=${page}&sort_by=popularity.desc&api_key=${api}`;
+        const url = `${base_url}/discover/movie?primary_release_year=${year}&include_adult=false&language=en-US&page=${page}&sort_by=${sortBy}&vote_count.gte=50&api_key=${api}`;
 
         // res is our response object, sends an http request to the tmdb
         // await pauses until the response comes back
