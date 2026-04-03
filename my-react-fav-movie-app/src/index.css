@@ -447,7 +447,7 @@ body {
     margin-top: 20px;
     display: grid;
     grid-template-columns: repeat(8, 1fr);
-    gap: 20px;
+    gap: 10px;
 }
 
 .movie-list-heading {
@@ -456,6 +456,14 @@ body {
     border-bottom: 1px solid rgba(255, 255, 255, 0.15);
     padding-bottom: 8px;
     width: 100%;
+}
+
+.movie-total-number {
+    display: flex;
+    justify-content: center;
+    background-color: hsla(0, 0%, 30%, 0.5);
+    padding: 10px;
+    border-radius: 5px;
 }
 
 .movie-list-poster, .movie-list-poster-placeholder {

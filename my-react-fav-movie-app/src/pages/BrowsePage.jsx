@@ -9,35 +9,50 @@ function BrowsePage() {
     const { type, value } = useParams();
     const navigate = useNavigate();
 
+    // movie will store only the values we want to display
     const [movies, setMovies] = useState([]);
+    // heading will store only the value we want to display as our heading
     const [heading, setHeading] = useState("");
+    // loading tells us if we are waiting for the api
     const [loading, setLoading] = useState(true);
+    // error stores any error messages
     const [error, setError] = useState("");
+    // totalResults will store only the value of the total number of movies released in that year
+    const [totalResults, setTotalResults] = useState(0);
 
+    // this runs when the page loads or when the id changes
     useEffect(() => {
+        // async function to fetch movie data
         async function loadBrowseResults() {
+            // try catch in case anything fails
             try {
-                setLoading(true);
-                setError("");
+                setLoading(true); // show loading
+                setError(""); // clear any old errors
 
                 // for now, only handle year
                 if (type === "year") {
+                    // get full movies list released on specified year
                     const data = await getMoviesByYear(value);
 
-                    setMovies(data || []);
+                    // put those movies into a data array
+                    setMovies(data.movies || []);
+                    // set the heading to display the year the movies were released
                     setHeading(`Films Released in ${value}`);
+                    // set the total results value to display the total number of movies released
+                    setTotalResults(data.totalResults.toLocaleString() || 0);
                 } else {
                     setMovies([]);
                     setHeading("Browse");
                 }
             }
+            // catch any errors
             catch (err) {
                 console.error(err);
                 setMovies([]);
                 setError("Failed to load browse results.");
             }
             finally {
-                setLoading(false);
+                setLoading(false); // stop loading
             }
         }
 
@@ -54,7 +69,7 @@ function BrowsePage() {
             {!loading && !error && (
                 <>
                     <p className="movie-list-heading">{heading}</p>
-
+                    <p className="movie-total-number">There are {totalResults} films released in {value}</p>
                     <ul className="movies-list">
                         {movies.map((movie) => {
                             const posterUrl = movie.poster_path
