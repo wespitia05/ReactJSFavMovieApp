@@ -21,6 +21,8 @@ function BrowsePage() {
     const [totalResults, setTotalResults] = useState(0);
     // sortBy will store only the value of how we will sort the movies (based on popularity)
     const [sortBy, setSortBy] = useState("popularity.desc");
+    // gridSize will store the amount of movies display per row, default is 10 per row
+    const [gridSize, setGridSize] = useState(10);
 
     // this runs when the page loads or when the id changes
     useEffect(() => {
@@ -83,9 +85,26 @@ function BrowsePage() {
                             <option value="primary_release_date.desc">Newest First</option>
                             <option value="primary_release_date.asc">Oldest First</option>
                         </select>
+
+                        <div className="grid-buttons">
+                            <button onClick={() => setGridSize(10)} className="grid-10-button">
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                                    <rect x="2" y="2" width="8" height="8" />
+                                    <rect x="12" y="2" width="8" height="8" />
+                                    <rect x="2" y="12" width="8" height="8" />
+                                    <rect x="12" y="12" width="8" height="8" />
+                                </svg>
+                            </button>
+
+                            <button onClick={() => setGridSize(5)} className="grid-5-button">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                                <rect x="2" y="2" width="14" height="20" />
+                            </svg>
+                            </button>
+                        </div>
                     </div>
                     <p className="movie-total-number">There are {totalResults} films released in {value}</p>
-                    <ul className="movies-list">
+                    <ul className={`movies-list grid-${gridSize}`}>
                         {movies.map((movie) => {
                             const posterUrl = movie.poster_path
                                 ? `https://image.tmdb.org/t/p/original${movie.poster_path}`
