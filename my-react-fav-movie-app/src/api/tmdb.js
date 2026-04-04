@@ -300,13 +300,14 @@ async function getTvKeywords(tvId) {
 
 // async so we can use await and returns an object
 // our parameter is year which is what we use to get info on the movies released that year
-async function getMoviesByYear(year, sortBy = "popularity.desc") {
+async function getMoviesByYear(year, sortBy = "popularity.desc", startPage = 1) {
     let allMovies = [];
     let totalResults = 0;
+    let totalPages = 1;
 
     // only fetch the first 3 pages worth of movies
-    for (let page = 1; page <= 3; page++) {
-        const url = `${base_url}/discover/movie?primary_release_year=${year}&include_adult=false&language=en-US&page=${page}&sort_by=${sortBy}&vote_count.gte=50&api_key=${api}`;
+    for (let page = startPage; page <= startPage + 3; page++) {
+        const url = `${base_url}/discover/movie?primary_release_year=${year}&include_adult=false&language=en-US&page=${page}&sort_by=${sortBy}&vote_count.gte=50&page=${page}&api_key=${api}`;
 
         // res is our response object, sends an http request to the tmdb
         // await pauses until the response comes back
@@ -322,18 +323,24 @@ async function getMoviesByYear(year, sortBy = "popularity.desc") {
         // converts the response body into a json, data becomes the parsed json
         const data = await res.json();
 
-        if (page === 1) {
+        if (page === startPage) {
             // return number of movies released in that year
             totalResults = data.total_results || 0;
+            totalPages = data.total_pages || 1;
         }
 
         allMovies = [...allMovies, ...(data.results || [])];
+
+        // stop if we reach the last tmdb page
+        if (page >= totalPages) {
+            break;
+        }
     }
 
     // return the parsed json to whoever calls getMovieByYear
     return {
         movies: allMovies.slice(0, 50),
-        totalResults: totalResults
+        totalResults, totalPages
     };
 }
 

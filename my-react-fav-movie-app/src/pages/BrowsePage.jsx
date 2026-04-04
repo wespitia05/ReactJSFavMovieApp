@@ -23,6 +23,15 @@ function BrowsePage() {
     const [sortBy, setSortBy] = useState("popularity.desc");
     // gridSize will store the amount of movies display per row, default is 10 per row
     const [gridSize, setGridSize] = useState(10);
+    // totalPages will store the total amount of pages we can visit, default is page 1
+    const [totalPages, setTotalPages] = useState(1);
+    // page will store the page we are currently displaying, default is page 1
+    const [page, setPage] = useState(1);
+
+    // reset page when year/type/sort changes
+    useEffect(() => {
+        setPage(1);
+    }, [type, value, sortBy]);
 
     // this runs when the page loads or when the id changes
     useEffect(() => {
@@ -36,7 +45,7 @@ function BrowsePage() {
                 // for now, only handle year
                 if (type === "year") {
                     // get full movies list released on specified year
-                    const data = await getMoviesByYear(value, sortBy);
+                    const data = await getMoviesByYear(value, sortBy, page);
 
                     // put those movies into a data array
                     setMovies(data.movies || []);
@@ -44,6 +53,7 @@ function BrowsePage() {
                     setHeading(`Films Released in ${value}`);
                     // set the total results value to display the total number of movies released
                     setTotalResults(data.totalResults.toLocaleString() || 0);
+                    setTotalPages(data.totalPages || 1);
                 } else {
                     setMovies([]);
                     setHeading("Browse");
@@ -62,6 +72,20 @@ function BrowsePage() {
 
         loadBrowseResults();
     }, [type, value, sortBy]);
+
+    async function handleLoadMore() {
+        try {
+            const nextPage = page + 3;
+    
+            const data = await getMoviesByYear(value, sortBy, nextPage);
+    
+            setMovies((prevMovies) => [...prevMovies, ...(data.movies || [])]);
+            setPage(nextPage);
+        } catch (err) {
+            console.error(err);
+            setError("Failed to load more movies.");
+        }
+    }
 
     return (
         <div className="movie-app">
@@ -131,6 +155,13 @@ function BrowsePage() {
                             );
                         })}
                     </ul>
+                    {movies.length < totalResults && (
+                        <div className="load-more-container">
+                            <button className="load-more-button" onClick={handleLoadMore}>
+                                Load More
+                            </button>
+                        </div>
+                    )}
                 </>
             )}
         </div>
