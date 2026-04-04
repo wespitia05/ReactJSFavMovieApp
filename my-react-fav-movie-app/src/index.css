@@ -542,6 +542,27 @@ body {
     font-size: 0.8rem;
 }
 
+.browse-pagination {
+    display: flex;
+    justify-content: space-between;
+}
+
+.browse-page-button {
+    background-color: hsla(0, 0%, 30%, 0.5);
+    padding: 6px 10px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-family: monospace;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.browse-page-button:hover {
+    background-color: hsla(0, 0%, 50%, 0.5);
+    cursor: pointer;
+}
+
 /* EPISODES LIST STYLING */
 .episode-item {
     list-style: none;
