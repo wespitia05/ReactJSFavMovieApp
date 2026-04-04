@@ -33,59 +33,71 @@ function BrowsePage() {
         setPage(1);
     }, [type, value, sortBy]);
 
-    // this runs when the page loads or when the id changes
-    useEffect(() => {
-        // async function to fetch movie data
-        async function loadBrowseResults() {
-            // try catch in case anything fails
-            try {
-                setLoading(true); // show loading
-                setError(""); // clear any old errors
+    // this function will load a chunk of 50 movies
+    async function loadPage(targetPage) {
+        try {
+            setLoading(true); // show loading
+            setError(""); // clear any old errors
 
-                // for now, only handle year
-                if (type === "year") {
-                    // get full movies list released on specified year
-                    const data = await getMoviesByYear(value, sortBy, page);
+            // for now, only handle year
+            if (type === "year") {
+                // get full movies list released on specified year
+                const data = await getMoviesByYear(value, sortBy, targetPage);
 
-                    // put those movies into a data array
-                    setMovies(data.movies || []);
-                    // set the heading to display the year the movies were released
-                    setHeading(`Films Released in ${value}`);
-                    // set the total results value to display the total number of movies released
-                    setTotalResults(data.totalResults.toLocaleString() || 0);
-                    setTotalPages(data.totalPages || 1);
-                } else {
-                    setMovies([]);
-                    setHeading("Browse");
-                }
-            }
-            // catch any errors
-            catch (err) {
-                console.error(err);
+                // put those movies into a data array
+                setMovies(data.movies || []);
+                // set the heading to display the year the movies were released
+                setHeading(`Films Released in ${value}`);
+                // set the total results value to display the total number of movies released
+                setTotalResults(data.totalResults.toLocaleString() || 0);
+                setTotalPages(data.totalPages || 1);
+                setPage(targetPage);
+            } else {
                 setMovies([]);
-                setError("Failed to load browse results.");
-            }
-            finally {
-                setLoading(false); // stop loading
+                setHeading("Browse");
             }
         }
-
-        loadBrowseResults();
-    }, [type, value, sortBy]);
-
-    async function handleLoadMore() {
-        try {
-            const nextPage = page + 3;
-    
-            const data = await getMoviesByYear(value, sortBy, nextPage);
-    
-            setMovies((prevMovies) => [...prevMovies, ...(data.movies || [])]);
-            setPage(nextPage);
-        } catch (err) {
+        // catch any errors
+        catch (err) {
             console.error(err);
-            setError("Failed to load more movies.");
+            setMovies([]);
+            setError("Failed to load browse results.");
+        }
+        finally {
+            setLoading(false); // stop loading
         }
     }
+
+    // this runs when the page loads or when the id changes
+    useEffect(() => {
+        loadPage(1);
+    }, [type, value, sortBy]);
+
+    // this function will go to the next chunk of 50 movies
+    async function handleNext() {
+        const nextPage = page + 3;
+
+        // if the next page exceeds the total available pages, stop
+        if (nextPage > totalPages) {
+            return;
+        }
+
+        await loadPage(nextPage);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    // this function will go to the previous chunk of 50 movies
+    async function handlePrev() {
+        const prevPage = Math.max(page - 3, 1);
+
+        await loadPage(prevPage);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    // currentChunk will store the current 50-movie chunk being displayed
+    const currentChunk = Math.floor((page - 1) / 3) + 1;
+    // maxChunks will store the total amount of 50-movie chunks available
+    const maxChunks = Math.ceil(totalPages / 3);
 
     return (
         <div className="movie-app">
@@ -121,13 +133,17 @@ function BrowsePage() {
                             </button>
 
                             <button onClick={() => setGridSize(5)} className="grid-5-button">
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                                <rect x="2" y="2" width="14" height="20" />
-                            </svg>
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                                    <rect x="2" y="2" width="14" height="20" />
+                                </svg>
                             </button>
                         </div>
                     </div>
-                    <p className="movie-total-number">There are {totalResults} films released in {value}</p>
+
+                    <p className="movie-total-number">
+                        There are {totalResults} films released in {value}
+                    </p>
+
                     <ul className={`movies-list grid-${gridSize}`}>
                         {movies.map((movie) => {
                             const posterUrl = movie.poster_path
@@ -155,13 +171,15 @@ function BrowsePage() {
                             );
                         })}
                     </ul>
-                    {movies.length < totalResults && (
-                        <div className="load-more-container">
-                            <button className="load-more-button" onClick={handleLoadMore}>
-                                Load More
-                            </button>
-                        </div>
-                    )}
+
+                    <div className="browse-pagination">
+                        <button className="browse-page-button" onClick={handlePrev} disabled={page === 1}>
+                            Previous
+                        </button>
+                        <button className="browse-page-button" onClick={handleNext} disabled={currentChunk >= maxChunks}>
+                            Next
+                        </button>
+                    </div>
                 </>
             )}
         </div>
