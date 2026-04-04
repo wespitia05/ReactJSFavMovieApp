@@ -520,6 +520,42 @@ body {
     border-radius: 5px;
 }
 
+.year-browser {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.year-browser-list {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.year-browser-button,
+.decade-nav-button {
+    background: transparent;
+    background-color: hsla(0, 0%, 30%, 0.5);
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-family: monospace;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 5px 25px;
+}
+
+.year-browser-button:hover,
+.decade-nav-button:hover {
+    background-color: hsla(0, 0%, 50%, 0.5);
+}
+
+.year-browser-button.active {
+    font-weight: bold;
+    background-color: hsla(0, 0%, 60%, 0.5);
+    text-decoration: underline;
+}
+
 .movie-list-poster, .movie-list-poster-placeholder {
     width: 100%;
     aspect-ratio: 2 / 3;
