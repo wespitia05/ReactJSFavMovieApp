@@ -27,6 +27,15 @@ function BrowsePage() {
     const [totalPages, setTotalPages] = useState(1);
     // page will store the page we are currently displaying, default is page 1
     const [page, setPage] = useState(1);
+    // currentYear will convert the url value into a number
+    const currentYear = Number(value);
+    // start of the current decade
+    const decadeStart = Math.floor(currentYear / 10) * 10;
+    // array of years in the current decade
+    const decadeYears = Array.from({ length: 10 }, (_, index) => decadeStart + index);
+    // previous and next decade labels
+    const previousDecade = decadeStart - 10;
+    const nextDecade = decadeStart + 10;
 
     // reset page when year/type/sort changes
     useEffect(() => {
@@ -143,6 +152,37 @@ function BrowsePage() {
                     <p className="movie-total-number">
                         There are {totalResults} films released in {value}
                     </p>
+
+                    <div className="year-browser">
+                        <button
+                            className="decade-nav-button"
+                            onClick={() => navigate(`/browse/year/${previousDecade}`)}
+                            type="button"
+                        >
+                            &lt; {previousDecade}s
+                        </button>
+
+                        <div className="year-browser-list">
+                            {decadeYears.map((year) => (
+                                <button
+                                    key={year}
+                                    className={`year-browser-button ${year === currentYear ? "active" : ""}`}
+                                    onClick={() => navigate(`/browse/year/${year}`)}
+                                    type="button"
+                                >
+                                    {year}
+                                </button>
+                            ))}
+                        </div>
+
+                        <button
+                            className="decade-nav-button"
+                            onClick={() => navigate(`/browse/year/${nextDecade}`)}
+                            type="button"
+                        >
+                            {nextDecade}s &gt;
+                        </button>
+                    </div>
 
                     <ul className={`movies-list grid-${gridSize}`}>
                         {movies.map((movie) => {
