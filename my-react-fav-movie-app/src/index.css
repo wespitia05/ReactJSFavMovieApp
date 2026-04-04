@@ -556,6 +556,13 @@ body {
     text-decoration: underline;
 }
 
+.year-browser-button:disabled,
+.decade-nav-button:disabled {
+    cursor: default;
+    pointer-events: none;
+    text-decoration: line-through;
+}
+
 .movie-list-poster, .movie-list-poster-placeholder {
     width: 100%;
     aspect-ratio: 2 / 3;

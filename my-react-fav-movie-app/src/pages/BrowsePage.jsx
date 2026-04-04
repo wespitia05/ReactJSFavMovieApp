@@ -36,6 +36,9 @@ function BrowsePage() {
     // previous and next decade labels
     const previousDecade = decadeStart - 10;
     const nextDecade = decadeStart + 10;
+    // getting today's date/current year
+    const today = new Date();
+    const currentRealYear = today.getFullYear();
 
     // reset page when year/type/sort changes
     useEffect(() => {
@@ -169,6 +172,7 @@ function BrowsePage() {
                                     className={`year-browser-button ${year === currentYear ? "active" : ""}`}
                                     onClick={() => navigate(`/browse/year/${year}`)}
                                     type="button"
+                                    disabled={year > currentRealYear}
                                 >
                                     {year}
                                 </button>
@@ -179,6 +183,7 @@ function BrowsePage() {
                             className="decade-nav-button"
                             onClick={() => navigate(`/browse/year/${nextDecade}`)}
                             type="button"
+                            disabled={nextDecade > currentRealYear}
                         >
                             {nextDecade}s &gt;
                         </button>
