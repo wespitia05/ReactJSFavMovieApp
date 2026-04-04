@@ -332,7 +332,7 @@ async function getMoviesByYear(year, sortBy = "popularity.desc") {
 
     // return the parsed json to whoever calls getMovieByYear
     return {
-        movies: allMovies.slice(0, 40),
+        movies: allMovies.slice(0, 50),
         totalResults: totalResults
     };
 }

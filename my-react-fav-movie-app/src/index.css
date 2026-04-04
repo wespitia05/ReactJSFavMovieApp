@@ -446,7 +446,7 @@ body {
     padding: 0;
     margin-top: 20px;
     display: grid;
-    grid-template-columns: repeat(8, 1fr);
+    grid-template-columns: repeat(10, 1fr);
     gap: 10px;
 }
 
