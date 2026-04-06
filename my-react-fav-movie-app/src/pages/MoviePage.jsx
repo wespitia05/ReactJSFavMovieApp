@@ -166,6 +166,12 @@ function MoviePage() {
                     groupRelease[type].push(release);
                 });
 
+                // converts country code into full country name
+                const languageDisplay = new Intl.DisplayNames(["en"], { type: "language" });
+                const primaryLanguage = data.original_language
+                    ? languageDisplay.of(data.original_language)
+                    : "Unknown";
+
                 // create object of movie data we want to display
                 const movieData = {
                     // pull movie title directly from tmbd
@@ -200,6 +206,9 @@ function MoviePage() {
                     languages: data.spoken_languages
                         ? data.spoken_languages.map((language) => language.english_name)
                         : [],
+                    primaryLanguage: data.original_language
+                        ? languageDisplay.of(data.original_language)
+                        : "Unknown",
                     // pulls keywords from selected movie
                     keywords: keywordList,
                     releases: groupRelease
