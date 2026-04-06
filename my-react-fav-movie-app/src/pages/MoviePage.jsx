@@ -350,7 +350,7 @@ function MoviePage() {
                                     <div className="movie-tab-content">
                                         {activeTab === "cast" && <CastList cast={movie.cast} media="movie"/>}
                                         {activeTab === "crew" && <CrewList crew={movie.crew} media="movie"/>}
-                                        {activeTab === "details" && <Details studios={movie.studios} countries={movie.countries} languages={movie.languages}/>}
+                                        {activeTab === "details" && <Details studios={movie.studios} countries={movie.countries} languages={movie.languages} primaryLanguage={movie.primaryLanguage}/>}
                                         {activeTab === "genres" && <Genres genres={movie.genre} keywords={movie.keywords}/>}
                                         {activeTab === "releases" && <Releases releases={movie.releases}/>}
                                     </div>

@@ -1,6 +1,6 @@
 // this function will handle returning details on a movie or tv show
 // will display the studio, country and language information
-function Details({studios = [], countries = [], languages = []}) {
+function Details({studios = [], countries = [], languages = [], primaryLanguage = ""}) {
     // if nothing exists, render nothing
     if (studios.length === 0 && countries.length === 0 && languages.length === 0) {
         return null;
@@ -36,6 +36,12 @@ function Details({studios = [], countries = [], languages = []}) {
                     ) : (
                         "Unknown"
                     )}
+                </span>
+            </div>
+            <div className="details-row">
+                <span className="details-label">Primary Language: </span>
+                <span className="details-item">
+                    {primaryLanguage || "Unknown"}
                 </span>
             </div>
             <div className="details-row">
