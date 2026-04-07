@@ -198,7 +198,10 @@ function MoviePage() {
                     crew: data.credits?.crew || [],
                     // pull movie details (studios, country and languages)
                     studios: data.production_companies
-                        ? data.production_companies.map((studio) => studio.name)
+                        ? data.production_companies.map((studio) => ({
+                            id: studio.id,
+                            name: studio.name
+                        }))
                         : [],
                     countries: data.production_countries
                         ? data.production_countries.map((country) => country.name)

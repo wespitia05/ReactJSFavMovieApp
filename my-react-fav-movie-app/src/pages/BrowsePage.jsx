@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import SearchBar from "../components/SearchBar";
-import { getMoviesByYear } from "../api/tmdb";
+import { getMoviesByYear, getMoviesByStudio } from "../api/tmdb";
+import { useSearchParams } from "react-router-dom";
 
 // this function will handle returning a list of movies based on what
 // we want to view. (year, studio, country, etc)
@@ -39,6 +40,9 @@ function BrowsePage() {
     // getting today's date/current year
     const today = new Date();
     const currentRealYear = today.getFullYear();
+    // finds the name of the studio to display it
+    const [searchParams] = useSearchParams();
+    const studioName = searchParams.get("name");
 
     // reset page when year/type/sort changes
     useEffect(() => {
@@ -64,7 +68,21 @@ function BrowsePage() {
                 setTotalResults(data.totalResults.toLocaleString() || 0);
                 setTotalPages(data.totalPages || 1);
                 setPage(targetPage);
-            } else {
+            } 
+            else if (type === "studio") {
+                // get full movies list released on specified year
+                const data = await getMoviesByStudio(value, sortBy, targetPage);
+
+                // put those movies into a data array
+                setMovies(data.movies || []);
+                // set the heading to display the year the movies were released
+                setHeading(`Films Produced by ${studioName}`);
+                // set the total results value to display the total number of movies released
+                setTotalResults(data.totalResults.toLocaleString() || 0);
+                setTotalPages(data.totalPages || 1);
+                setPage(targetPage);
+            }
+            else {
                 setMovies([]);
                 setHeading("Browse");
             }
@@ -151,43 +169,51 @@ function BrowsePage() {
                             </button>
                         </div>
                     </div>
+                    {type === "studio" && (
+                        <p className="movie-total-number">
+                            There are {totalResults} films produced by {studioName}
+                        </p>
+                    )}
 
-                    <p className="movie-total-number">
-                        There are {totalResults} films released in {value}
-                    </p>
-
-                    <div className="year-browser">
-                        <button
-                            className="decade-nav-button"
-                            onClick={() => navigate(`/browse/year/${previousDecade}`)}
-                            type="button"
-                        >
-                            &lt; {previousDecade}s
-                        </button>
-
-                        <div className="year-browser-list">
-                            {decadeYears.map((year) => (
+                    {type === "year" && (
+                        <>
+                            <p className="movie-total-number">
+                                There are {totalResults} films released in {value}
+                            </p>
+                            <div className="year-browser">
                                 <button
-                                    key={year}
-                                    className={`year-browser-button ${year === currentYear ? "active" : ""}`}
-                                    onClick={() => navigate(`/browse/year/${year}`)}
+                                    className="decade-nav-button"
+                                    onClick={() => navigate(`/browse/year/${previousDecade}`)}
                                     type="button"
-                                    disabled={year > currentRealYear}
                                 >
-                                    {year}
+                                    &lt; {previousDecade}s
                                 </button>
-                            ))}
-                        </div>
 
-                        <button
-                            className="decade-nav-button"
-                            onClick={() => navigate(`/browse/year/${nextDecade}`)}
-                            type="button"
-                            disabled={nextDecade > currentRealYear}
-                        >
-                            {nextDecade}s &gt;
-                        </button>
-                    </div>
+                                <div className="year-browser-list">
+                                    {decadeYears.map((year) => (
+                                        <button
+                                            key={year}
+                                            className={`year-browser-button ${year === currentYear ? "active" : ""}`}
+                                            onClick={() => navigate(`/browse/year/${year}`)}
+                                            type="button"
+                                            disabled={year > currentRealYear}
+                                        >
+                                            {year}
+                                        </button>
+                                    ))}
+                                </div>
+
+                                <button
+                                    className="decade-nav-button"
+                                    onClick={() => navigate(`/browse/year/${nextDecade}`)}
+                                    type="button"
+                                    disabled={nextDecade > currentRealYear}
+                                >
+                                    {nextDecade}s &gt;
+                                </button>
+                            </div>
+                        </>
+                    )}
 
                     <ul className={`movies-list grid-${gridSize}`}>
                         {movies.map((movie) => {

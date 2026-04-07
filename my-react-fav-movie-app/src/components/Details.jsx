@@ -1,6 +1,11 @@
+import { useNavigate } from "react-router-dom";
+
 // this function will handle returning details on a movie or tv show
 // will display the studio, country and language information
 function Details({studios = [], countries = [], languages = [], primaryLanguage = ""}) {
+    // this constant we will use to navigate from one page to the next
+    const navigate = useNavigate();
+
     // if nothing exists, render nothing
     if (studios.length === 0 && countries.length === 0 && languages.length === 0) {
         return null;
@@ -11,16 +16,20 @@ function Details({studios = [], countries = [], languages = [], primaryLanguage 
             <div className="details-row">
                 <span className="details-label">Studios: </span>
                 <span className="details-value">
-                    {studios.length > 0 ? (
-                        studios.map((studio, index) => (
-                        <span key={studio} className="details-item">
-                            {studio}
+                {studios.length > 0 ? (
+                    studios.map((studio, index) => (
+                        <span
+                            key={studio.id}
+                            className="details-item"
+                            onClick={() => navigate(`/browse/studio/${studio.id}?name=${encodeURIComponent(studio.name)}`)}
+                        >
+                            {studio.name}
                             {index < studios.length - 1 && ", "}
                         </span>
-                        ))
-                    ) : (
-                        "Unknown"
-                    )}
+                    ))
+                ) : (
+                    "Unknown"
+                )}
                 </span>
             </div>
             <div className="details-row">
