@@ -37,10 +37,18 @@ function Details({studios = [], countries = [], languages = [], primaryLanguage 
                 <span className="details-value">
                     {countries.length > 0 ? (
                         countries.map((country, index) => (
-                        <span key={country} className="details-item">
-                            {country}
-                            {index < countries.length - 1 && ", "}
-                        </span>
+                            <span
+                                key={country.code}
+                                className="details-item"
+                                onClick={() =>
+                                    navigate(`/browse/country/${country.code}`, {
+                                        state: { name: country.name }
+                                    })
+                                }
+                            >
+                                {country.name}
+                                {index < countries.length - 1 && ", "}
+                            </span>
                         ))
                     ) : (
                         "Unknown"

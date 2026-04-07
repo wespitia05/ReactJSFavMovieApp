@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import SearchBar from "../components/SearchBar";
-import { getMoviesByYear, getMoviesByStudio } from "../api/tmdb";
-import { useSearchParams } from "react-router-dom";
+import { getMoviesByYear, getMoviesByStudio, getMoviesByCountry } from "../api/tmdb";
+import { useSearchParams, useLocation } from "react-router-dom";
 
 // this function will handle returning a list of movies based on what
 // we want to view. (year, studio, country, etc)
 function BrowsePage() {
-    const { type, value } = useParams();
+    const { type, value, name } = useParams();
     const navigate = useNavigate();
 
     // movie will store only the values we want to display
@@ -43,6 +43,9 @@ function BrowsePage() {
     // finds the name of the studio to display it
     const [searchParams] = useSearchParams();
     const studioName = searchParams.get("name");
+    // finds the name of the country and displays it
+    const location = useLocation();
+    const countryName = location.state?.name;
 
     // reset page when year/type/sort changes
     useEffect(() => {
@@ -77,6 +80,19 @@ function BrowsePage() {
                 setMovies(data.movies || []);
                 // set the heading to display the year the movies were released
                 setHeading(`Films Produced by ${studioName}`);
+                // set the total results value to display the total number of movies released
+                setTotalResults(data.totalResults.toLocaleString() || 0);
+                setTotalPages(data.totalPages || 1);
+                setPage(targetPage);
+            }
+            else if (type === "country") {
+                // get full movies list released on specified year
+                const data = await getMoviesByCountry(value, sortBy, targetPage);
+
+                // put those movies into a data array
+                setMovies(data.movies || []);
+                // set the heading to display the year the movies were released
+                setHeading(`Films Produced by ${countryName}`);
                 // set the total results value to display the total number of movies released
                 setTotalResults(data.totalResults.toLocaleString() || 0);
                 setTotalPages(data.totalPages || 1);
@@ -172,6 +188,11 @@ function BrowsePage() {
                     {type === "studio" && (
                         <p className="movie-total-number">
                             There are {totalResults} films produced by {studioName}
+                        </p>
+                    )}
+                    {type === "country" && (
+                        <p className="movie-total-number">
+                            There are {totalResults} films produced by {countryName}
                         </p>
                     )}
 

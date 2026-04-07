@@ -204,7 +204,10 @@ function MoviePage() {
                         }))
                         : [],
                     countries: data.production_countries
-                        ? data.production_countries.map((country) => country.name)
+                        ? data.production_countries.map((country) => ({
+                            code: country.iso_3166_1,
+                            name: country.name
+                          }))
                         : [],
                     languages: data.spoken_languages
                         ? data.spoken_languages.map((language) => language.english_name)
