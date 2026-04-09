@@ -46,7 +46,7 @@ function BrowsePage() {
     // finds the name of the country and displays it
     const location = useLocation();
     const countryName = location.state?.name;
-    const displayName = location.state?.name;
+    const primaryLanguageName = location.state?.name;
 
     // reset page when year/type/sort changes
     useEffect(() => {
@@ -106,7 +106,7 @@ function BrowsePage() {
                 // put those movies into a data array
                 setMovies(data.movies || []);
                 // set the heading to display the year the movies were released
-                setHeading(`Films with Primary Language in ${displayName}`);
+                setHeading(`Films with Primary Language in ${primaryLanguageName}`);
                 // set the total results value to display the total number of movies released
                 setTotalResults(data.totalResults.toLocaleString() || 0);
                 setTotalPages(data.totalPages || 1);
@@ -207,6 +207,11 @@ function BrowsePage() {
                     {type === "country" && (
                         <p className="movie-total-number">
                             There are {totalResults} films produced by {countryName}
+                        </p>
+                    )}
+                    {type === "language" && (
+                        <p className="movie-total-number">
+                            There are {totalResults} films with its primary language in {primaryLanguageName}
                         </p>
                     )}
 
