@@ -63,7 +63,7 @@ function Details({studios = [], countries = [], languages = [], primaryLanguage 
                             className="details-item"
                             onClick={() =>
                                 navigate(`/browse/language/${primaryLanguage.code}`, {
-                                    state: { name: primaryLanguage.name }
+                                    state: { name: primaryLanguage.name, source: "primary" }
                                 })
                             }
                         >
@@ -79,10 +79,18 @@ function Details({studios = [], countries = [], languages = [], primaryLanguage 
                 <span className="details-value">
                     {languages.length > 0 ? (
                         languages.map((language, index) => (
-                        <span key={language} className="details-item">
-                            {language}
-                            {index < languages.length - 1 && ", "}
-                        </span>
+                            <span
+                                key={language.code}
+                                className="details-item"
+                                onClick={() =>
+                                    navigate(`/browse/language/${language.code}`, {
+                                        state: { name: language.name, source: "spoken" }
+                                    })
+                                }
+                            >
+                                {language.name}
+                                {index < languages.length - 1 && ", "}
+                            </span>
                         ))
                     ) : (
                         "Unknown"

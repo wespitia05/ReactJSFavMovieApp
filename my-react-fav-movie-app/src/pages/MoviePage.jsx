@@ -209,8 +209,11 @@ function MoviePage() {
                             name: country.name
                           }))
                         : [],
-                    languages: data.spoken_languages
-                        ? data.spoken_languages.map((language) => language.english_name)
+                    spokenLanguages: data.spoken_languages
+                        ? data.spoken_languages.map((language) => ({
+                            code: language.iso_639_1,
+                            name: language.english_name
+                          }))
                         : [],
                     primaryLanguage: data.original_language
                         ? {
@@ -358,7 +361,7 @@ function MoviePage() {
                                     <div className="movie-tab-content">
                                         {activeTab === "cast" && <CastList cast={movie.cast} media="movie"/>}
                                         {activeTab === "crew" && <CrewList crew={movie.crew} media="movie"/>}
-                                        {activeTab === "details" && <Details studios={movie.studios} countries={movie.countries} languages={movie.languages} primaryLanguage={movie.primaryLanguage}/>}
+                                        {activeTab === "details" && <Details studios={movie.studios} countries={movie.countries} languages={movie.spokenLanguages} primaryLanguage={movie.primaryLanguage}/>}
                                         {activeTab === "genres" && <Genres genres={movie.genre} keywords={movie.keywords}/>}
                                         {activeTab === "releases" && <Releases releases={movie.releases}/>}
                                     </div>

@@ -46,7 +46,8 @@ function BrowsePage() {
     // finds the name of the country and displays it
     const location = useLocation();
     const countryName = location.state?.name;
-    const primaryLanguageName = location.state?.name;
+    const displayName = location.state?.name;
+    const source = location.state?.source;
 
     // reset page when year/type/sort changes
     useEffect(() => {
@@ -105,8 +106,16 @@ function BrowsePage() {
 
                 // put those movies into a data array
                 setMovies(data.movies || []);
-                // set the heading to display the year the movies were released
-                setHeading(`Films with Primary Language in ${primaryLanguageName}`);
+                if (displayName) {
+                    if (source === "primary") {
+                        // set the heading to display the year the movies were released
+                        setHeading(`Films with Primary Language in ${displayName}`);
+                    }
+                    else if (source === "spoken") {
+                        // set the heading to display the year the movies were released
+                        setHeading(`Films with Spoken Language in ${displayName}`);
+                    }
+                }
                 // set the total results value to display the total number of movies released
                 setTotalResults(data.totalResults.toLocaleString() || 0);
                 setTotalPages(data.totalPages || 1);
@@ -158,6 +167,22 @@ function BrowsePage() {
     const currentChunk = Math.floor((page - 1) / 3) + 1;
     // maxChunks will store the total amount of 50-movie chunks available
     const maxChunks = Math.ceil(totalPages / 3);
+    // labelText will store the total results text for language browse
+    let labelText = "";
+
+    if (type === "language") {
+        if (displayName) {
+            if (source === "primary") {
+                labelText = `films with its primary language in ${displayName}`;
+            }
+            else if (source === "spoken") {
+                labelText = `films with its spoken language in ${displayName}`;
+            }
+            else {
+                labelText = `films in ${displayName}`;
+            }
+        }
+    }
 
     return (
         <div className="movie-app">
@@ -211,7 +236,7 @@ function BrowsePage() {
                     )}
                     {type === "language" && (
                         <p className="movie-total-number">
-                            There are {totalResults} films with its primary language in {primaryLanguageName}
+                            There are {totalResults} {labelText}
                         </p>
                     )}
 
