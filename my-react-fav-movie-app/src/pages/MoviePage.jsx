@@ -213,8 +213,10 @@ function MoviePage() {
                         ? data.spoken_languages.map((language) => language.english_name)
                         : [],
                     primaryLanguage: data.original_language
-                        ? languageDisplay.of(data.original_language)
-                        : "Unknown",
+                        ? {
+                            code: data.original_language,
+                            name: languageDisplay.of(data.original_language)
+                        } : null,
                     // pulls keywords from selected movie
                     keywords: keywordList,
                     releases: groupRelease

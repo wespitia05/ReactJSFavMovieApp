@@ -57,8 +57,21 @@ function Details({studios = [], countries = [], languages = [], primaryLanguage 
             </div>
             <div className="details-row">
                 <span className="details-label">Primary Language: </span>
-                <span className="details-item">
-                    {primaryLanguage || "Unknown"}
+                <span className="details-value">
+                    {primaryLanguage ? (
+                        <span
+                            className="details-item"
+                            onClick={() =>
+                                navigate(`/browse/language/${primaryLanguage.code}`, {
+                                    state: { name: primaryLanguage.name }
+                                })
+                            }
+                        >
+                            {primaryLanguage.name}
+                        </span>
+                    ) : (
+                        "Unknown"
+                    )}
                 </span>
             </div>
             <div className="details-row">
