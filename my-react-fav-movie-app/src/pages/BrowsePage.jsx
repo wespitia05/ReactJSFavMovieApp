@@ -173,10 +173,10 @@ function BrowsePage() {
     if (type === "language") {
         if (displayName) {
             if (source === "primary") {
-                labelText = `films with its primary language in ${displayName}`;
+                labelText = `films with ${displayName} as its primary language`;
             }
             else if (source === "spoken") {
-                labelText = `films with its spoken language in ${displayName}`;
+                labelText = `films with ${displayName} as a spoken language`;
             }
             else {
                 labelText = `films in ${displayName}`;
