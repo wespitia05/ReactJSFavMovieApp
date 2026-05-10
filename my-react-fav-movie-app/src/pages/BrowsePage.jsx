@@ -111,11 +111,11 @@ function BrowsePage() {
                 if (displayName) {
                     if (source === "primary") {
                         // set the heading to display the year the movies were released
-                        setHeading(`Films with Primary Language in ${displayName}`);
+                        setHeading(`Films with ${displayName} as its Primary Language`);
                     }
                     else if (source === "spoken") {
                         // set the heading to display the year the movies were released
-                        setHeading(`Films with Spoken Language in ${displayName}`);
+                        setHeading(`Films with ${displayName} as a Spoken Language`);
                     }
                 }
                 // set the total results value to display the total number of movies released
