@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import SearchBar from "../components/SearchBar";
-import { getMoviesByYear, getMoviesByStudio, getMoviesByCountry, getMoviesByPrimaryLanguage } from "../api/tmdb";
+import { getMoviesByYear, getMoviesByStudio, getMoviesByCountry, getMoviesByPrimaryLanguage, getMoviesByGenre } from "../api/tmdb";
 import { useSearchParams, useLocation } from "react-router-dom";
 
 // this function will handle returning a list of movies based on what
@@ -48,6 +48,8 @@ function BrowsePage() {
     const countryName = location.state?.name;
     const displayName = location.state?.name;
     const source = location.state?.source;
+    // finds the genre of the movie and displays it
+    const genreName = location.state?.name;
 
     // reset page when year/type/sort changes
     useEffect(() => {
@@ -116,6 +118,19 @@ function BrowsePage() {
                         setHeading(`Films with Spoken Language in ${displayName}`);
                     }
                 }
+                // set the total results value to display the total number of movies released
+                setTotalResults(data.totalResults.toLocaleString() || 0);
+                setTotalPages(data.totalPages || 1);
+                setPage(targetPage);
+            }
+            else if (type === "genre") {
+                // get full movies list released on specified year
+                const data = await getMoviesByGenre(value, sortBy, targetPage);
+
+                // put those movies into a data array
+                setMovies(data.movies || []);
+                // set the heading to display the year the movies were released
+                setHeading(`${genreName} Films`);
                 // set the total results value to display the total number of movies released
                 setTotalResults(data.totalResults.toLocaleString() || 0);
                 setTotalPages(data.totalPages || 1);
@@ -239,7 +254,11 @@ function BrowsePage() {
                             There are {totalResults} {labelText}
                         </p>
                     )}
-
+                    {type === "genre" && (
+                        <p className="movie-total-number">
+                            There are {totalResults} {genreName} films
+                        </p>
+                    )}
                     {type === "year" && (
                         <>
                             <p className="movie-total-number">

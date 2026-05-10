@@ -482,8 +482,54 @@ async function getMoviesByPrimaryLanguage(languageCode, sortBy = "popularity.des
     };
 }
 
+// async so we can use await and returns an object
+// our parameter is genreId which is what we use to get the genre on the movies 
+async function getMoviesByGenre(genreId, sortBy = "popularity.desc", startPage = 1) {
+    let allMovies = [];
+    let totalResults = 0;
+    let totalPages = 1;
+
+    // only fetch the first 3 pages worth of movies
+    for (let page = startPage; page <= startPage + 3; page++) {
+        const url = `${base_url}/discover/movie?with_genres=${genreId}&include_adult=false&language=en-US&page=${page}&sort_by=${sortBy}&vote_count.gte=50&page=${page}&api_key=${api}`;
+
+        // res is our response object, sends an http request to the tmdb
+        // await pauses until the response comes back
+        const res = await fetch(url);
+
+        // res.ok is true for status codes 200-299
+        // if res.ok is not true...
+        if (!res.ok) {
+            // if tmdb returns 401, 404, etc, we throw an error
+            throw new Error("TMDB movies by primary language failed")
+        };
+
+        // converts the response body into a json, data becomes the parsed json
+        const data = await res.json();
+
+        if (page === startPage) {
+            // return number of movies released in that year
+            totalResults = data.total_results || 0;
+            totalPages = data.total_pages || 1;
+        }
+
+        allMovies = [...allMovies, ...(data.results || [])];
+
+        // stop if we reach the last tmdb page
+        if (page >= totalPages) {
+            break;
+        }
+    }
+
+    // return the parsed json to whoever calls getMovieByYear
+    return {
+        movies: allMovies.slice(0, 50),
+        totalResults, totalPages
+    };
+}
+
 // exports function for other files to import
 export {searchMulti, getMovieDetails, getImages, getActorDetails, getPersonCredits, 
         getTvDetails, getTvImages, getTvSeasonDetails, getTvSeasonCredits, getMovieKeywords, 
         getTvKeywords, getMoviesByYear, getMoviesByStudio, getMoviesByCountry,
-        getMoviesByPrimaryLanguage}
+        getMoviesByPrimaryLanguage, getMoviesByGenre}

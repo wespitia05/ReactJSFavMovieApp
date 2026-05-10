@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom";
+
 // this function will capitalize the first letter of each word
 function capitalizeWords(text) {
     return text.replace (/\b\w/g, (char) =>  char.toUpperCase());
@@ -6,6 +8,9 @@ function capitalizeWords(text) {
 // this function will handle returning genres and themes
 // on the movie selected
 function Genres({ genres = [], keywords = []}) {
+    // this constant we will use to navigate from one page to the next
+    const navigate = useNavigate();
+
     // if nothing exists, render nothing
     if (genres.length === 0 && keywords.length === 0) {
         return null;
@@ -18,8 +23,16 @@ function Genres({ genres = [], keywords = []}) {
                     <span className="genres-label">Genres: </span>
                     <span className="genres-value">
                         {genres.map((genre, index) => (
-                            <span key={genre} className="genre-item">
-                                {genre}
+                            <span
+                                key={genre.id}
+                                className="genre-item"
+                                onClick={() =>
+                                    navigate(`/browse/genre/${genre.id}`, {
+                                        state: { name: genre.name }
+                                    })
+                                }
+                            >
+                                {genre.name}
                                 {index < genres.length - 1 && ", "}
                             </span>
                         ))}

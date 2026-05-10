@@ -189,6 +189,12 @@ function MoviePage() {
                     //      {id: 18, name: "Drama"}
                     // we just return the genre name only
                     genre: data.genres ? data.genres.map((genre) => genre.name) : [],
+                    genres: data.genres
+                        ? data.genres.map((genre) => ({
+                            id: genre.id,
+                            name: genre.name
+                        }))
+                        : [],
                     // pass the directors name from tmdb
                     director: directorInfo,
                     tagline: data.tagline,
@@ -207,13 +213,13 @@ function MoviePage() {
                         ? data.production_countries.map((country) => ({
                             code: country.iso_3166_1,
                             name: country.name
-                          }))
+                        }))
                         : [],
                     spokenLanguages: data.spoken_languages
                         ? data.spoken_languages.map((language) => ({
                             code: language.iso_639_1,
                             name: language.english_name
-                          }))
+                        }))
                         : [],
                     primaryLanguage: data.original_language
                         ? {
@@ -362,7 +368,7 @@ function MoviePage() {
                                         {activeTab === "cast" && <CastList cast={movie.cast} media="movie"/>}
                                         {activeTab === "crew" && <CrewList crew={movie.crew} media="movie"/>}
                                         {activeTab === "details" && <Details studios={movie.studios} countries={movie.countries} languages={movie.spokenLanguages} primaryLanguage={movie.primaryLanguage}/>}
-                                        {activeTab === "genres" && <Genres genres={movie.genre} keywords={movie.keywords}/>}
+                                        {activeTab === "genres" && <Genres genres={movie.genres} keywords={movie.keywords}/>}
                                         {activeTab === "releases" && <Releases releases={movie.releases}/>}
                                     </div>
                                 </div>
