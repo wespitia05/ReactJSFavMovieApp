@@ -683,6 +683,9 @@ body {
     text-align: center;
     width: 40vw;
     gap: 0;
+    position: sticky;
+    top: 20px;
+    align-self: flex-start;
 }
 
 .actor-profile-img {
