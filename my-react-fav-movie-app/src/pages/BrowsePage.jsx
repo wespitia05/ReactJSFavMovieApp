@@ -144,7 +144,7 @@ function BrowsePage() {
                 // put those movies into a data array
                 setMovies(data.movies || []);
                 // set the heading to display the year the movies were released
-                setHeading(`${genreName} Films`);
+                setHeading(`Films With The Theme: ${themeName}`);
                 // set the total results value to display the total number of movies released
                 setTotalResults(data.totalResults.toLocaleString() || 0);
                 setTotalPages(data.totalPages || 1);
@@ -271,6 +271,11 @@ function BrowsePage() {
                     {type === "genre" && (
                         <p className="movie-total-number">
                             There are {totalResults} {genreName} films
+                        </p>
+                    )}
+                    {type === "theme" && (
+                        <p className="movie-total-number">
+                            There are {totalResults} films with "{themeName}" as the theme
                         </p>
                     )}
                     {type === "year" && (
