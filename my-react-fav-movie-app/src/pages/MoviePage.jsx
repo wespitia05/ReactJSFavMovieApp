@@ -227,7 +227,12 @@ function MoviePage() {
                             name: languageDisplay.of(data.original_language)
                         } : null,
                     // pulls keywords from selected movie
-                    keywords: keywordList,
+                    keywords: keywordData.keywords
+                        ? keywordData.keywords.map((keyword) => ({
+                            id: keyword.id,
+                            name: keyword.name
+                        }))
+                        : [],
                     releases: groupRelease
                 };
 
