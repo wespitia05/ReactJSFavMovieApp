@@ -41,18 +41,26 @@ function Genres({ genres = [], keywords = []}) {
             )}
 
             {keywords.length > 0 && (
-                <div className="genres-list">
-                    <span className="genres-label">Themes: </span>
-                    <span className="genres-value">
-                        {keywords.map((keyword, index) => (
-                            <span key={keyword} className="genre-item">
-                                {capitalizeWords(keyword)}
-                                {index < keywords.length - 1 && ", "}
-                            </span>
-                        ))}
-                    </span>
-                </div>    
-            )}
+            <div className="genres-list">
+                <span className="genres-label">Themes: </span>
+                <span className="genres-value">
+                    {keywords.map((keyword, index) => (
+                        <span
+                            key={keyword.id}
+                            className="genre-item"
+                            onClick={() =>
+                                navigate(`/browse/theme/${keyword.id}`, {
+                                    state: { name: keyword.name }
+                                })
+                            }
+                        >
+                            {keyword.name}
+                            {index < keywords.length - 1 && ", "}
+                        </span>
+                    ))}
+                </span>
+            </div>    
+        )}
         </div>
     );
 }
