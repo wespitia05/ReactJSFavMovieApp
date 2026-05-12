@@ -106,14 +106,24 @@ function TvSeasonPage() {
                     summary: seasonData.overview || data.overview || "No Overview Available",
                     creators,
                     episodes: seasonData.episodes?.length || 0,
-                    genres: data.genres ? data.genres.map((genre) => genre.name) : [],
+                    genres: data.genres
+                        ? data.genres.map((genre) => ({
+                            id: genre.id,
+                            name: genre.name
+                            }))
+                        : [],
                     seasonList: data.seasons || [],
                     cast: seasonCast, 
                     crew: seasonCrew,
                     // pull tv season episode list
                     episodes: seasonData.episodes || [],
                     // pulls keywords from selected movie
-                    keywords: keywordList,
+                    keywords: keywordData.results
+                        ? keywordData.results.map((keyword) => ({
+                            id: keyword.id,
+                            name: keyword.name
+                            }))
+                        : [],
                     airDate: seasonData.air_date || "",
                     studios: seasonData.networks ? seasonData.networks.map((network) => network.name) : [],
                     countries: data.origin_country || []
