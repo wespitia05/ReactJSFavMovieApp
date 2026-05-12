@@ -299,9 +299,8 @@ function TvPage() {
                                         {tv.status && (<span>{tv.status}</span>)}
                                     </p>
                                     <p>
-                                        {/* if there is more than one genre, separate with a comma */}
                                         {tv?.genres?.length > 0 && (
-                                            <span>{tv.genres.join(", ")}</span>
+                                            <span>{tv.genres.map((genre) => genre.name).join(", ")}</span>
                                         )}
                                     </p>
                                     <h3><i>{tv.tagline}</i></h3>

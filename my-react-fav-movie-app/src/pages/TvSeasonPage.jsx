@@ -230,7 +230,7 @@ function TvSeasonPage() {
                                     </p>
                                     <p>
                                         {season?.genres?.length > 0 && (
-                                            <span>{season.genres.join(", ")}</span>
+                                            <span>{season.genres.map((genre) => genre.name).join(", ")}</span>
                                         )}
                                     </p>
                                     <h3><i>{season.tagline}</i></h3>
