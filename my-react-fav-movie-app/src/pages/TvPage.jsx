@@ -136,14 +136,24 @@ function TvPage() {
                     // pull the array of crew members
                     crew: data.credits?.crew || [],
                     // pull the different genres
-                    genres: data.genres ? data.genres.map((genre) => genre.name) : [],
+                    genres: data.genres
+                        ? data.genres.map((genre) => ({
+                            id: genre.id,
+                            name: genre.name
+                            }))
+                        : [],
                     seasonList: data.seasons || [],
                     // pull tv show details (network, country and languages)
                     studios: data.networks ? data.networks.map((network) => network.name) : [],
                     countries: data.origin_country || [],
                     languages: data.spoken_languages ? data.spoken_languages.map((language) => language.english_name) : [],
                     // pulls keywords from selected movie
-                    keywords: keywordList,
+                    keywords: keywordData.results
+                        ? keywordData.results.map((keyword) => ({
+                            id: keyword.id,
+                            name: keyword.name
+                            }))
+                        : [],
                     firstAirDate: data.first_air_date || "",
                     lastAirDate: data.last_air_date || ""
                 };
@@ -202,9 +212,9 @@ function TvPage() {
                                                         return;
                                                     }
                                                     setSelectedSeason(seasonNumber);
-                                                  
+                                                
                                                     if (seasonNumber) {
-                                                      navigate(`/tv/${id}/season/${seasonNumber}`);
+                                                        navigate(`/tv/${id}/season/${seasonNumber}`);
                                                     }
                                                 }}
                                             >
