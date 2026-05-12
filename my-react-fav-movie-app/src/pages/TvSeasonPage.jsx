@@ -105,7 +105,7 @@ function TvSeasonPage() {
                     tagline: data.tagline || "No Tagline Available",   
                     summary: seasonData.overview || data.overview || "No Overview Available",
                     creators,
-                    episodes: seasonData.episodes?.length || 0,
+                    totalEpisodes: seasonData.episodes?.length || 0,
                     genres: data.genres
                         ? data.genres.map((genre) => ({
                             id: genre.id,
@@ -176,9 +176,8 @@ function TvSeasonPage() {
                                                         return;
                                                     }
                                                     setSelectedSeason(seasonNumber);
-                                                  
                                                     if (seasonNumber) {
-                                                      navigate(`/tv/${id}/season/${seasonNumber}`);
+                                                        navigate(`/tv/${id}/season/${seasonNumber}`);
                                                     }
                                                 }}
                                             >
@@ -225,9 +224,8 @@ function TvSeasonPage() {
                                     </h3>
                                     <p>
                                         {season.number !== undefined && <span>Season {season.number} • </span>}
-                                        {season.number !== undefined && season.episodes > 0 && <span> • </span>}
-                                        {season.episodes > 0 && <span>{season.episodes} Episodes</span>}
-                                        {season.number !== undefined && season.episodes > 0 && season.rating && <span> • </span>}
+                                        {season.totalEpisodes > 0 && <span>{season.totalEpisodes} Episodes</span>}
+                                        {season.number !== undefined && season.totalEpisodes > 0 && season.rating && <span> • </span>}
                                         {season.rating && <span className="tv-rating">{season.rating}</span>}
                                     </p>
                                     <p>
