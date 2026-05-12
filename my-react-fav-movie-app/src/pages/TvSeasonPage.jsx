@@ -125,8 +125,6 @@ function TvSeasonPage() {
                             }))
                         : [],
                     airDate: seasonData.air_date || "",
-                    studios: seasonData.networks ? seasonData.networks.map((network) => network.name) : [],
-                    countries: data.origin_country || []
                 };
             
                 setSeason(tvSeasonData);

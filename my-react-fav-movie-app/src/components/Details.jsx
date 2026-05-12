@@ -11,6 +11,8 @@ function Details({studios = [], countries = [], languages = [], primaryLanguage 
         return null;
     }
 
+    // console.log("DETAILS PROPS:", { studios, countries, languages, primaryLanguage });
+
     return(
         <div className="details">
             <div className="details-row">
@@ -19,7 +21,7 @@ function Details({studios = [], countries = [], languages = [], primaryLanguage 
                 {studios.length > 0 ? (
                     studios.map((studio, index) => (
                         <span
-                            key={studio.id}
+                            key={`${studio.id || studio.name}-${index}`}
                             className="details-item"
                             onClick={() => navigate(`/browse/studio/${studio.id}?name=${encodeURIComponent(studio.name)}`)}
                         >
@@ -38,7 +40,7 @@ function Details({studios = [], countries = [], languages = [], primaryLanguage 
                     {countries.length > 0 ? (
                         countries.map((country, index) => (
                             <span
-                                key={country.code}
+                                key={`${country.code || country.name}-${index}`}
                                 className="details-item"
                                 onClick={() =>
                                     navigate(`/browse/country/${country.code}`, {
@@ -58,20 +60,23 @@ function Details({studios = [], countries = [], languages = [], primaryLanguage 
             <div className="details-row">
                 <span className="details-label">Primary Language: </span>
                 <span className="details-value">
-                    {primaryLanguage ? (
-                        <span
-                            className="details-item"
-                            onClick={() =>
-                                navigate(`/browse/language/${primaryLanguage.code}`, {
-                                    state: { name: primaryLanguage.name, source: "primary" }
-                                })
-                            }
-                        >
-                            {primaryLanguage.name}
-                        </span>
-                    ) : (
-                        "Unknown"
-                    )}
+                {primaryLanguage ? (
+                    <span
+                        className="details-item"
+                        onClick={() =>
+                            navigate(`/browse/language/${primaryLanguage.code}`, {
+                                state: {
+                                    name: primaryLanguage.name,
+                                    source: "primary"
+                                }
+                            })
+                        }
+                    >
+                        {primaryLanguage.name}
+                    </span>
+                ) : (
+                    "Unknown"
+                )}
                 </span>
             </div>
             <div className="details-row">
@@ -80,7 +85,7 @@ function Details({studios = [], countries = [], languages = [], primaryLanguage 
                     {languages.length > 0 ? (
                         languages.map((language, index) => (
                             <span
-                                key={language.code}
+                                key={`${language.code || language.name}-${index}`}
                                 className="details-item"
                                 onClick={() =>
                                     navigate(`/browse/language/${language.code}`, {

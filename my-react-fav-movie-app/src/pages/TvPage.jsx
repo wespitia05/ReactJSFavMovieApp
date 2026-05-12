@@ -65,8 +65,8 @@ function TvPage() {
                 // only try to read the creators if it exists
                 if (data.created_by && data.created_by.length > 0) {
                     creators = data.created_by.map((person) => ({
-                      id: person.id,
-                      name: person.name
+                        id: person.id,
+                        name: person.name
                     }));
                 }
 
@@ -107,6 +107,8 @@ function TvPage() {
                 // returns list of keywords
                 const keywordList = keywordData.results ? keywordData.results.map((keyword) => keyword.name) : [];
 
+                const languageDisplay = new Intl.DisplayNames(["en"], { type: "language" });
+
                 // create object of tv show data we want to display
                 const tvData = {
                     // pull movie title directly from tmbd
@@ -144,9 +146,30 @@ function TvPage() {
                         : [],
                     seasonList: data.seasons || [],
                     // pull tv show details (network, country and languages)
-                    studios: data.networks ? data.networks.map((network) => network.name) : [],
-                    countries: data.origin_country || [],
-                    languages: data.spoken_languages ? data.spoken_languages.map((language) => language.english_name) : [],
+                    studios: data.networks
+                        ? data.networks.map((network) => ({
+                            id: network.id,
+                            name: network.name
+                        }))
+                        : [],
+                    countries: data.origin_country
+                        ? data.origin_country.map((code) => ({
+                            code,
+                            name: new Intl.DisplayNames(["en"], { type: "region" }).of(code)
+                        }))
+                        : [],
+                    languages: data.spoken_languages
+                        ? data.spoken_languages.map((language) => ({
+                            code: language.iso_639_1,
+                            name: language.english_name
+                        }))
+                        : [],
+                    primaryLanguage: data.original_language
+                        ? {
+                            code: data.original_language,
+                            name: languageDisplay.of(data.original_language)
+                        }
+                        : null,
                     // pulls keywords from selected movie
                     keywords: keywordData.results
                         ? keywordData.results.map((keyword) => ({
