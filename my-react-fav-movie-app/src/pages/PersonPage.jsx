@@ -87,7 +87,6 @@ function ActorPage() {
         "Editorial Consultant": "Films Edited Consultantly By",
         "Original Film Writer": "Films Originally Written By",
         Other: "Other Films",
-        Presenter: "Films Presented By",
         "Sound Effects Editor": "Films With Sound Effects Edited By",
         Decorator: "Films With Decoration By",
         Idea: "Films With Ideas By",
