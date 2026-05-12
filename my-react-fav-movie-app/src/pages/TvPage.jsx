@@ -334,7 +334,7 @@ function TvPage() {
                                     <div className="tv-tab-content">
                                         {activeTab === "cast" && <CastList cast={tv.cast} media="tv"/>}
                                         {activeTab === "crew" && <CrewList crew={tv.crew} media="tv"/>}
-                                        {activeTab === "details" && <Details studios={tv.studios} countries={tv.countries} languages={tv.languages}/>}
+                                        {activeTab === "details" && <Details studios={tv.studios} countries={tv.countries} languages={tv.languages} primaryLanguage={tv.primaryLanguage}/>}
                                         {activeTab === "genres" && <Genres genres={tv.genres} keywords={tv.keywords}/>}
                                         {activeTab === "releases" && <TvReleases
                                                                         firstAirDate={tv.firstAirDate}
