@@ -85,7 +85,7 @@ function BrowsePage() {
 
                 // put those movies into a data array
                 setMovies(data.movies || []);
-                // set the heading to display the year the movies were released
+                // set the heading to display the studio of either the movie or tv show
                 if (mediaType === "tv") {
                     setHeading(`TV Shows Produced By ${studioName}`);
                 }
