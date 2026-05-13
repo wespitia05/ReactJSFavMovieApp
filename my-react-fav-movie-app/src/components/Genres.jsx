@@ -7,7 +7,7 @@ function capitalizeWords(text) {
 
 // this function will handle returning genres and themes
 // on the movie selected
-function Genres({ genres = [], keywords = []}) {
+function Genres({ genres = [], keywords = [], mediaType = "movie"}) {
     // this constant we will use to navigate from one page to the next
     const navigate = useNavigate();
 
@@ -28,7 +28,7 @@ function Genres({ genres = [], keywords = []}) {
                                 className="genre-item"
                                 onClick={() =>
                                     navigate(`/browse/genre/${genre.id}`, {
-                                        state: { name: genre.name }
+                                        state: { name: genre.name, mediaType: mediaType }
                                     })
                                 }
                             >
@@ -50,7 +50,7 @@ function Genres({ genres = [], keywords = []}) {
                             className="genre-item"
                             onClick={() =>
                                 navigate(`/browse/theme/${keyword.id}`, {
-                                    state: { name: keyword.name }
+                                    state: { name: keyword.name, mediaType: mediaType }
                                 })
                             }
                         >

@@ -5,7 +5,7 @@ body {
     background-color: #0f0f0f;
     color: #ffffff;
 }
-  
+
 /* layout */
 .movie-app {
     position: relative;
@@ -30,7 +30,7 @@ body {
     height: 50%;
     background: linear-gradient(to bottom, transparent, #0f0f0f);
 }
-  
+
 /* SEARCH BAR STYLING */
 .search-bar {
     margin-bottom: 14px;
@@ -40,7 +40,7 @@ body {
     display: flex;
     gap: 10px;
 }
-  
+
 .search-input {
     flex: 1;
     padding: 12px 14px;
@@ -61,7 +61,7 @@ body {
 .search-input:hover {
     background: rgba(255, 255, 255, 0.16);
 }
-  
+
 .search-button {
     padding: 10px 14px;
     font-size: 1.25rem;
@@ -72,17 +72,17 @@ body {
     color: white;
     font-family: monospace;
 }
-  
+
 .search-button:hover {
     background-color: hsl(357, 92%, 40%);
 }
-  
+
 /* error */
 .error-text {
     margin-top: 8px;
     color: #ff6b6b;
 }
-  
+
 /* results */
 .results-list {
     list-style: none;

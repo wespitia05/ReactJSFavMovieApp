@@ -51,6 +51,8 @@ function BrowsePage() {
     // finds the genre and theme of the movie and displays it
     const genreName = location.state?.name;
     const themeName = location.state?.name;
+    // finds the media type we are currently viewing (movie or tv show)
+    const mediaType = location.state?.mediaType;
 
     // reset page when year/type/sort changes
     useEffect(() => {
@@ -66,7 +68,7 @@ function BrowsePage() {
             // for now, only handle year
             if (type === "year") {
                 // get full movies list released on specified year
-                const data = await getMoviesByYear(value, sortBy, targetPage);
+                const data = await getMoviesByYear(value, mediaType, sortBy, targetPage);
 
                 // put those movies into a data array
                 setMovies(data.movies || []);
@@ -126,12 +128,17 @@ function BrowsePage() {
             }
             else if (type === "genre") {
                 // get full movies list released on specified year
-                const data = await getMoviesByGenre(value, sortBy, targetPage);
+                const data = await getMoviesByGenre(value, mediaType, sortBy, targetPage);
 
                 // put those movies into a data array
                 setMovies(data.movies || []);
-                // set the heading to display the year the movies were released
-                setHeading(`${genreName} Films`);
+                // set the heading to display the genre of either the movie or tv show
+                if (mediaType === "tv") {
+                    setHeading(`${genreName} TV Shows`);
+                }
+                else {
+                    setHeading(`${genreName} Films`);
+                }
                 // set the total results value to display the total number of movies released
                 setTotalResults(data.totalResults.toLocaleString() || 0);
                 setTotalPages(data.totalPages || 1);
@@ -139,12 +146,17 @@ function BrowsePage() {
             }
             else if (type === "theme") {
                 // get full movies list released on specified year
-                const data = await getMoviesByTheme(value, sortBy, targetPage);
+                const data = await getMoviesByTheme(value, mediaType, sortBy, targetPage);
 
                 // put those movies into a data array
                 setMovies(data.movies || []);
-                // set the heading to display the year the movies were released
-                setHeading(`Films With The Theme: ${themeName}`);
+                // set the heading to display the theme of either the tv show or movie
+                if (mediaType === "tv") {
+                    setHeading(`TV Shows About ${themeName}`);
+                }
+                else {
+                    setHeading(`Films About ${themeName}`);
+                }
                 // set the total results value to display the total number of movies released
                 setTotalResults(data.totalResults.toLocaleString() || 0);
                 setTotalPages(data.totalPages || 1);

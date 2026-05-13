@@ -484,14 +484,14 @@ async function getMoviesByPrimaryLanguage(languageCode, sortBy = "popularity.des
 
 // async so we can use await and returns an object
 // our parameter is genreId which is what we use to get the genre on the movies 
-async function getMoviesByGenre(genreId, sortBy = "popularity.desc", startPage = 1) {
+async function getMoviesByGenre(genreId, mediaType = "movie", sortBy = "popularity.desc", startPage = 1) {
     let allMovies = [];
     let totalResults = 0;
     let totalPages = 1;
 
     // only fetch the first 3 pages worth of movies
     for (let page = startPage; page <= startPage + 3; page++) {
-        const url = `${base_url}/discover/movie?with_genres=${genreId}&include_adult=false&language=en-US&page=${page}&sort_by=${sortBy}&vote_count.gte=50&page=${page}&api_key=${api}`;
+        const url = `${base_url}/discover/${mediaType}?with_genres=${genreId}&include_adult=false&language=en-US&page=${page}&sort_by=${sortBy}&vote_count.gte=50&page=${page}&api_key=${api}`;
 
         // res is our response object, sends an http request to the tmdb
         // await pauses until the response comes back
@@ -530,14 +530,14 @@ async function getMoviesByGenre(genreId, sortBy = "popularity.desc", startPage =
 
 // async so we can use await and returns an object
 // our parameter is keywordId which is what we use to get the theme on the movie 
-async function getMoviesByTheme(keywordId, sortBy = "popularity.desc", startPage = 1) {
+async function getMoviesByTheme(keywordId, mediaType = "movie", sortBy = "popularity.desc", startPage = 1) {
     let allMovies = [];
     let totalResults = 0;
     let totalPages = 1;
 
     // only fetch the first 3 pages worth of movies
     for (let page = startPage; page <= startPage + 3; page++) {
-        const url = `${base_url}/discover/movie?with_keywords=${keywordId}&include_adult=false&language=en-US&page=${page}&sort_by=${sortBy}&vote_count.gte=50&page=${page}&api_key=${api}`;
+        const url = `${base_url}/discover/${mediaType}?with_keywords=${keywordId}&include_adult=false&language=en-US&page=${page}&sort_by=${sortBy}&vote_count.gte=50&page=${page}&api_key=${api}`;
 
         // res is our response object, sends an http request to the tmdb
         // await pauses until the response comes back
