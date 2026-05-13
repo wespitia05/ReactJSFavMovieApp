@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 
 // this function will handle returning details on a movie or tv show
 // will display the studio, country and language information
-function Details({studios = [], countries = [], languages = [], primaryLanguage = ""}) {
+function Details({studios = [], countries = [], languages = [], primaryLanguage = "", mediaType = "movie"}) {
     // this constant we will use to navigate from one page to the next
     const navigate = useNavigate();
 
@@ -18,20 +18,29 @@ function Details({studios = [], countries = [], languages = [], primaryLanguage 
             <div className="details-row">
                 <span className="details-label">Studios: </span>
                 <span className="details-value">
-                {studios.length > 0 ? (
-                    studios.map((studio, index) => (
-                        <span
-                            key={`${studio.id || studio.name}-${index}`}
-                            className="details-item"
-                            onClick={() => navigate(`/browse/studio/${studio.id}?name=${encodeURIComponent(studio.name)}`)}
-                        >
-                            {studio.name}
-                            {index < studios.length - 1 && ", "}
-                        </span>
-                    ))
-                ) : (
-                    "Unknown"
-                )}
+                    {studios.length > 0 ? (
+                        studios.map((studio, index) => (
+                            <span
+                                key={`${studio.id || studio.name}-${index}`}
+                                className="details-item"
+                                onClick={() =>
+                                    navigate(
+                                        `/browse/studio/${studio.id}?name=${encodeURIComponent(studio.name)}`,
+                                        {
+                                            state: {
+                                                mediaType: mediaType
+                                            }
+                                        }
+                                    )
+                                }
+                            >
+                                {studio.name}
+                                {index < studios.length - 1 && ", "}
+                            </span>
+                        ))
+                    ) : (
+                        "Unknown"
+                    )}
                 </span>
             </div>
             <div className="details-row">

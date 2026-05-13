@@ -81,12 +81,17 @@ function BrowsePage() {
             } 
             else if (type === "studio") {
                 // get full movies list released on specified year
-                const data = await getMoviesByStudio(value, sortBy, targetPage);
+                const data = await getMoviesByStudio(value, mediaType, sortBy, targetPage);
 
                 // put those movies into a data array
                 setMovies(data.movies || []);
                 // set the heading to display the year the movies were released
-                setHeading(`Films Produced by ${studioName}`);
+                if (mediaType === "tv") {
+                    setHeading(`TV Shows Produced By ${studioName}`);
+                }
+                else {
+                    setHeading(`Films Produced By ${studioName}`);
+                }
                 // set the total results value to display the total number of movies released
                 setTotalResults(data.totalResults.toLocaleString() || 0);
                 setTotalPages(data.totalPages || 1);
