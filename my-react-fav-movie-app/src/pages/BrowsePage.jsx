@@ -272,8 +272,12 @@ function BrowsePage() {
                     </div>
                     {type === "studio" && (
                         <p className="movie-total-number">
-                            There are {totalResults} films produced by {studioName}
+                            There are {totalResults}{" "}
+                            {mediaType === "tv"
+                                ? `TV shows produced by ${studioName}`
+                                : `films produced by ${studioName}`}
                         </p>
+                        
                     )}
                     {type === "country" && (
                         <p className="movie-total-number">
