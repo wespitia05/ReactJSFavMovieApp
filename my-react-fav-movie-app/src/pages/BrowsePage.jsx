@@ -287,12 +287,18 @@ function BrowsePage() {
                     )}
                     {type === "genre" && (
                         <p className="movie-total-number">
-                            There are {totalResults} {genreName} films
+                            There are {totalResults}{" "}
+                            {mediaType === "tv"
+                                ? `${genreName} TV shows`
+                                : `${genreName} films`}
                         </p>
                     )}
                     {type === "theme" && (
                         <p className="movie-total-number">
-                            There are {totalResults} films with "{themeName}" as the theme
+                            There are {totalResults}{" "}
+                            {mediaType === "tv"
+                                ? `TV shows with "${themeName}" as the theme`
+                                : `films with "${themeName}" as the theme`}
                         </p>
                     )}
                     {type === "year" && (
