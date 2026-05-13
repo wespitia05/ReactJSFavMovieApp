@@ -70,6 +70,7 @@ body {
     cursor: pointer;
     background-color: hsl(357, 92%, 50%);
     color: white;
+    font-family: monospace;
 }
   
 .search-button:hover {
