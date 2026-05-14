@@ -79,7 +79,8 @@ function Details({studios = [], countries = [], languages = [], primaryLanguage 
                             navigate(`/browse/language/${primaryLanguage.code}`, {
                                 state: {
                                     name: primaryLanguage.name,
-                                    source: "primary"
+                                    source: "primary",
+                                    mediaType: mediaType
                                 }
                             })
                         }
@@ -101,7 +102,11 @@ function Details({studios = [], countries = [], languages = [], primaryLanguage 
                                 className="details-item"
                                 onClick={() =>
                                     navigate(`/browse/language/${language.code}`, {
-                                        state: { name: language.name, source: "spoken" }
+                                        state: { 
+                                            name: language.name, 
+                                            source: "spoken",
+                                            mediaType: mediaType
+                                        }
                                     })
                                 }
                             >

@@ -53,6 +53,8 @@ function BrowsePage() {
     const themeName = location.state?.name;
     // finds the media type we are currently viewing (movie or tv show)
     const mediaType = location.state?.mediaType;
+    // labelText will store the total number text for browse page
+    const [labelText, setLabelText] = useState("");
 
     // reset page when year/type/sort changes
     useEffect(() => {
@@ -117,17 +119,32 @@ function BrowsePage() {
             }
             else if (type === "language") {
                 // get full movies list released on specified year
-                const data = await getMoviesByPrimaryLanguage(value, sortBy, targetPage);
+                const data = await getMoviesByPrimaryLanguage(value, mediaType, sortBy, targetPage);
 
                 // put those movies into a data array
                 setMovies(data.movies || []);
-                // set the heading to display the primary language of either the movie or tv show
-                if (displayName) {
-                    if (source === "primary") {
-                        setHeading(`Films with ${displayName} as its Primary Language`);
-                    }
-                    else if (source === "spoken") {
-                        setHeading(`Films with ${displayName} as a Spoken Language`);
+                if (type === "language") {
+                    if (displayName) {
+                        if (source === "primary") {
+                            if (mediaType === "tv") {
+                                setHeading(`TV Shows with Primary Language in ${displayName}`);
+                                setLabelText(`TV shows with its Primary Language in ${displayName}`);
+                            }
+                            else {
+                                setHeading(`Films with Primary Language in ${displayName}`);
+                                setLabelText(`films with its Primary Language in ${displayName}`);
+                            }
+                        }       
+                        else if (source === "spoken") {
+                            if (mediaType === "tv") {
+                                setHeading(`TV Shows with a Spoken Language in ${displayName}`);
+                                setLabelText(`TV shows with a Spoken Language in ${displayName}`);
+                            }
+                            else {
+                                setHeading(`Films with a Spoken Language in ${displayName}`);
+                                setLabelText(`films with a Spoken Language in ${displayName}`);
+                            }
+                        }
                     }
                 }
                 // set the total results value to display the total number of movies released
@@ -217,22 +234,6 @@ function BrowsePage() {
     const currentChunk = Math.floor((page - 1) / 3) + 1;
     // maxChunks will store the total amount of 50-movie chunks available
     const maxChunks = Math.ceil(totalPages / 3);
-    // labelText will store the total results text for language browse
-    let labelText = "";
-
-    if (type === "language") {
-        if (displayName) {
-            if (source === "primary") {
-                labelText = `films with ${displayName} as its primary language`;
-            }
-            else if (source === "spoken") {
-                labelText = `films with ${displayName} as a spoken language`;
-            }
-            else {
-                labelText = `films in ${displayName}`;
-            }
-        }
-    }
 
     return (
         <div className="movie-app">
