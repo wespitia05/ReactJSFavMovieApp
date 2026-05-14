@@ -53,7 +53,10 @@ function Details({studios = [], countries = [], languages = [], primaryLanguage 
                                 className="details-item"
                                 onClick={() =>
                                     navigate(`/browse/country/${country.code}`, {
-                                        state: { name: country.name }
+                                        state: {
+                                            name: country.name,
+                                            mediaType: mediaType
+                                        }
                                     })
                                 }
                             >

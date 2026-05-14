@@ -99,12 +99,17 @@ function BrowsePage() {
             }
             else if (type === "country") {
                 // get full movies list released on specified year
-                const data = await getMoviesByCountry(value, sortBy, targetPage);
+                const data = await getMoviesByCountry(value, mediaType, sortBy, targetPage);
 
                 // put those movies into a data array
                 setMovies(data.movies || []);
-                // set the heading to display the year the movies were released
-                setHeading(`Films Produced by ${countryName}`);
+                // set the heading to display the country of either the movie or tv show was produced by
+                if (mediaType === "tv") {
+                    setHeading(`TV Shows Produced in ${countryName}`);
+                }
+                else {
+                    setHeading(`Films Produced in ${countryName}`);
+                }
                 // set the total results value to display the total number of movies released
                 setTotalResults(data.totalResults.toLocaleString() || 0);
                 setTotalPages(data.totalPages || 1);
@@ -116,13 +121,12 @@ function BrowsePage() {
 
                 // put those movies into a data array
                 setMovies(data.movies || []);
+                // set the heading to display the primary language of either the movie or tv show
                 if (displayName) {
                     if (source === "primary") {
-                        // set the heading to display the year the movies were released
                         setHeading(`Films with ${displayName} as its Primary Language`);
                     }
                     else if (source === "spoken") {
-                        // set the heading to display the year the movies were released
                         setHeading(`Films with ${displayName} as a Spoken Language`);
                     }
                 }
@@ -281,7 +285,10 @@ function BrowsePage() {
                     )}
                     {type === "country" && (
                         <p className="movie-total-number">
-                            There are {totalResults} films produced by {countryName}
+                            There are {totalResults}{" "}
+                            {mediaType === "tv"
+                                ? `TV shows produced in ${countryName}`
+                                : `films produced in ${countryName}`}
                         </p>
                     )}
                     {type === "language" && (
