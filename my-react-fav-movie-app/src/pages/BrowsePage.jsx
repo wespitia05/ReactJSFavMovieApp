@@ -355,7 +355,13 @@ function BrowsePage() {
                                 <li
                                     key={movie.id}
                                     className="movie-list-item"
-                                    onClick={() => navigate(`/movie/${movie.id}`)}
+                                    onClick={() =>
+                                        navigate(
+                                            mediaType === "tv"
+                                                ? `/tv/${movie.id}`
+                                                : `/movie/${movie.id}`
+                                        )
+                                    }
                                 >
                                     {posterUrl ? (
                                         <img
