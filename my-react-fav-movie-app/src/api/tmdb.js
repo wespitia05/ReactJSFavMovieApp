@@ -355,7 +355,7 @@ async function getMoviesByStudio(studioId, mediaType = "movie", sortBy = "popula
     for (let page = startPage; page <= startPage + 3; page++) {
         const studioParam = 
             mediaType === "tv" ? `with_networks=${studioId}` : `with_companies=${studioId}`;
-        const url = `${base_url}/discover/${mediaType}?${studioParam}=${studioId}&include_adult=false&language=en-US&page=${page}&sort_by=${sortBy}&vote_count.gte=50&page=${page}&api_key=${api}`;
+        const url = `${base_url}/discover/${mediaType}?${studioParam}&include_adult=false&language=en-US&page=${page}&sort_by=${sortBy}${mediaType === "movie" ? "&vote_count.gte=50" : ""}&api_key=${api}`;
 
         // res is our response object, sends an http request to the tmdb
         // await pauses until the response comes back
@@ -401,9 +401,8 @@ async function getMoviesByCountry(countryCode, mediaType = "movie", sortBy = "po
 
     // only fetch the first 3 pages worth of movies
     for (let page = startPage; page <= startPage + 3; page++) {
-        const countryParam = 
-            mediaType === "tv" ? `with_origin_country=${countryCode}` : `with_origin_country=${countryCode}`;
-        const url = `${base_url}/discover/${mediaType}?${countryParam}&include_adult=false&language=en-US&page=${page}&sort_by=${sortBy}&vote_count.gte=50&page=${page}&api_key=${api}`;
+        const countryParam = `with_origin_country=${countryCode}`;
+        const url = `${base_url}/discover/${mediaType}?${countryParam}&include_adult=false&language=en-US&page=${page}&sort_by=${sortBy}&vote_count.gte=50&api_key=${api}`;
 
         // res is our response object, sends an http request to the tmdb
         // await pauses until the response comes back
@@ -449,7 +448,7 @@ async function getMoviesByPrimaryLanguage(languageCode, mediaType = "movie", sor
 
     // only fetch the first 3 pages worth of movies
     for (let page = startPage; page <= startPage + 3; page++) {
-        const url = `${base_url}/discover/${mediaType}?with_original_language=${languageCode}&include_adult=false&language=en-US&page=${page}&sort_by=${sortBy}&vote_count.gte=50&page=${page}&api_key=${api}`;
+        const url = `${base_url}/discover/${mediaType}?with_original_language=${languageCode}&include_adult=false&language=en-US&page=${page}&sort_by=${sortBy}&vote_count.gte=50&api_key=${api}`;
 
         // res is our response object, sends an http request to the tmdb
         // await pauses until the response comes back
@@ -495,7 +494,7 @@ async function getMoviesByGenre(genreId, mediaType = "movie", sortBy = "populari
 
     // only fetch the first 3 pages worth of movies
     for (let page = startPage; page <= startPage + 3; page++) {
-        const url = `${base_url}/discover/${mediaType}?with_genres=${genreId}&include_adult=false&language=en-US&page=${page}&sort_by=${sortBy}&vote_count.gte=50&page=${page}&api_key=${api}`;
+        const url = `${base_url}/discover/${mediaType}?with_genres=${genreId}&include_adult=false&language=en-US&page=${page}&sort_by=${sortBy}&vote_count.gte=50&api_key=${api}`;
 
         // res is our response object, sends an http request to the tmdb
         // await pauses until the response comes back
@@ -541,7 +540,7 @@ async function getMoviesByTheme(keywordId, mediaType = "movie", sortBy = "popula
 
     // only fetch the first 3 pages worth of movies
     for (let page = startPage; page <= startPage + 3; page++) {
-        const url = `${base_url}/discover/${mediaType}?with_keywords=${keywordId}&include_adult=false&language=en-US&page=${page}&sort_by=${sortBy}&vote_count.gte=50&page=${page}&api_key=${api}`;
+        const url = `${base_url}/discover/${mediaType}?with_keywords=${keywordId}&include_adult=false&language=en-US&page=${page}&sort_by=${sortBy}&vote_count.gte=50&api_key=${api}`;
 
         // res is our response object, sends an http request to the tmdb
         // await pauses until the response comes back
