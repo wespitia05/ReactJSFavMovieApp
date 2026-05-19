@@ -74,8 +74,13 @@ function BrowsePage() {
 
                 // put those movies into a data array
                 setMovies(data.movies || []);
-                // set the heading to display the year the movies were released
-                setHeading(`Films Released in ${value}`);
+                // set the heading to display the studio of either the movie or tv show
+                if (mediaType === "tv") {
+                    setHeading(`TV Shows Released In ${value}`);
+                }
+                else {
+                    setHeading(`Films Released In ${value}`);
+                }
                 // set the total results value to display the total number of movies released
                 setTotalResults(data.totalResults.toLocaleString() || 0);
                 setTotalPages(data.totalPages || 1);
@@ -316,7 +321,10 @@ function BrowsePage() {
                     {type === "year" && (
                         <>
                             <p className="movie-total-number">
-                                There are {totalResults} films released in {value}
+                                There are {totalResults}{" "}
+                                {mediaType === "tv"
+                                    ? `TV shows released in ${value}`
+                                    : `films released in ${value}`}
                             </p>
                             <div className="year-browser">
                                 <button
@@ -332,7 +340,11 @@ function BrowsePage() {
                                         <button
                                             key={year}
                                             className={`year-browser-button ${year === currentYear ? "active" : ""}`}
-                                            onClick={() => navigate(`/browse/year/${year}`)}
+                                            onClick={() => navigate(`/browse/year/${year}`, {
+                                                state: {
+                                                    mediaType: mediaType
+                                                }
+                                            })}
                                             type="button"
                                             disabled={year > currentRealYear}
                                         >

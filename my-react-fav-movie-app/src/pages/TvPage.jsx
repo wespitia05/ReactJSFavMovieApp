@@ -261,21 +261,36 @@ function TvPage() {
                                     <h1>{tv.title}</h1>
                                     <h3>
                                         {/* only render the year if it exists */}
-                                        {tv.year && <span><u>{tv.year}</u></span>}
+                                        {tv.year && !isNaN(Number(tv.year)) ? (
+                                            <span>
+                                                <u onClick={() => navigate(`/browse/year/${tv.year}`, {
+                                                    state: {
+                                                        mediaType: "tv"
+                                                    }
+                                                })}>
+                                                    {tv.year}
+                                                </u>
+                                            </span>
+                                        ) : (
+                                            <span>{tv.year}</span>
+                                        )}
                                         {/* only show the bullet if both year and creator exist */}
-                                        {tv.year && tv.creators && <span> • </span>}
+                                        {tv.year && tv.creators && tv.creators.length > 0 && <span> • </span>}
                                         {/* renders the creators text */}
-                                        {tv.creators && (
+                                        {tv.creators && tv.creators.length > 0 && (
                                             <span>
                                                 Created By{" "}
                                                 {tv.creators.map((creator, index) => (
                                                     <span key={creator.id}>
                                                         <u
                                                             className="tv-creator"
-                                                            onClick={() => navigate(`/person/${creator.id}?job=Creator&media=tv`)}
+                                                            onClick={() =>
+                                                                navigate(`/person/${creator.id}?job=Creator&media=tv`)
+                                                            }
                                                         >
                                                             {creator.name}
                                                         </u>
+
                                                         {index < tv.creators.length - 1 && ", "}
                                                     </span>
                                                 ))}
